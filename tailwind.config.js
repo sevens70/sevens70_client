@@ -16,6 +16,10 @@ module.exports = withMT({
         md: "24px",
         lg: "36px",
       },
+      fontFamily: {
+        DEFAULT: ["var(--font-montserrat)", "sans"],
+        sans: ["var(--font-montserrat)", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -60,7 +64,7 @@ module.exports = withMT({
           500: "#001C31", //edited
           600: "#111827", //edited for title color
           700: "#1D1F20", //edit for hover
-          800: "#000000",
+          800: "#1D1F20v", //edit for nav menu
           900: "#000000",
           950: "#000000",
         },
@@ -68,6 +72,7 @@ module.exports = withMT({
           //EDIT FOR FOOOTER ICON
           DEFAULT: "#FFFFF",
           50: "#CBD5E0",
+          100: "#F9FAFB",
         },
         grey: {
           // below  eidted

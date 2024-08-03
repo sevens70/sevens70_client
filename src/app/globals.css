@@ -59,7 +59,7 @@ a {
     @apply text-lg;
   }
 }
-.custom-select-area label {
+/* .custom-select-area label {
   display: none;
 }
 .custom-select {
@@ -74,4 +74,4 @@ a {
 
 .custom-select .material-tailwind-label {
   border: none !important;
-}
+} */

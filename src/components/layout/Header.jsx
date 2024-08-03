@@ -12,28 +12,51 @@ import {
   Button,
   MenuList,
   MenuItem,
+  Badge,
 } from "@material-tailwind/react";
 import { useCountries } from "use-react-countries";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaPhone } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
-// import { IoMailOutline } from "react-icons/io5";
-// import { GiHamburgerMenu } from "react-icons/gi";
-// import { RxCross2 } from "react-icons/rx";
+import { FaChevronDown } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa";
+import { IoMailOutline } from "react-icons/io5";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { GiSelfLove } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
 
 const menu = [
   {
     name: "Home",
     url: "/",
+    isMenu: true,
   },
   {
-    name: "Concrete delivery",
-    url: "/concrete-delivery",
+    name: "Shop",
+    url: "/shop",
+    isMenu: true,
   },
   {
-    name: "Blog",
-    url: "/blog",
+    name: "Men",
+    url: "/men",
+    isMenu: true,
+  },
+  {
+    name: "Woman",
+    url: "/woman",
+    isMenu: true,
+  },
+  {
+    name: "Accessories",
+    url: "/accessories",
+    isMenu: true,
+  },
+  {
+    name: "Pages",
+    url: "/Pages",
+    isMenu: false,
   },
 ];
 
@@ -42,6 +65,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     name: "",
     flag: "",
@@ -55,194 +79,263 @@ const Header = () => {
       });
     }
   }, [countries]);
+
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpen(false)
+    );
+  }, []);
+
+  const navList = (
+    <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      {menu.map(({ name, url, isMenu }, idx) => (
+        <>
+          {isMenu ? (
+            <Menu key={idx}>
+              <MenuHandler>
+                <Typography
+                  as="a"
+                  href="#"
+                  variant="small"
+                  className="font-normal hover:no-underline"
+                >
+                  <MenuItem className="hidden pt-0 px-2 pb-0 hover:bg-transparent text-sm items-center gap-2 !font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                    {name}
+                    <FaChevronDown
+                      strokeWidth={2.5}
+                      className={`h-3 w-3 transition-transform ${
+                        isMenuOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </MenuItem>
+                </Typography>
+              </MenuHandler>
+            </Menu>
+          ) : (
+            <Typography
+              key={idx}
+              as="li"
+              variant="small"
+              color="blue-gray"
+              className="p-1 font-normal hover:no-underline"
+            >
+              <a href="#" className="flex items-center hover:no-underline">
+                Blog
+              </a>
+            </Typography>
+          )}
+        </>
+      ))}
+    </ul>
+  );
   return (
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
         <div className="">
           <div className="w-full bg-pageBg ">
-            <div className="w-11/12 md:w-10/12 mx-auto py-3 flex justify-center md:justify-between items-center">
+            <div className="w-11/12 md:w-10/12 mx-auto py-1 flex justify-center md:justify-between items-center">
               <div className="md:flex md:flex-row justify-end items-center hidden">
                 <Link
                   href={"/blog"}
-                  className="text-grey-700 text-sm font-normal mx-3 underline hover:underline"
+                  className="text-grey-700 text-xsm font-normal mx-3 underline hover:underline"
                 >
                   FAQs
                 </Link>
                 <Link
                   href={"/testimonials"}
-                  className="text-grey-700 text-sm font-normal mx-3 hover:underline"
+                  className="text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Track Order
                 </Link>
                 <Link
                   href={"/contact-us"}
-                  className="text-grey-700 text-sm font-normal mx-3 hover:underline"
+                  className="text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Support
                 </Link>
               </div>
               <div className="md:flex md:flex-row gap-3 justiffy-end items-center">
-                <div className="custom-select-area">
-                  <Select
-                    value={selectedCountry.name}
-                    onChange={(value) => {
-                      const selected = countries.find(
-                        (country) => country.name === value
-                      );
-                      setSelectedCountry({
-                        name: selected.name,
-                        flag: selected.flags.svg,
-                      });
-                    }}
-                    size="sm"
-                    // className="border-none custom-select"
-                    className="border-none"
-                    labelProps={{
-                      className: "hidden",
-                    }}
-                    label="Select Country"
-                    selected={(element) =>
-                      element &&
-                      React.cloneElement(element, {
-                        disabled: true,
-                        className:
-                          "flex items-center opacity-100 px-0 gap-2 pointer-events-none",
-                        children: (
-                          <>
-                            <img
-                              src={selectedCountry.flag}
-                              alt={selectedCountry.name}
-                              className="h-5 w-5 rounded-full object-cover"
-                            />
-                            {selectedCountry.name}
-                          </>
-                        ),
-                      })
-                    }
-                  >
-                    {countries.map(({ name, flags }) => (
-                      <Option
-                        key={name}
-                        value={name}
-                        className="flex items-center gap-2"
-                      >
-                        <img
-                          src={flags.svg}
-                          alt={name}
-                          className="h-5 w-5 rounded-full object-cover"
-                        />
-                        {name}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className="">
-                  {" "}
-                  <select
-                    value={selectedCountry.name}
-                    onChange={(value) => {
-                      const selected = countries.find(
-                        (country) => country.name === value
-                      );
-                      setSelectedCountry({
-                        name: selected.name,
-                        flag: selected.flags.svg,
-                      });
-                    }}
-                    size="sm"
-                    className="border-none w-[70px]"
-                    label="Select Country"
-                  >
-                    {countries.map(({ name }) => (
-                      <option key={name} value={name}>
-                        {name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <Menu className="">
+                  <MenuHandler>
+                    <MenuItem className="pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                      <GiHamburgerMenu className="h-[11px] w-[11px] text-blue-gray-500" />{" "}
+                      USD{" "}
+                      <FaChevronDown
+                        strokeWidth={2}
+                        className={`h-2 w-2 transition-transform ${
+                          isMenuOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </MenuItem>
+                  </MenuHandler>
+                </Menu>
+                <Menu>
+                  <MenuHandler>
+                    <MenuItem className="pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                      ENG{" "}
+                      <FaChevronDown
+                        strokeWidth={2}
+                        className={`h-2 w-2 transition-transform ${
+                          isMenuOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </MenuItem>
+                  </MenuHandler>
+                </Menu>
               </div>
             </div>
           </div>
+          <div className="border-b border-b-grey-300 ">
+            {" "}
+            <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
+              <a href="/">
+                <img
+                  priority="true"
+                  src="/logo.png"
+                  alt=""
+                  className="max-w-[150px] w-full h-full"
+                  width={300}
+                  height={300}
+                />
+              </a>
 
-          <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
-            <a href="/">
-              <img
-                priority="true"
-                src="/logo.png"
-                alt=""
-                className="max-w-[150px] w-full h-full"
-                width={300}
-                height={300}
-              />
-            </a>
+              <div className="relative flex w-full max-w-[26rem]">
+                <Input
+                  size="md"
+                  type="email"
+                  placeholder="Search product..."
+                  className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-grey-600 placeholder:text-xsm placeholder:opacity-100"
+                  labelProps={{
+                    className: "hidden",
+                  }}
+                  containerProps={{ className: "!min-w-[250px]" }}
+                />
+                <Button
+                  size="md"
+                  className="!absolute bg-primaryRed  right-0 top-0 rounded"
+                >
+                  Search Now
+                </Button>
+              </div>
 
-            <div className="relative flex w-full max-w-[26rem]">
-              <Input
-                size="md"
-                type="email"
-                placeholder="Search product..."
-                className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-grey-600 placeholder:text-xsm placeholder:opacity-100"
+              <nav className="gap-2 items-center hidden lg:flex">
+                <a
+                  href="tel:+1 (647) 539-6755"
+                  className="flex items-center justify-center gap-2 py-2 px-3 group"
+                >
+                  <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
+                    <FaMailBulk
+                      className="inline-block h-4 w-4
+                  fill-primaryRed group-hover:fill-primary"
+                    />
+                  </span>
+                  <span className="text-sm font-normal text-dark">
+                    {contacts.phone}
+                  </span>
+                </a>
+                <a
+                  href="tel:+1 (647) 539-6755"
+                  className="flex items-center justify-center gap-2 py-2 px-3 group"
+                >
+                  <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
+                    <FaPhone className="inline-block h-4 w-4 fill-primaryRed group-hover:fill-primary" />
+                  </span>
+                  <span className="text-sm font-normal text-dark">
+                    {contacts.phone}
+                  </span>
+                </a>
+              </nav>
+            </div>
+          </div>
+
+          {/* =========================== header main*/}
+          <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-3 flex  items-center justify-between bg-white sticky top-0">
+            <div className="leftSection">
+              <Select
+                size="lg"
+                label="Select Country"
+                placeholder="All Categories"
+                defaultValue="all-categories"
+                className="border-none bg-light-100"
                 labelProps={{
                   className: "hidden",
                 }}
-                containerProps={{ className: "!min-w-[250px]" }}
-              />
-              <Button
-                size="md"
-                className="!absolute bg-primaryRed  right-0 top-0 rounded"
+                selected={(element) =>
+                  element ? (
+                    React.cloneElement(element, {
+                      disabled: true,
+                      className:
+                        "flex items-center opacity-100 px-0 gap-2 pointer-events-none",
+                    })
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <GiHamburgerMenu className="h-5 w-5" />
+                      All Categories
+                    </div>
+                  )
+                }
               >
-                Search Now
-              </Button>
+                <Option
+                  key="all-categories"
+                  value="all-categories"
+                  className="flex items-center gap-2"
+                >
+                  <GiHamburgerMenu className="h-5 w-5" />
+                  All Categories
+                </Option>
+                {countries.map(({ name, flags }) => (
+                  <Option
+                    key={name}
+                    value={name}
+                    className="flex items-center gap-2"
+                  >
+                    <img
+                      src={flags.svg}
+                      alt={name}
+                      className="h-5 w-5 rounded-full object-cover"
+                    />
+                    {name}
+                  </Option>
+                ))}
+              </Select>
             </div>
-
-            {/* <nav className="flex-grow hidden lg:block">
-              {menu.map((item, key) => (
+            <nav className="hidden lg:block">
+              {navList}
+              {/* {menu.map((item, key) => (
                 <Link
                   href={item.url}
                   key={key}
-                  className="text-lg text-grey-700 hover:text-primary py-2 px-3 duration-200"
+                  className="text-lg text-dark hover:text-primary py-2 px-3 duration-200"
                 >
                   {item.name}
                 </Link>
-              ))}
-            </nav> */}
-            <nav className="gap-2 items-center hidden lg:flex">
-              <a
-                href="tel:+1 (647) 539-6755"
-                className="flex items-center justify-center gap-2 py-2 px-3 group"
-              >
-                <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
-                  <FaMailBulk
-                    className="inline-block h-4 w-4
-                  fill-primaryRed group-hover:fill-primary"
-                  />
-                </span>
-                <span className="text-sm font-normal text-dark">
-                  {contacts.phone}
-                </span>
-              </a>
-              <a
-                href="tel:+1 (647) 539-6755"
-                className="flex items-center justify-center gap-2 py-2 px-3 group"
-              >
-                <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
-                  <FaPhone className="inline-block h-4 w-4 fill-primaryRed group-hover:fill-primary" />
-                </span>
-                <span className="text-sm font-normal text-dark">
-                  {contacts.phone}
-                </span>
-              </a>
-              {/* <Link href="/contact-us" className="btn !text-sm">
-                Get an Estimate
-              </Link> */}
+              ))} */}
             </nav>
-            {/* {!open ? (
+            <nav className="gap-1 items-center hidden lg:flex">
+              <div className="flex items-end gap-4">
+                <IconButton color="white" size="sm">
+                  <GiSelfLove className="h-5 w-5" />
+                </IconButton>
+
+                <Badge content="5">
+                  <IconButton color="white" size="sm">
+                    <FaCartShopping className="h-5 w-5" />
+                  </IconButton>
+                </Badge>
+                <IconButton color="white" size="sm">
+                  <FaRegUser className="h-5 w-5" />
+                </IconButton>
+              </div>
+            </nav>
+            {!open ? (
               <IconButton
                 aria-label="icon-button"
                 variant="text"
                 className="block p-4 rounded-none lg:hidden"
                 onClick={openDrawer}
               >
+                {/* <i className="fa-solid fa-bars text-xl bg-none text-white " /> */}
                 <GiHamburgerMenu className="w-7 h-7" />
               </IconButton>
             ) : (
@@ -252,9 +345,10 @@ const Header = () => {
                 className="block p-4 rounded-none lg:hidden"
                 onClick={openDrawer}
               >
+                {/* <i className="fa-solid fa-bars text-xl bg-none text-white " /> */}
                 <RxCross2 className="w-7 h-7" />
               </IconButton>
-            )} */}
+            )}
           </div>
         </div>
       </header>
