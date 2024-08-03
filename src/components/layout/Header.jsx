@@ -1,5 +1,5 @@
 "use client";
-import { contacts, site_info } from "@/site/info";
+import { contacts } from "@/site/info";
 import {
   Drawer,
   IconButton,

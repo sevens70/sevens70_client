@@ -13,8 +13,10 @@ module.exports = withMT({
       fontSize: {
         sm: "14px",
         xsm: "11px",
+        xs: "12px",
+        base: "16px",
+        // base using for figma 24 px
         md: "24px",
-        lg: "36px",
       },
       fontFamily: {
         DEFAULT: ["var(--font-montserrat)", "sans"],
@@ -73,6 +75,7 @@ module.exports = withMT({
           DEFAULT: "#FFFFF",
           50: "#CBD5E0",
           100: "#F9FAFB",
+          200: "#F4F4F4",
         },
         grey: {
           // below  eidted

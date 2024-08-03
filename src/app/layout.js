@@ -21,7 +21,8 @@ export default function RootLayout({ children }) {
         {" "}
         <Header />
         {children}
-        <Footer className={jost.className} />
+        {/* <Footer className={jost.className} /> */}
+        <Footer />
       </body>
     </html>
   );
