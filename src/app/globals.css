@@ -59,6 +59,15 @@ a {
     @apply text-lg;
   }
 }
+@layer utilities {
+  .rounded-tl-48 {
+    border-top-left-radius: 48%;
+  }
+  .rounded-tr-48 {
+    border-top-right-radius: 48%;
+  }
+}
+
 /* .custom-select-area label {
   display: none;
 }
