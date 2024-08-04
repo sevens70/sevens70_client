@@ -62,7 +62,7 @@ function TrendingProducts() {
     // },
   ];
   return (
-    <section className="w-11/12 mt-20 mb-20 md:w-10/12 mx-auto">
+    <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
         <div>
           <p className="text-base text-center text-grey-700">Our Products</p>
@@ -79,7 +79,7 @@ function TrendingProducts() {
               key={idx}
               className="group col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
             >
-              <Card className="flex-row">
+              <Card className="flex-row shadow-sm">
                 <CardHeader
                   floated={false}
                   className="basis-4/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
@@ -128,9 +128,9 @@ function TrendingProducts() {
                   <p className="text-xsm text-grey-700 mt-2">{text}</p>
                   <Button
                     size="sm"
-                    className="flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700 border-[1px] border-grey-600 group-hover:border-none group-hover:bg-primaryRed group-hover:text-white h-[35px] rounded-none"
+                    className="flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[35px] rounded-none"
                   >
-                    <FaCartShopping className="fill-dark-700 group-hover:fill-white" />
+                    <FaCartShopping className="fill-dark-700 hover:fill-white group-hover:fill-dark-700" />
                     Add To Cart
                   </Button>
                 </CardBody>

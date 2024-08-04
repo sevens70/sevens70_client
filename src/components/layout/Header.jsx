@@ -213,8 +213,8 @@ const Header = () => {
                   containerProps={{ className: "!min-w-[250px]" }}
                 />
                 <Button
-                  size="md"
-                  className="!absolute bg-primaryRed  right-0 top-0 rounded"
+                  size="sm"
+                  className="capitalize h-[40px] !rounded-none !rounded-tr-lg !rounded-br-lg !absolute bg-primaryRed  right-0 top-0 rounded"
                 >
                   Search Now
                 </Button>
@@ -232,7 +232,7 @@ const Header = () => {
                     />
                   </span>
                   <span className="text-sm font-normal text-dark">
-                    {contacts.phone}
+                    {contacts.email}
                   </span>
                 </a>
                 <a

@@ -105,7 +105,7 @@ function Products() {
               key={idx}
               className="group col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3"
             >
-              <Card className="h-[400px]">
+              <Card className="h-[400px] shadow-sm">
                 <CardHeader
                   floated={false}
                   className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
@@ -143,7 +143,7 @@ function Products() {
                     Add To Carts
                   </Button>
                 </CardHeader>
-                <CardBody className="text-center p-2 mt-1">
+                <CardBody className="text-center px-2 mb-1 mt-1">
                   <div className="flex justify-between items-center">
                     <p className="text-xsm text-grey-600">{tag}</p>
                     <p className="flex justify-center items-center text-xsm font-medium text-dark-700">

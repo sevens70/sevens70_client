@@ -40,7 +40,7 @@ function Banner() {
             </p>
             <Button
               size="md"
-              className="bg-primaryRed rounded mt-3 flex items-center gap-2"
+              className="capitalize bg-primaryRed rounded mt-3 flex items-center gap-2"
             >
               Shop Now <FaLongArrowAltRight className="fill-white" />
             </Button>

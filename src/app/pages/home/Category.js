@@ -53,7 +53,7 @@ function Category() {
             key={idx}
             className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2"
           >
-            <Card className="h-[280px]">
+            <Card className="h-[280px] shadow-sm">
               <CardHeader
                 floated={false}
                 className="h-4/5 !m-0 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none"
