@@ -66,7 +66,7 @@ module.exports = withMT({
           500: "#001C31", //edited
           600: "#111827", //edited for title color
           700: "#1D1F20", //edit for hover
-          800: "#1D1F20v", //edit for nav menu
+          // 800: "#1D1F20", //edit for nav menu
           900: "#000000",
           950: "#000000",
         },

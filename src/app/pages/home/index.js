@@ -3,6 +3,8 @@ import Banner from "./Banner";
 import Category from "./Category";
 import Shop from "./shop";
 import Products from "./Products";
+import Collection from "./Collection";
+import TrendingProducts from "./TrendingProducts";
 
 function Home() {
   return (
@@ -11,6 +13,8 @@ function Home() {
       <Category />
       <Shop />
       <Products />
+      <Collection />
+      <TrendingProducts />
     </div>
   );
 }

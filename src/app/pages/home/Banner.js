@@ -6,7 +6,7 @@ function Banner() {
   return (
     <section className="md:pt-10 w-full bg-pageBg relative ">
       <div
-        className="absolute top-0 left-0"      
+        className="absolute top-0 left-0"
         style={{
           background: "linear-gradient(180deg, #DA3F3F -3528%, #F7E9E9 100%)",
           height: "300px",
@@ -30,11 +30,7 @@ function Banner() {
                 Summer Super Sale
               </span>
             </Button>
-            <h2
-              className="font-medium text-2xl  md:text-3xl lg:text-5xl"
-              style={{ lineHeight: "60px" }}
-              // data-aos="fade-right"
-            >
+            <h2 className="font-medium text-2xl  md:text-3xl lg:text-5xl lg:leading-[60px] md:leading-[40px] leading-[30px]">
               Style Haven Unveiled Your Exclusive Dress Fashion
             </h2>
             <p className="text-dark-300 text-sm mt-3">
@@ -50,7 +46,7 @@ function Banner() {
             </Button>
           </div>
           <div
-            className="bannerImg-area pt-8
+            className="pt-8
               !rounded-tl-48 !rounded-tr-48
                 flex-grow flex justify-center"
             style={{

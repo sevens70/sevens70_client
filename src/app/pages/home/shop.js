@@ -26,14 +26,9 @@ function Shop() {
             className="bg-light-200 rounded-xl col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
           >
             <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
-              <div className="flex flex-col justify-center items-start">
+              <div className="w-1/2 flex flex-col justify-center items-start py-5">
                 <p className="text-primaryRed text-sm mb-1">{tag}</p>
-                <h5
-                  className="font-medium"
-                  //   style={{ lineHeight: "60px" }}
-                >
-                  {title}
-                </h5>
+                <h5 className="font-medium">{title}</h5>
                 <p className="text-dark-300 text-sm mt-3">{text}</p>
                 <Button
                   size="md"
@@ -43,7 +38,7 @@ function Shop() {
                   <FaLongArrowAltRight className="fill-text-dark-700" />
                 </Button>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="flex items-end justify-center">
                 <img
                   className="object-cover object-center"
                   src={img}

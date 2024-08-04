@@ -1,5 +1,5 @@
 "use client";
-import { contacts } from "@/site/info";
+// import { contacts } from "@/site/info";
 import {
   Drawer,
   IconButton,
@@ -26,6 +26,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
+import { contacts } from "../../site/info";
 
 const menu = [
   {
