@@ -35,12 +35,7 @@ module.exports = withMT({
           200: "#ffe188",
           300: "#ffcc4a",
           400: "#ffb620",
-          // 500: "#f9960d",
-          // 600: "#dc6d03",
-          // 700: "#b74b06",
-          // 800: "#94390c",
-          // 900: "#7a300d",
-          // 950: "#461702",
+          500: "#fff7f4", // for shop list bg
         },
         primary: {
           DEFAULT: "#9c7066",
@@ -79,7 +74,8 @@ module.exports = withMT({
         },
         grey: {
           // below  eidted
-          default: "#323B49",
+          DEFAULT: "#323B49",
+          200: "#7C7C7C",
           300: "#EEEFF2",
           700: "#323B49",
           600: "#718096",
