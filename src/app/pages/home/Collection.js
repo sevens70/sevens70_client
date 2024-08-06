@@ -27,17 +27,17 @@ function Collection() {
           >
             <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
               <div className="basis-1/2 flex flex-col justify-center items-start py-5">
-                <p className="text-primaryRed text-sm mb-1">{tag}</p>
+                <h6 className="text-primaryRed mb-1">{tag}</h6>
                 <h2
-                  className="capitalize font-medium text-2xl md:text-3xl lg:text-5xl lg:leading-[60px] md:leading-[40px] leading-[30px]"
+                  className="capitalize font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px]"
                   //   style={{ lg:lineHeight: "60px" }}
                 >
                   {title} <span className="text-primaryRed">2024</span>
                 </h2>
-                <p className="text-dark-300 text-sm leading-6 mt-3">{text}</p>
+                <p className="text-dark-900 text-[20px] leading-6 mt-3">{text}</p>
                 <Button
                   size="md"
-                  className="bg-primaryRed capitalize text-white rounded mt-5 flex items-center gap-2"
+                  className="font-jost text-sm bg-primaryRed capitalize text-white rounded mt-5 flex items-center gap-2"
                 >
                   Shop Now <FaLongArrowAltRight className="fill-white" />
                 </Button>

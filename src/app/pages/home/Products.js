@@ -66,32 +66,32 @@ function Products() {
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
         <div>
-          <p className="text-base text-grey-700">Our Products</p>
-          <h3 className=" mt-2">Our Top Products</h3>
+          <h6 className="text-grey-700 font-normal">Our Products</h6>
+          <h3 className="text-xmd mt-1 text-dark-700">Our Top Products</h3>
         </div>
         <div>
           <div className="flex w-max gap-4">
             <Button
-              className="bg-primaryRed text-white font-normal rounded-none capitalize border  border-light-50"
+              className="font-jost bg-primaryRed text-white text-sm font-normal rounded-none capitalize border  border-light-50"
               size="sm"
             >
               All
             </Button>
             <Button
               size="sm"
-              className="bg-transparent font-normal rounded-none capitalize text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize text-dark-700 border  border-light-50"
             >
               Woman
             </Button>
             <Button
               size="sm"
-              className="bg-transparent font-normal rounded-none capitalize  text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize  text-dark-700 border  border-light-50"
             >
               Man
             </Button>
             <Button
               size="sm"
-              className="bg-transparent font-normal rounded-none capitalize  text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize  text-dark-700 border  border-light-50"
             >
               Accessories
             </Button>
@@ -117,7 +117,7 @@ function Products() {
                   />
                   <Button
                     size="sm"
-                    className="!py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
+                    className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
                   >
                     {discount}
                   </Button>
@@ -138,26 +138,26 @@ function Products() {
 
                   <Button
                     size="sm"
-                    className="hidden group-hover:block !py-1 !px-2 bg-white font-normal capitalize text-dark-500 absolute bottom-3 left-1/3"
+                    className="font-jost hidden group-hover:block !py-1 !px-2 bg-white font-normal capitalize text-dark-500 absolute bottom-3 left-1/3"
                   >
                     Add To Carts
                   </Button>
                 </CardHeader>
                 <CardBody className="text-center px-2 mb-1 mt-1">
                   <div className="flex justify-between items-center">
-                    <p className="text-xsm text-grey-600">{tag}</p>
-                    <p className="flex justify-center items-center text-xsm font-medium text-dark-700">
+                    <p className="text-sm text-grey-600">{tag}</p>
+                    <h6 className="flex justify-center items-center text-dark-700">
                       <GoDotFill className="fill-primaryRed" />
                       {rating}
-                    </p>
+                    </h6>
                   </div>
-                  <h6 className="text-base text-left">{name}</h6>
-                  <p className="flex gap-3 justify-start items-center font-medium text-dark-700 text-base ">
+                  <h6 className="text-left text-dark-700">{name}</h6>
+                  <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
                     {disc_price}
-                    <span className="text-xsm font-normal ext-grey-600">
+                    <span className="font-normal line-through text-grey-600">
                       {price}
                     </span>
-                  </p>
+                  </h6>
                 </CardBody>
               </Card>
             </div>

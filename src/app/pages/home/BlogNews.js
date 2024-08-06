@@ -50,14 +50,14 @@ function BlogNews() {
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
         <div>
-          <p className="text-base text-grey-700">Latest Articles</p>
-          <h3 className=" mt-2">Explore News & Blog</h3>
+          <h6 className="font-normal text-grey-700">Latest Articles</h6>
+          <h3 className="text-xmd text-dark-700 mt-2">Explore News & Blog</h3>
         </div>
         <Button
           size="sm"
-          className="bg-transparent font-normal capitalize text-dark-700 border-[1px] border-grey-600 h-[35px] rounded-none"
+          className="font-jost text-sm bg-transparent font-normal capitalize text-dark-700 border-[1px] border-grey-600 rounded-none"
         >
-          Add To Cart
+          See More
         </Button>
       </div>
       <div className="grid grid-cols-12 gap-4">
@@ -88,11 +88,11 @@ function BlogNews() {
                     {time}
                   </p>
                 </div>
-                <h6 className="text-base text-left">{name}</h6>
-                <p className="text-xsm text-grey-700 mt-1">{text}</p>
+                <h6 className="text-left text-dark-900">{name}</h6>
+                <p className="text-sm text-grey-700 mt-1">{text}</p>
                 <Button
                   size="md"
-                  className="bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[35px] rounded-none mt-5 mb-2 flex items-center gap-2"
+                  className="font-jost text-sm bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[35px] rounded-none mt-5 mb-2 flex items-center gap-2"
                 >
                   Read More{" "}
                   <FaLongArrowAltRight className="fill-text-dark-700" />

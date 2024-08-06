@@ -2,15 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Jost:wght@400;500;700&display=swap"); /* optional */
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Jost:wght@400;500;700&display=swap"); */
 
 * {
   @apply text-dark;
 }
-body {
-  /* background-color: #f5f8fa; */
-  /* font-family: jost !important; */
-}
+
+/* body {
+  font-family: jost;
+} */
+/* button, span {
+  font-family: jost;
+} */
+/* a {
+  font-family: jost;
+} */
+
 /* footer * {
   @apply text-white;
 } */
@@ -19,18 +26,15 @@ body {
   @apply max-w-7xl mx-auto px-2;
 }
 a {
-  @apply text-dark underline-offset-2 hover:underline decoration-dark-700;
+  @apply font-jost text-dark underline-offset-2 hover:underline decoration-dark-700;
 }
+
 .bar {
   @apply h-[2px] w-40 bg-primary;
 }
-.btn {
-  @apply tracking-wider py-3 px-6 text-white font-medium text-lg bg-primary hover:bg-primary-600 active:bg-primary-700 duration-150;
-}
-.footer {
-  font-family: "Jost", sans-serif;
-  font-weight: 400;
-}
+/* .btn {
+  @apply  tracking-wider py-3 px-6 text-white font-medium text-lg bg-primary hover:bg-primary-600 active:bg-primary-700 duration-150;
+} */
 
 @layer base {
   h1,
@@ -42,28 +46,28 @@ a {
     @apply font-medium;
   }
   h1 {
+    @apply text-7xl;
+    /* 72px */ 
+  }
+  h2 {
+    @apply text-6xl;  
+    /* 60px  ok*/
+  }
+  h3 {
     @apply text-5xl;
     /* 48px */
   }
-  h2 {
+  h4 {
     @apply text-4xl;
     /* 36px */
   }
-  h3 {
+  h5 {
     @apply text-3xl;
     /* 30px */
   }
-  h4 {
+  h6 {
     @apply text-2xl;
     /* 24px */
-  }
-  h5 {
-    @apply text-xl;
-    /* 1.25 rem or 20px */
-  }
-  h6 {
-    @apply text-lg;
-    /* 18px */
   }
 }
 @layer utilities {
@@ -75,19 +79,3 @@ a {
   }
 }
 
-/* .custom-select-area label {
-  display: none;
-}
-.custom-select {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.custom-select .material-tailwind-select {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.custom-select .material-tailwind-label {
-  border: none !important;
-} */

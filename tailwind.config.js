@@ -2,6 +2,7 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
 module.exports = withMT({
   content: [
+    './src/**/*.{js,jsx,ts,tsx}',
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,16 +12,15 @@ module.exports = withMT({
   theme: {
     extend: {
       fontSize: {
-        sm: "14px",
-        xsm: "11px",
-        xs: "12px",
-        base: "16px",
-        // base using for figma 24 px
-        md: "24px",
+        sm: "18px",
+        xsm: "16px",
+        base: "14px",
+        md: "28px",
+        xmd: "44px"
       },
       fontFamily: {
-        DEFAULT: ["var(--font-montserrat)", "sans"],
-        sans: ["var(--font-montserrat)", "sans-serif"],
+        jost: ['var(--font-jost)'],
+        montserrat: ['var(--font-montserrat)'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

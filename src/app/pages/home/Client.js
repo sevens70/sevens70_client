@@ -49,8 +49,8 @@ function Client() {
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
         <div>
-          <p className="text-base text-center text-grey-700">Feedback</p>
-          <h3 className="mt-2">Happy Clients</h3>
+          <h6 className="text-center text-grey-700">Feedback</h6>
+          <h3 className="text-xmd mt-2">Happy Clients</h3>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4 mt-7">
@@ -67,13 +67,13 @@ function Client() {
                       <StarIcon key={index} />
                     ))}
                   </div>
-                  <h6 className="text-base text-left mt-2">{name}</h6>
-                  <p className="text-xsm text-grey-700 mt-1">{text}</p>
+                  <h6 className="text-left text-dark-900 mt-2">{name}</h6>
+                  <p className="text-sm text-grey-700 mt-1">{text}</p>
                 </CardHeader>
                 <CardBody className="mx-0 flex items-start gap-3 mt-5 p-0">
-                  <Avatar size="sm" variant="circular" src={img} />
+                  <Avatar size="md" variant="circular" src={img} />
                   <div className="flex w-full flex-col gap-0.5">
-                    <p className="text-sm font-medium">{userName}</p>
+                    <p className="text-sm text-dark-900 font-medium">{userName}</p>
                     <p className="text-xsm text-grey-700 ">{location}</p>
                   </div>
                 </CardBody>

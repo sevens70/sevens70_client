@@ -45,15 +45,15 @@ function Category() {
     },
   ];
   return (
-    <section className="w-11/12 mt-10 md:w-10/12 mx-auto">
-      <h3 className="text-center mb-6">Popular Category</h3>
+    <section className="w-11/12 mt-15 md:w-10/12 mx-auto">
+      <h3 className="text-center text-xmd my-10">Popular Category</h3>
       <div className="grid grid-cols-12 gap-4">
         {category?.map(({ name, qunatity, img }, idx) => (
           <div
             key={idx}
             className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-2"
           >
-            <Card className="h-[280px] shadow-sm">
+            <Card className="h-[300px] shadow-sm">
               <CardHeader
                 floated={false}
                 className="h-4/5 !m-0 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none"
@@ -65,15 +65,15 @@ function Category() {
                 />
               </CardHeader>
               <CardBody className="text-center p-2">
-                <h6 className="text-base">{name}</h6>
-                <p className="flex justify-center items-center text-xsm">
+                <h6>{name}</h6>
+                <p className="flex justify-center items-center text-sm text-grey-600">
                   <GoDotFill className="fill-primaryRed" />
                   {qunatity}
                 </p>
               </CardBody>
             </Card>
           </div>
-        ))}
+        ))} 
       </div>
     </section>
   );

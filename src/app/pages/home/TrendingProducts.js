@@ -65,8 +65,8 @@ function TrendingProducts() {
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
         <div>
-          <p className="text-base text-center text-grey-700">Our Products</p>
-          <h3 className="mt-2">Trending New Product</h3>
+          <h6 className="text-center font-normal text-grey-700">Our Products</h6>
+          <h3 className="mt-2 text-xmd text-dark-700">Trending New Product</h3>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4">
@@ -87,13 +87,13 @@ function TrendingProducts() {
                   <img
                     src={img}
                     alt="profile-picture"
-                    className="max-h-[250px] object-cover object-center w-full h-full"
+                    className="max-h-[350px] object-cover object-center w-full h-full"
                     width={300}
                     height={300}
                   />
                   <Button
                     size="sm"
-                    className="!py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
+                    className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
                   >
                     {discount}
                   </Button>
@@ -113,22 +113,22 @@ function TrendingProducts() {
                   </div>
                 </CardHeader>
                 <CardBody className="flex-grow items-center text-left p-3 mt-2">
-                  <p className="text-xsm text-grey-600 ">{tag}</p>
-                  <h6 className="text-base text-left mt-1">{name}</h6>
-                  <p className="flex gap-3 justify-start items-center font-medium text-dark-700 text-base mt-1">
+                  <p className="text-sm text-grey-600 ">{tag}</p>
+                  <h6 className="text-left text-dark-700 mt-1">{name}</h6>
+                  <h6 className="flex gap-3 justify-start items-center font-medium text-dark-700 mt-1">
                     {disc_price}
-                    <span className="text-xsm font-normal ext-grey-600">
+                    <span className="font-[400] line-through text-grey-600">
                       {price}
                     </span>
-                  </p>
-                  <p className="mt-2 flex justify-start items-center gap-1 text-xsm font-medium text-dark-700">
+                  </h6>
+                  <h6 className="mt-2 flex justify-start items-center gap-1 text-dark-700">
                     <FcRating className="fill-primaryRed" />
                     {rating}
-                  </p>
-                  <p className="text-xsm text-grey-700 mt-2">{text}</p>
+                  </h6>
+                  <p className="text-sm text-grey-700 mt-2">{text}</p>
                   <Button
                     size="sm"
-                    className="flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[35px] rounded-none"
+                    className="font-jost text-sm flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[40px] rounded-none"
                   >
                     <FaCartShopping className="fill-dark-700 hover:fill-white group-hover:fill-dark-700" />
                     Add To Cart

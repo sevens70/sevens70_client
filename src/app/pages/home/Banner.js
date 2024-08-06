@@ -17,30 +17,30 @@ function Banner() {
       <div className="w-11/12 md:w-10/12 mx-auto">
         {" "}
         <div className=" flex flex-col-reverse md:flex-row lg:gap-16 md:gap:8 gap:4 relative">
-          <div className="basis-3/5 flex flex-col justify-center items-start">
-            <Button className="rounded-full bg-light-100 !h-[48px] mb-5 flex items-center text-sm text-dark-500">
+          <div className="basis-3/5 mt-3 flex flex-col justify-center items-start">
+            <Button className="font-jost rounded-full bg-light-100 !h-[48px] mb-5 flex items-center text-md font-medium text-dark-500">
               <img
                 src={"./discount.png"}
                 alt={"discount"}
                 className="h-5 w-5 mr-2 rounded-full object-cover"
               />
               50% OFF{" "}
-              <span className="ml-2 font-normal normal-case">
+              <span className="ml-2 md:hidden hidden lg:block font-normal normal-case">
                 {" "}
                 Summer Super Sale
               </span>
             </Button>
-            <h2 className="font-medium text-2xl  md:text-3xl lg:text-5xl lg:leading-[60px] md:leading-[40px] leading-[30px]">
+            <h2 className="font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px] ">
               Style Haven Unveiled Your Exclusive Dress Fashion
             </h2>
-            <p className="text-dark-300 text-sm mt-3">
+            <p className="text-dark-300 text-[20px] mt-3">
               Crafted to convey a sense of discovery and exclusivity, enticing
               readers to explore indulge in the latest trends and offerings. The
               term suggests a grand reveal , adding.
             </p>
             <Button
               size="md"
-              className="capitalize bg-primaryRed rounded mt-3 flex items-center gap-2"
+              className="font-jost font-medium text-sm capitalize bg-primaryRed rounded mt-5 flex items-center gap-2"
             >
               Shop Now <FaLongArrowAltRight className="fill-white" />
             </Button>

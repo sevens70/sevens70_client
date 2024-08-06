@@ -27,12 +27,12 @@ function Shop() {
           >
             <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
               <div className="w-1/2 flex flex-col justify-center items-start py-5">
-                <p className="text-primaryRed text-sm mb-1">{tag}</p>
-                <h5 className="font-medium">{title}</h5>
-                <p className="text-dark-300 text-sm mt-3">{text}</p>
+                <p className="text-primaryRed text-xsm mb-1">{tag}</p>
+                <h5 className="font-medium text-md">{title}</h5>
+                <p className="text-dark-300 text-xsm mt-3">{text}</p> 
                 <Button
                   size="md"
-                  className="bg-white text-dark-700 rounded mt-5 flex items-center gap-2"
+                  className="font-jost capitalize text-sm font-normal bg-white text-dark-700 rounded mt-5 flex items-center gap-2"
                 >
                   Shop Now{" "}
                   <FaLongArrowAltRight className="fill-text-dark-700" />

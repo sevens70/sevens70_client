@@ -1,7 +1,6 @@
 "use client";
 // import { contacts } from "@/site/info";
 import {
-  Drawer,
   IconButton,
   Option,
   Select,
@@ -10,7 +9,6 @@ import {
   Menu,
   MenuHandler,
   Button,
-  MenuList,
   MenuItem,
   Badge,
 } from "@material-tailwind/react";
@@ -22,7 +20,6 @@ import { FaMailBulk } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
-import { IoMailOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
@@ -99,9 +96,9 @@ const Header = () => {
                   as="a"
                   href="#"
                   variant="small"
-                  className="font-normal hover:no-underline"
+                  className="font-normal font-jost hover:no-underline"
                 >
-                  <MenuItem className="hidden pt-0 px-2 pb-0 hover:bg-transparent text-sm items-center gap-2 !font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                  <MenuItem className="hidden font-jost pt-0 px-2 pb-0 hover:bg-transparent text-sm items-center gap-2 !font-normal text-dark-700 lg:flex lg:rounded-full">
                     {name}
                     <FaChevronDown
                       strokeWidth={2.5}
@@ -121,7 +118,7 @@ const Header = () => {
               color="blue-gray"
               className="p-1 font-normal hover:no-underline"
             >
-              <a href="#" className="flex items-center hover:no-underline">
+              <a href="#" className="flex font-jost items-center hover:no-underline">
                 Blog
               </a>
             </Typography>
@@ -134,24 +131,24 @@ const Header = () => {
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
         <div className="">
-          <div className="w-full bg-pageBg ">
+          <div className="w-full bg-pageBg py-1">
             <div className="w-11/12 md:w-10/12 mx-auto py-1 flex justify-center md:justify-between items-center">
               <div className="md:flex md:flex-row justify-end items-center hidden">
                 <Link
                   href={"/blog"}
-                  className="text-grey-700 text-xsm font-normal mx-3 underline hover:underline"
+                  className={`font-montserrat text-grey-700  text-xsm font-normal mx-3 underline hover:underline`}
                 >
                   FAQs
                 </Link>
                 <Link
                   href={"/testimonials"}
-                  className="text-grey-700 text-xsm font-normal mx-3 hover:underline"
+                  className="font-montserrat text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Track Order
                 </Link>
                 <Link
                   href={"/contact-us"}
-                  className="text-grey-700 text-xsm font-normal mx-3 hover:underline"
+                  className="font-montserrat text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Support
                 </Link>
@@ -159,7 +156,7 @@ const Header = () => {
               <div className="md:flex md:flex-row gap-3 justiffy-end items-center">
                 <Menu className="">
                   <MenuHandler>
-                    <MenuItem className="pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                    <MenuItem className="font-montserrat pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
                       <GiHamburgerMenu className="h-[11px] w-[11px] text-blue-gray-500" />{" "}
                       USD{" "}
                       <FaChevronDown
@@ -173,7 +170,7 @@ const Header = () => {
                 </Menu>
                 <Menu>
                   <MenuHandler>
-                    <MenuItem className="pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
+                    <MenuItem className="font-montserrat pt-0 p-0 pb-0 hidden !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
                       ENG{" "}
                       <FaChevronDown
                         strokeWidth={2}
@@ -193,7 +190,7 @@ const Header = () => {
               <a href="/">
                 <img
                   priority="true"
-                  src="/logo.png"
+                  src="/Logo.png"
                   alt=""
                   className="max-w-[150px] w-full h-full"
                   width={300}
@@ -214,7 +211,7 @@ const Header = () => {
                 />
                 <Button
                   size="sm"
-                  className="capitalize h-[40px] !rounded-none !rounded-tr-lg !rounded-br-lg !absolute bg-primaryRed  right-0 top-0 rounded"
+                  className="font-jost text-base font-medium capitalize h-[40px] !rounded-none !rounded-tr-lg !rounded-br-lg !absolute bg-primaryRed  right-0 top-0 rounded"
                 >
                   Search Now
                 </Button>
@@ -227,8 +224,8 @@ const Header = () => {
                 >
                   <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
                     <FaMailBulk
-                      className="inline-block h-4 w-4
-                  fill-primaryRed group-hover:fill-primary"
+                      className="inline-block 
+                  fill-primaryRed "
                     />
                   </span>
                   <span className="text-sm font-normal text-dark">
@@ -240,7 +237,7 @@ const Header = () => {
                   className="flex items-center justify-center gap-2 py-2 px-3 group"
                 >
                   <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark">
-                    <FaPhone className="inline-block h-4 w-4 fill-primaryRed group-hover:fill-primary" />
+                    <FaPhone className="inline-block fill-primaryRed" />
                   </span>
                   <span className="text-sm font-normal text-dark">
                     {contacts.phone}

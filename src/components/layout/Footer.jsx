@@ -47,34 +47,34 @@ const Footer = () => {
     <footer className="pt-10 !bg-pageBg custom-container overflow-x-hidden">
       <div className="w-11/12 md:w-10/12 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-start mx-auto">
-          <div className="col-span-12 md:col-span-4 justify-center md:justify-start">
+          <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <img
               priority="true"
               src="./FooterLogo.png"
-              className="w-full max-w-[150px] bg-white mb-3 rounded-none mx-auto md:mx-0 h-full"
+              className="w-full max-w-[150px] bg-white mb-3 rounded-none md:mx-0 h-full"
               alt=""
               width={300}
               height={300}
             />
-            <p className="text-sm text-dark-600 leading-relexed text-center md:text-left">
+            <p className="text-sm text-dark-600 leading-relexed text-left md:text-left">
               Want to create something <br />
               Great Together?
             </p>
           </div>
-          <div className="col-span-12 md:col-span-4 justify-center md:justify-start">
+          <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <h3
-              className="mb-2 text-dark-600 text-xl md:text-2xl lg:text-3xl"
+              className="mb-2 text-dark-700 text-xmd"
               // data-aos="fade-right"
             >
               Join Our Newsletter
             </h3>
-            <p className="text-sm text-dark-600 leading-relexed text-center md:text-left">
+            <p className="text-sm text-grey-700 leading-relexed text-left md:text-left">
               Join over{" "}
               <span className="underline text-primaryRed">68,000</span> people
               getting out emails
             </p>
           </div>
-          <div className="col-span-12 md:col-span-4 justify-center md:justify-start">
+          <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <div className="relative flex w-full max-w-[26rem]">
               <Input
                 size="lg"
@@ -87,8 +87,8 @@ const Footer = () => {
                 containerProps={{ className: "!min-w-[250px]" }}
               />
               <Button
-                size="md"
-                className="!absolute bg-primaryRed right-3 top-2 rounded"
+                size="sm"
+                className="font-jost capitalize text-sm !absolute bg-primaryRed right-2 top-1.5 rounded"
               >
                 Subscribe
               </Button>
@@ -208,13 +208,11 @@ const Footer = () => {
               {SITEMAP.map(({ title, links }, key) => (
                 <>
                   <div key={key} className="w-full">
-                    <Typography
-                      variant="paragraph"
-                      // color="text-[#111827]"
-                      className="mb-5 text-sm font-bold text-dark-500 "
+                    <h6
+                      className="mb-5 font-medium text-dark-500 "
                     >
                       {title}
-                    </Typography>
+                    </h6>
                     <ul className="space-y-1">
                       {links.map((link, key) => (
                         <Typography key={key} as="li" className="font-normal">
