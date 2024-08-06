@@ -63,7 +63,7 @@ module.exports = withMT({
           700: "#1D1F20", //edit for hover
           // 800: "#1D1F20", //edit for nav menu
           900: "#000000",
-          950: "#000000",
+          // 950: "#000000",
         },
         light: {
           //EDIT FOR FOOOTER ICON
@@ -71,6 +71,8 @@ module.exports = withMT({
           50: "#CBD5E0",
           100: "#F9FAFB",
           200: "#F4F4F4",
+          300: "#E6E6E6",
+          900: "#FFFFF"
         },
         grey: {
           // below  eidted

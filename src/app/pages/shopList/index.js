@@ -2,6 +2,7 @@
 import React from "react";
 import { Breadcrumbs } from "@material-tailwind/react";
 import LeftSidebar from './LeftSidebar'
+import RightSidebar from "./RightSidebar";
 function ShopList() {
   return (
     <section className="">
@@ -23,7 +24,7 @@ function ShopList() {
           </div>
           <div className="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-9">
             {" "}
-            list{" "}
+             <RightSidebar/>
           </div>
         </div>
       </div>
