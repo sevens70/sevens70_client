@@ -63,7 +63,7 @@ function CommonCategory({ data }) {
         >
           <ListItem
             className="p-0 bg-hidden hover:bg-hidden h-[40px]"
-            selected={open === 1}
+            // selected={open === 1}
           >
             <AccordionHeader
               // onClick={() => handleOpen(1)}
@@ -82,10 +82,16 @@ function CommonCategory({ data }) {
               {data.data.map(({ title, value, color }, idx) => (
                 <ListItem
                   key={idx}
-                  className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm ${data.category === "Filter by size" ? "uppercase" : "capitalize"}`}
+                  className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm ${
+                    data.category === "Filter by size"
+                      ? "uppercase"
+                      : "capitalize"
+                  }`}
                 >
                   <ListItemPrefix>
-                    {(data.category === "Prodcut Category" || data.category === "Filter by size" || data.category === "Brand") && (
+                    {(data.category === "Prodcut Category" ||
+                      data.category === "Filter by size" ||
+                      data.category === "Brand") && (
                       <Radio
                         name="type"
                         ripple={false}
@@ -101,9 +107,7 @@ function CommonCategory({ data }) {
                       <div
                         style={{ backgroundColor: color }}
                         className={`h-6 w-6 bg-dark-500 rounded-full`}
-                      >
-    
-                      </div>
+                      ></div>
                     )}
                   </ListItemPrefix>
                   {title}
