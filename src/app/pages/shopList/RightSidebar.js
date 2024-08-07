@@ -232,14 +232,13 @@ function RightSidebar() {
         )}
       </div>
       <div className="flex justify-center">
-      <Button
-        size="md"
-        className="font-jost text-sm bg-dark-900 font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[35px] rounded-none mt-5 mb-2 flex items-center gap-2"
-      >
-        View all products <FaLongArrowAltRight className="fill-white" />
-      </Button>
+        <Button
+          size="md"
+          className="font-jost text-sm bg-dark-900 font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
+        >
+          View all products <FaLongArrowAltRight className="fill-white" />
+        </Button>
       </div>
-
     </div>
   );
 }

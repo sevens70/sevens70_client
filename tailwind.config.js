@@ -87,6 +87,8 @@ module.exports = withMT({
         buttonColor: "#FF6448",
         pageBg: "#F5F5F5",
         primaryRed: "#DA3F3F",
+        successGreen: "#0CAF60",
+        priceColor: "#ADADAD",
       },
     },
   },
