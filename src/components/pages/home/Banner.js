@@ -45,9 +45,7 @@ function Banner() {
     >
       {slidersInfo.map((item, key) => (
         <SwiperSlide key={key} className="h-full">
-          <div
-            className=""
-          >
+          <div className="">
             <section className="md:pt-10 w-full bg-pageBg relative ">
               <div
                 className="absolute top-0 left-0"

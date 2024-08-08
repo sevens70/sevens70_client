@@ -1,5 +1,4 @@
 "use client";
-// Import Swiper React components
 import {
   Autoplay,
   EffectFade,
@@ -8,58 +7,54 @@ import {
   Pagination,
 } from "swiper/modules";
 import { Swiper } from "swiper/react";
-// Import Swiper styles
-import { MdOutlineNavigateNext } from "react-icons/md";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { GrFormPrevious } from "react-icons/gr";
+import { useRef, useEffect, useState } from "react";
 
 export default ({
   children,
   spaceBetween = 0,
   slidesPerView = 1,
   navigation = true,
-  autoPlayEnabled = false, // Renamed from Autoplay
-  // pagination = {
-  //   clickable: true,
-  //   el: ".swiper-custom-pagination",
-  //   dynamicBullets: false,
-  //   bulletClass: "swiper-pagination-bullet",
-  //   bulletActiveClass: "swiper-pagination-bullet-active",
-  // },
+  autoPlayEnabled = false,
   pagination = false,
   modules = [Navigation, Autoplay, EffectFade, Pagination],
   ...rest
 }) => {
-  console.log("spaceBetween", spaceBetween, slidesPerView, rest, pagination);
-  const paginationConfig = pagination
-    ? {
+  const paginationRef = useRef(null);
+  const [paginationConfig, setPaginationConfig] = useState(false);
+
+  useEffect(() => {
+    if (pagination && paginationRef.current) {
+      setPaginationConfig({
         clickable: true,
-        el: ".swiper-custom-pagination", // Custom pagination container
+        el: paginationRef.current,
         dynamicBullets: false,
         bulletClass: "swiper-pagination-bullet",
         bulletActiveClass: "swiper-pagination-bullet-active",
-      }
-    : false;
+      });
+    }
+  }, [pagination, paginationRef.current]);
+
   return (
     <div className="">
-      {" "}
       <Swiper
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
         effect="fade"
         loop={true}
-        autoplay={autoPlayEnabled ? { delay: 3000 } : false} // Use renamed prop
+        autoplay={autoPlayEnabled ? { delay: 3000 } : false}
         navigation={navigation}
         pagination={paginationConfig}
-        modules={modules} // Use the modules prop directly
+        modules={modules}
         {...rest}
       >
         {children}
       </Swiper>
+      <div className="swiper-custom-pagination" ref={paginationRef}></div>
     </div>
   );
 };

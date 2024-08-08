@@ -2,6 +2,9 @@
 import { Button } from "@material-tailwind/react";
 import React from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { SwiperSlide } from "swiper/react";
+import Slider from "../../Slider";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 const shop = [
   {
     tag: "New Arrivals",
@@ -15,42 +18,68 @@ const shop = [
     text: "25% Discount This Week",
     img: "./shop/s2.png",
   },
+  {
+    tag: "Big Sale",
+    title: "Hot Summer Sale Collections",
+    text: "25% Discount This Week",
+    img: "./shop/s2.png",
+  },
 ];
 function Shop() {
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
-      <div className="grid grid-cols-12 gap-4">
+      {/* <div className="grid grid-cols-12 gap-4"> */}
+      <Slider
+        className="overflow-hidden"
+        id="shop-slider"
+        pagination={false}
+        slidesPerView={2}
+        spaceBetween={30}
+        autoPlayEnabled={false}
+        autoplay={true}
+        modules={[Autoplay, Navigation, Pagination]}
+        navigation={false}
+        style={{
+          "--swiper-navigation-size": "18px",
+          "--swiper-theme-color": "black-dark-900",
+        }}
+      >
+        {" "}
         {shop.map(({ tag, title, text, img }, idx) => (
-          <div
-            key={idx}
-            className="bg-light-200 rounded-xl col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
-          >
-            <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
-              <div className="w-1/2 flex flex-col justify-center items-start py-5">
-                <p className="text-primaryRed text-xsm mb-1">{tag}</p>
-                <h5 className="font-medium text-md">{title}</h5>
-                <p className="text-dark-300 text-xsm mt-3">{text}</p> 
-                <Button
-                  size="md"
-                  className="font-jost capitalize text-sm font-normal bg-white text-dark-700 rounded mt-5 flex items-center gap-2"
-                >
-                  Shop Now{" "}
-                  <FaLongArrowAltRight className="fill-text-dark-700" />
-                </Button>
-              </div>
-              <div className="flex items-end justify-center">
-                <img
-                  className="object-cover object-center"
-                  src={img}
-                  alt="img"
-                  width={300}
-                  height={300}
-                />
+          <SwiperSlide key={idx} className="h-full">
+            {" "}
+            <div
+              key={idx}
+              className="bg-light-200 min-h-[317px] rounded-xl col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
+            >
+              <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
+                <div className="w-1/2 flex flex-col justify-center items-start py-5">
+                  <p className="text-primaryRed text-xsm mb-1">{tag}</p>
+                  <h5 className="font-medium text-md">{title}</h5>
+                  <p className="text-dark-300 text-xsm mt-3">{text}</p>
+                  <Button
+                    size="md"
+                    className="font-jost capitalize text-sm font-normal bg-white text-dark-700 rounded mt-5 flex items-center gap-2"
+                  >
+                    Shop Now{" "}
+                    <FaLongArrowAltRight className="fill-text-dark-700" />
+                  </Button>
+                </div>
+                <div className="flex items-end justify-center">
+                  <img
+                    className="object-cover object-center"
+                    src={img}
+                    alt="img"
+                    width={300}
+                    height={300}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Slider>
+      {/* </div> */}
     </section>
   );
 }

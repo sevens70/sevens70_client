@@ -55,10 +55,9 @@ function Category() {
   return (
     <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
       <h3 className="text-center text-xmd my-10">Popular Category</h3>
-      {/* <div className="grid grid-cols-12 gap-4"> */}
       <Slider
         className="overflow-hidden"
-        id="home-banner-slider"
+        id="category-slider"
         autoPlayEnabled={false}
         // pagination={{ type: "bullets", clickable: true }}
         // pagination={{
