@@ -1,7 +1,6 @@
 // "use client";
 
-
-import ShopList from "../pages/shopList";
+import ShopList from "../../components/pages/shopList";
 
 export default function MainPage() {
   return (

@@ -1,6 +1,6 @@
 // "use client";
 
-import Cart from "../pages/cart";
+import Cart from "../../components/pages/cart";
 
 export default function page() {
   return (
