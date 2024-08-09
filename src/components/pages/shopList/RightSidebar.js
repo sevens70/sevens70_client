@@ -19,6 +19,8 @@ import { GoDotFill } from "react-icons/go";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { CiShoppingCart } from "react-icons/ci";
+import Link from "next/link";
 const products = [
   {
     name: "Ribbed modal T-shirt",
@@ -104,6 +106,7 @@ const products = [
 ];
 function RightSidebar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
     <div>
       <div className="my-5 md:flex md:flex-row gap-3 lg:justify-between items-center">
@@ -182,12 +185,12 @@ function RightSidebar() {
                     alt="profile-picture"
                     className="object-cover object-center w-full h-full "
                   />
-                  <Button
+                  <button
                     size="sm"
                     className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
                   >
                     {discount}
-                  </Button>
+                  </button>
                   <div className="hidden group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
                     <IconButton color="white" size="sm">
                       <GiSelfLove stroke="1" className="h-5 w-5 font-normal" />
@@ -202,13 +205,26 @@ function RightSidebar() {
                       <FaRegUser className="h-5 w-5" />
                     </IconButton>
                   </div>
-
-                  <Button
-                    size="sm"
-                    className="font-jost hidden group-hover:block !py-1 !px-2 bg-white font-normal capitalize text-dark-500 absolute bottom-3 left-1/3"
-                  >
-                    Add To Carts
-                  </Button>
+                  <div className="hidden group-hover:block  absolute bottom-3 left-[22%]">
+                    <Link
+                      // href="cart"
+                      href={{
+                        pathname: "/cart",
+                        query: {
+                          search: `${name}`,
+                        },
+                      }}
+                    >
+                      {" "}
+                      <Button
+                        size="sm"
+                        className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                      >
+                        <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                        Add To Carts
+                      </Button>
+                    </Link>
+                  </div>
                 </CardHeader>
                 <CardBody className="text-center px-2 mb-1 mt-1">
                   <div className="flex justify-between items-center">

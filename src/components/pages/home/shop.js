@@ -25,6 +25,29 @@ const shop = [
     img: "./shop/s2.png",
   },
 ];
+const breakpoints = {
+  0: {
+    slidesPerView: 1,
+  },
+  400: {
+    slidesPerView: 1,
+  },
+  639: {
+    slidesPerView: 1,
+  },
+  865: {
+    slidesPerView: 1,
+  },
+  1000: {
+    slidesPerView: 2,
+  },
+  1500: {
+    slidesPerView: 2,
+  },
+  1700: {
+    slidesPerView: 2,
+  },
+};
 function Shop() {
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
@@ -37,6 +60,7 @@ function Shop() {
         spaceBetween={30}
         autoPlayEnabled={false}
         autoplay={true}
+        breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation={false}
         style={{
@@ -79,6 +103,9 @@ function Shop() {
           </SwiperSlide>
         ))}
       </Slider>
+      <div className="absolute bottom-0 left-0 w-full">
+        <div className="swiper-custom-pagination"></div>
+      </div>
       {/* </div> */}
     </section>
   );

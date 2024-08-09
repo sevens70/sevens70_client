@@ -9,23 +9,25 @@
 }
 .swiper-button-next,
 .swiper-button-prev {
-  background-color: lightcyan !important;
-  /* padding: 20px !important;  //it's not working */
+  background-color: #da3f3f !important;
+  backdrop-filter: blur(10px);
   height: 30px !important;
   width: 30px !important;
   border-radius: 50% !important;
+  border: 1px solid #fefefe;
+  color: #fefefe !important;
 }
 .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-  background-color: #ffb74d; /* Example color for inactive bullets */
+  background-color: #ffb74d !important;
   opacity: 0.6;
   margin: 0 4px;
 }
 
 .swiper-pagination-bullet-active {
-  background-color: #4caf50; /* Example color for active bullets */
-  opacity: 1;
+  background-color: #da3f3f !important;
+  opacity: 1 !important;
 }
 
 /* Ensure custom pagination container is styled */
@@ -33,30 +35,16 @@
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
-  /* bottom: 0px !important; */
 }
-
-/* body {
-  font-family: jost;
-} */
-/* button, span {
-  font-family: jost;
-} */
-/* a {
-  font-family: jost;
-} */
-
-/* footer * {
-  @apply text-white;
-} */
 
 .container {
   @apply max-w-7xl mx-auto px-2;
 }
 a {
-  @apply font-jost text-dark underline-offset-2 hover:underline decoration-dark-700;
+  /* @apply font-jost text-dark underline-offset-2 hover:underline decoration-dark-700; */
+  @apply font-jost text-dark decoration-dark-700;
 }
 
 .bar {

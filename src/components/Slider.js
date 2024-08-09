@@ -40,7 +40,7 @@ export default ({
   }, [pagination, paginationRef.current]);
 
   return (
-    <div className="">
+    <div className="" key={rest.id}>
       <Swiper
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
@@ -54,7 +54,14 @@ export default ({
       >
         {children}
       </Swiper>
-      <div className="swiper-custom-pagination" ref={paginationRef}></div>
+      {/* {paginationConfig && ( */}
+
+      <div
+        className="swiper-custom-pagination"
+        style={rest.id === "home-banner-slider" ? { display: "none" } : {}}
+        ref={paginationRef}
+      ></div>
+      {/* )} */}
     </div>
   );
 };

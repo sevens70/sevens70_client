@@ -14,10 +14,35 @@ import { GoDotFill } from "react-icons/go";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { GiSelfLove } from "react-icons/gi";
+import { CiShoppingCart } from "react-icons/ci";
 import Slider from "../../Slider";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import Link from "next/link";
 function Products() {
+  const breakpoints = {
+    0: {
+      slidesPerView: 1,
+    },
+    400: {
+      slidesPerView: 2,
+    },
+    639: {
+      slidesPerView: 3,
+    },
+    865: {
+      slidesPerView: 3,
+    },
+    1000: {
+      slidesPerView: 4,
+    },
+    1500: {
+      slidesPerView: 4,
+    },
+    1700: {
+      slidesPerView: 4,
+    },
+  };
   const products = [
     {
       name: "Ribbed modal T-shirt",
@@ -110,6 +135,7 @@ function Products() {
         slidesPerView={4}
         spaceBetween={30}
         autoplay={false}
+        breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation
         style={{
@@ -160,12 +186,18 @@ function Products() {
                       </IconButton>
                     </div>
 
-                    <Button
-                      size="sm"
-                      className="font-jost hidden group-hover:block !py-1 !px-2 bg-white font-normal capitalize text-dark-500 absolute bottom-3 left-1/3"
-                    >
-                      Add To Carts
-                    </Button>
+                    <div className="hidden group-hover:block  absolute bottom-3 left-[22%]">
+                      <Link href="cart">
+                        {" "}
+                        <Button
+                          size="sm"
+                          className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                        >
+                          <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                          Add To Carts
+                        </Button>
+                      </Link>
+                    </div>
                   </CardHeader>
                   <CardBody className="text-center px-2 mb-1 mt-1">
                     <div className="flex justify-between items-center">
@@ -189,6 +221,9 @@ function Products() {
           )
         )}
       </Slider>
+      <div className="absolute bottom-0 left-0 w-full">
+        <div className="swiper-custom-pagination"></div>
+      </div>
     </section>
   );
 }
