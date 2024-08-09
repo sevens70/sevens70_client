@@ -116,10 +116,7 @@ function Client() {
         {products?.map(
           ({ name, text, userName, img, location, ratings }, idx) => (
             <SwiperSlide key={idx} className="h-full">
-              <div
-                key={idx}
-                className="group col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-4"
-              >
+              <div key={idx} className="group">
                 <Card className="p-5 shadow-sm">
                   <CardHeader floated={false} className="shadow-none !m-0">
                     <div className="flex items-center gap-0">

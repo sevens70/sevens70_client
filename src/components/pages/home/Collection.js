@@ -47,12 +47,9 @@ function Collection() {
         {" "}
         {shop.map(({ tag, title, text, img }, idx) => (
           <SwiperSlide key={idx} className="h-full">
-            <div
-              key={idx}
-              className="bg-light-200 rounded-xl col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12"
-            >
+            <div key={idx} className="bg-light-200 rounded-xl">
               <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
-                <div className="basis-1/2 flex flex-col justify-center items-start py-5">
+                <div className="min-h-[400px] basis-1/2 flex flex-col justify-center items-start py-5">
                   <h6 className="text-primaryRed mb-1">{tag}</h6>
                   <h2
                     className="capitalize font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px]"

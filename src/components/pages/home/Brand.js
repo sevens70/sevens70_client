@@ -6,19 +6,19 @@ import { SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 const breakpoints = {
   0: {
-    slidesPerView: 2,
+    slidesPerView: 3,
   },
   400: {
-    slidesPerView: 3,
-  },
-  639: {
-    slidesPerView: 3,
-  },
-  865: {
     slidesPerView: 4,
   },
-  1000: {
+  639: {
+    slidesPerView: 4,
+  },
+  865: {
     slidesPerView: 5,
+  },
+  1000: {
+    slidesPerView: 6,
   },
   1500: {
     slidesPerView: 6,
@@ -55,7 +55,7 @@ const brand = [
 ];
 function Brand() {
   return (
-    <section className="w-11/12 mt-16 pb-10  relative md:w-10/12 mx-auto">
+    <section className="w-11/12 pb-10  relative md:w-10/12 mx-auto">
       <div className="divide-y divide-dashed border border-1 my-12 "></div>
 
       {/* <div className="grid grid-cols-12 gap-4 my-12"> */}

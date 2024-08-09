@@ -29,7 +29,7 @@ const breakpoints = {
     slidesPerView: 1,
   },
   1000: {
-    slidesPerView: 1,
+    slidesPerView: 2,
   },
   1500: {
     slidesPerView: 2,
@@ -73,12 +73,17 @@ function TrendingProducts() {
   ];
   return (
     <section className="w-11/12 mt-20 pb-10 relative md:w-10/12 mx-auto">
-      <div className="flex flex-wrap justify-center items-center gap-3 mb-10">
+      <div className="flex flex-wrap md:justify-center justify-start items-center gap-3 mb-10">
         <div>
-          <h6 className="text-center font-normal text-grey-700">
+          <h6 className="md:text-center text-left font-normal text-grey-700">
             Our Products
           </h6>
-          <h3 className="mt-2 text-xmd text-dark-700">Trending New Product</h3>
+          <h3
+            className="mt-2 text-xmd text-dark-700"
+            style={{ lineHeight: "46px" }}
+          >
+            Trending New Product
+          </h3>
         </div>
       </div>
       {/* <div className="grid grid-cols-12 gap-4"> */}
@@ -105,18 +110,18 @@ function TrendingProducts() {
             idx
           ) => (
             <SwiperSlide key={idx} className="h-full">
-              <div
-                key={idx}
-                className="group col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
-              >
-                <Card className="flex-row shadow-sm">
+              <div key={idx} className="group">
+                <Card className="md:flex-row flex-col shadow-sm">
                   <CardHeader
                     floated={false}
-                    className="basis-4/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
+                    className="min-w-[200px] basis-4/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
                   >
                     <img
                       src={img}
                       alt="profile-picture"
+                      // className="max-h-[350px] object-cover object-center w-full h-full"
+                      // width={300}
+                      // height={300}
                       className="max-h-[350px] object-cover object-center w-full h-full"
                       width={300}
                       height={300}

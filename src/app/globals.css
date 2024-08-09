@@ -7,6 +7,12 @@
 * {
   @apply text-dark;
 }
+input::placeholder {
+  font-weight: 400;
+  opacity: 0.5;
+  font-size: 14px;
+  /* color: red; */
+}
 .swiper-button-next,
 .swiper-button-prev {
   background-color: #da3f3f !important;
@@ -94,5 +100,12 @@ a {
   }
   .rounded-tr-48 {
     border-top-right-radius: 48%;
+  }
+}
+
+/* ======================= */
+@media only screen and (max-width: 900px) {
+  .bannerLeft-bg {
+    display: none !important;
   }
 }

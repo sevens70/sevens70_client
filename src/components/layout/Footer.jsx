@@ -46,7 +46,7 @@ const Footer = () => {
   return (
     <footer className="pt-10 !bg-pageBg custom-container overflow-x-hidden">
       <div className="w-11/12 md:w-10/12 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-start mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-start mx-auto ">
           <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <img
               priority="true"
@@ -64,7 +64,7 @@ const Footer = () => {
           <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <h3
               className="mb-2 text-dark-700 text-xmd"
-              // data-aos="fade-right"
+              style={{ lineHeight: "46px!important" }}
             >
               Join Our Newsletter
             </h3>
@@ -95,7 +95,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-center mx-auto mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-center mx-auto md:mt-0 mt-[50px]">
           <div className="col-span-12 md:col-span-4 justify-center md:justify-start">
             <p>
               <Link
@@ -204,15 +204,12 @@ const Footer = () => {
             </div>
           </div>
           <div className="col-span-12 md:col-span-8 justify-center md:justify-start">
-            <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto grid w-full grid-cols-2 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
               {SITEMAP.map(({ title, links }, key) => (
                 <>
+                  {/* <div className="col-span-6 md:col-span-4 justify-center md:justify-start"> */}
                   <div key={key} className="w-full">
-                    <h6
-                      className="mb-5 font-medium text-dark-500 "
-                    >
-                      {title}
-                    </h6>
+                    <h6 className="mb-5 font-medium text-dark-500 ">{title}</h6>
                     <ul className="space-y-1">
                       {links.map((link, key) => (
                         <Typography key={key} as="li" className="font-normal">
@@ -226,6 +223,7 @@ const Footer = () => {
                       ))}
                     </ul>
                   </div>
+                  {/* </div> */}
                 </>
               ))}
               <div className="grid grid-cols-3 gap-2 h-20">
@@ -242,13 +240,13 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-center mx-auto mt-5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-center mx-auto">
           <div className="col-span-12 md:col-span-12 justify-center md:justify-start">
             {" "}
-            <div className="flex flex-col md:flex-row justify-between items-center w-full my-5">
+            <div className="flex flex-col md:flex-row justify-between items-center w-full my-5 md:mt-0 ">
               <p className="text-sm text-dark-600 ">
                 2024 © All rights reserved by{" "}
-                <span className="underline text-dark-600">ecarto</span>.
+                <span className="underline text-dark-600">ecarto</span>
               </p>
 
               <p className="text-sm text-dark-600 ">

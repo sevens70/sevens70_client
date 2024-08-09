@@ -50,16 +50,15 @@ const breakpoints = {
 };
 function Shop() {
   return (
-    <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
-      {/* <div className="grid grid-cols-12 gap-4"> */}
+    <section className="w-11/12 mt-10 md:w-10/12 mx-auto">
       <Slider
         className="overflow-hidden"
         id="shop-slider"
         pagination={false}
         slidesPerView={2}
-        spaceBetween={30}
+        spaceBetween={10}
         autoPlayEnabled={false}
-        autoplay={true}
+        autoplay={false}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation={false}
@@ -72,12 +71,9 @@ function Shop() {
         {shop.map(({ tag, title, text, img }, idx) => (
           <SwiperSlide key={idx} className="h-full">
             {" "}
-            <div
-              key={idx}
-              className="bg-light-200 min-h-[317px] rounded-xl col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6"
-            >
+            <div key={idx} className="bg-light-200 rounded-xl">
               <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
-                <div className="w-1/2 flex flex-col justify-center items-start py-5">
+                <div className="basis-4/5 flex flex-col justify-center items-start py-3">
                   <p className="text-primaryRed text-xsm mb-1">{tag}</p>
                   <h5 className="font-medium text-md">{title}</h5>
                   <p className="text-dark-300 text-xsm mt-3">{text}</p>
@@ -89,9 +85,9 @@ function Shop() {
                     <FaLongArrowAltRight className="fill-text-dark-700" />
                   </Button>
                 </div>
-                <div className="flex items-end justify-center">
+                <div className="flex-grow flex justify-center">
                   <img
-                    className="object-cover object-center"
+                    className="h-[300px] w-[300px]"
                     src={img}
                     alt="img"
                     width={300}

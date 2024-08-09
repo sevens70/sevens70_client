@@ -70,10 +70,15 @@ const articles = [
 function BlogNews() {
   return (
     <section className="w-11/12 mt-20 pb-0 relative md:w-10/12 mx-auto">
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+      <div className="flex flex-wrap justify-between items-center gap-5 mb-6">
         <div>
           <h6 className="font-normal text-grey-700">Latest Articles</h6>
-          <h3 className="text-xmd text-dark-700 mt-2">Explore News & Blog</h3>
+          <h3
+            className="text-xmd text-dark-700 mt-2"
+            style={{ lineHeight: "46px" }}
+          >
+            Explore News & Blog
+          </h3>
         </div>
         <Button
           size="sm"

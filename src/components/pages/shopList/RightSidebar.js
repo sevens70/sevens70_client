@@ -21,6 +21,29 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
+const breakpoints = {
+  0: {
+    slidesPerView: 1,
+  },
+  400: {
+    slidesPerView: 1,
+  },
+  550: {
+    slidesPerView: 2,
+  },
+  865: {
+    slidesPerView: 2,
+  },
+  1000: {
+    slidesPerView: 3,
+  },
+  1500: {
+    slidesPerView: 4,
+  },
+  1700: {
+    slidesPerView: 4,
+  },
+};
 const products = [
   {
     name: "Ribbed modal T-shirt",
@@ -110,62 +133,68 @@ function RightSidebar() {
   return (
     <div>
       <div className="my-5 md:flex md:flex-row gap-3 lg:justify-between items-center">
-        <div className="flex items-center wrap gap-3">
-          <Menu className="">
-            <MenuHandler>
-              <MenuItem className="!w-[180px] h-[40px] !rounded-none border border-2 !border-light-300 text-sm items-center gap-2 font-normal text-dark-900 lg:flex lg:rounded-full tracking-normal bg: hover:bg-transparent focus:bg-transparent active:bg-transparent">
-                Default Sorting{" "}
-                <FaChevronDown
-                  strokeWidth={2}
-                  className={`h-2 w-2 ml-4 transition-transform ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </MenuItem>
-            </MenuHandler>
-          </Menu>
-          <Menu>
-            <MenuHandler>
-              <MenuItem className="!w-[150px] h-[40px] !rounded-none border border-2 !border-light-300 text-sm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full bg: hover:bg-transparent focus:bg-transparent active:bg-transparent">
-                Show: <span className="text-dark-900">12</span>{" "}
-                <FaChevronDown
-                  strokeWidth={2}
-                  className={`h-2 w-2 ml-2 transition-transform ${
-                    isMenuOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </MenuItem>
-            </MenuHandler>
-          </Menu>
-          <p className="ml-3 text-dark-900 text-sm">
-            Showing 1-12 of 19 results
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <IconButton
-            color="black"
-            size="md"
-            className="group rounded-none hover:bg-dark-900"
-          >
-            <CiGrid41 className="h-5 w-5 fill-white group-hover:fill-white" />
-          </IconButton>
+        <div className="flex items-center flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3">
+            {" "}
+            <Menu className="">
+              <MenuHandler>
+                <MenuItem className="w-[330px] h-[40px] !rounded-none border border-2 !border-light-300 text-sm items-center gap-2 font-normal text-dark-900 lg:flex md:flex flex lg:rounded-full tracking-normal bg: hover:bg-transparent focus:bg-transparent active:bg-transparent">
+                  Default Sorting{" "}
+                  <FaChevronDown
+                    strokeWidth={2}
+                    className={`h-2 w-2 ml-4 transition-transform ${
+                      isMenuOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </MenuItem>
+              </MenuHandler>
+            </Menu>
+            <Menu>
+              <MenuHandler>
+                <MenuItem className="w-[150px]  h-[40px] !rounded-none border border-2 !border-light-300 text-sm items-center gap-2 font-normal text-blue-gray-900 lg:flex md:flex flex lg:rounded-full bg: hover:bg-transparent focus:bg-transparent active:bg-transparent">
+                  Show: <span className="text-dark-900">12</span>{" "}
+                  <FaChevronDown
+                    strokeWidth={2}
+                    className={`h-2 w-2 ml-2 transition-transform ${
+                      isMenuOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </MenuItem>
+              </MenuHandler>
+            </Menu>
+          </div>
+          <div className="flex gap-3">
+            {" "}
+            <p className="ml-3 text-dark-900 text-sm">
+              Showing 1-12 of 19 results
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <IconButton
+              color="black"
+              size="md"
+              className="group rounded-none hover:bg-dark-900"
+            >
+              <CiGrid41 className="h-5 w-5 fill-white group-hover:fill-white" />
+            </IconButton>
 
-          {/* <Badge content="5"> */}
-          <IconButton
-            color="white"
-            size="md"
-            className="group rounded-none hover:bg-dark-900"
-          >
-            <CiGrid2V className="h-5 w-5 fill-dark-700 group-hover:fill-white" />
-          </IconButton>
-          {/* </Badge> */}
-          <IconButton
-            color="white"
-            size="md"
-            className="group rounded-none hover:bg-dark-900"
-          >
-            <CiGrid2H className="h-5 w-5 fill-dark-700 group-hover:fill-white " />
-          </IconButton>
+            {/* <Badge content="5"> */}
+            <IconButton
+              color="white"
+              size="md"
+              className="group rounded-none hover:bg-dark-900"
+            >
+              <CiGrid2V className="h-5 w-5 fill-dark-700 group-hover:fill-white" />
+            </IconButton>
+            {/* </Badge> */}
+            <IconButton
+              color="white"
+              size="md"
+              className="group rounded-none hover:bg-dark-900"
+            >
+              <CiGrid2H className="h-5 w-5 fill-dark-700 group-hover:fill-white " />
+            </IconButton>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4">
@@ -173,7 +202,7 @@ function RightSidebar() {
           ({ name, disc_price, price, img, discount, rating, tag }, idx) => (
             <div
               key={idx}
-              className="group col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4"
+              className="group col-span-12 sm:col-span-6 md:col-span-12 lg:col-span-6 xl:col-span-4"
             >
               <Card className="h-[400px] shadow-sm">
                 <CardHeader

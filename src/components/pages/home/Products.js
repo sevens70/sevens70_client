@@ -1,14 +1,11 @@
 "use client";
 import React from "react";
-// import img1 from "cate1.png";
 import {
   Card,
   CardHeader,
   CardBody,
   Button,
-  rating,
   IconButton,
-  Badge,
 } from "@material-tailwind/react";
 import { GoDotFill } from "react-icons/go";
 import { FaCartShopping } from "react-icons/fa6";
@@ -25,16 +22,16 @@ function Products() {
       slidesPerView: 1,
     },
     400: {
+      slidesPerView: 1,
+    },
+    550: {
       slidesPerView: 2,
     },
-    639: {
-      slidesPerView: 3,
-    },
     865: {
-      slidesPerView: 3,
+      slidesPerView: 2,
     },
     1000: {
-      slidesPerView: 4,
+      slidesPerView: 3,
     },
     1500: {
       slidesPerView: 4,
@@ -98,28 +95,28 @@ function Products() {
           <h3 className="text-xmd mt-1 text-dark-700">Our Top Products</h3>
         </div>
         <div>
-          <div className="flex w-max gap-4">
+          <div className="flex w-max md:gap-4 gap-2">
             <Button
-              className="font-jost bg-primaryRed text-white text-sm font-normal rounded-none capitalize border  border-light-50"
+              className="font-jost bg-primaryRed !text-white md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50"
               size="sm"
             >
               All
             </Button>
             <Button
               size="sm"
-              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal md:text-sm text-xsm rounded-none capitalize text-dark-700 border  border-light-50"
             >
               Woman
             </Button>
             <Button
               size="sm"
-              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize  text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal md:text-sm text-xsm rounded-none capitalize  text-dark-700 border  border-light-50"
             >
               Man
             </Button>
             <Button
               size="sm"
-              className="font-jost bg-transparent font-normal text-sm rounded-none capitalize  text-dark-700 border  border-light-50"
+              className="font-jost bg-transparent font-normal md:text-sm text-xsm  rounded-none capitalize  text-dark-700 border  border-light-50"
             >
               Accessories
             </Button>
@@ -148,10 +145,7 @@ function Products() {
           ({ name, disc_price, price, img, discount, rating, tag }, idx) => (
             <SwiperSlide key={idx} className="h-full">
               {" "}
-              <div
-                key={idx}
-                className="group col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3"
-              >
+              <div key={idx} className="group">
                 <Card className="h-[400px] shadow-sm">
                   <CardHeader
                     floated={false}
@@ -160,7 +154,9 @@ function Products() {
                     <img
                       src={img}
                       alt="profile-picture"
-                      className="object-cover object-center w-full h-full "
+                      className="object-cover object-center h-full w-full"
+                      width={300}
+                      height={300}
                     />
                     <Button
                       size="sm"
