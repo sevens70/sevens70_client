@@ -2,7 +2,6 @@
 import React from "react";
 import { Breadcrumbs } from "@material-tailwind/react";
 import CartGallery from "./cartGallery";
-import SwiperCartGallery from "./swiperCartGallery";
 import CartInfo from "./cartInformation";
 import CommonCategories from "../../common/commonCategories";
 import { useSearchParams } from "next/navigation";
@@ -16,11 +15,10 @@ function Cart() {
           <a href="#" className="opacity-60 text-primaryRed text-sm">
             Home
           </a>
-          <a href="#">{searchParams.get("search")}</a>
+          <a href="#">{searchParams.get("category")}</a>
         </Breadcrumbs>
       </div>
       <CartGallery />
-      {/* <SwiperCartGallery /> */}
       <CartInfo />
       <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
         <h3 className="text-left text-xmd my-10 capitalize">

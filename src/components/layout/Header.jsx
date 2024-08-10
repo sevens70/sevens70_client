@@ -1,5 +1,4 @@
 "use client";
-// import { contacts } from "@/site/info";
 import {
   IconButton,
   Option,
@@ -15,9 +14,8 @@ import {
   Avatar,
   Drawer,
 } from "@material-tailwind/react";
-import { useCountries } from "use-react-countries";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaPhone } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
@@ -26,7 +24,7 @@ import { FaRegUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
-import { contacts, site_info } from "../../site/info";
+import { contacts } from "../../site/info";
 
 const menu = [
   {
@@ -62,25 +60,11 @@ const menu = [
 ];
 
 const Header = () => {
-  const { countries } = useCountries();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({
-    name: "",
-    flag: "",
-  });
-
-  useEffect(() => {
-    if (countries.length > 0) {
-      setSelectedCountry({
-        name: countries[0].name,
-        flag: countries[0].flags.svg,
-      });
-    }
-  }, [countries]);
 
   React.useEffect(() => {
     window.addEventListener(
@@ -295,52 +279,6 @@ const Header = () => {
 
           <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-3 flex  items-center justify-between bg-white sticky top-0">
             <div className="leftSection">
-              {/* <Select
-                size="lg"
-                label="Select Country"
-                placeholder="All Categories"
-                defaultValue="all-categories"
-                className="border-none bg-light-100"
-                labelProps={{
-                  className: "hidden",
-                }}
-                selected={(element) =>
-                  element ? (
-                    React.cloneElement(element, {
-                      disabled: true,
-                      className:
-                        "flex items-center opacity-100 px-0 gap-2 pointer-events-none",
-                    })
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <GiHamburgerMenu className="h-5 w-5" />
-                      All Categories
-                    </div>
-                  )
-                }
-              >
-                <Option
-                  key="all-categories"
-                  value="all-categories"
-                  className="flex items-center gap-2"
-                >
-                  All Categories
-                </Option>
-                {countries.map(({ name, flags }) => (
-                  <Option
-                    key={name}
-                    value={name}
-                    className="flex items-center gap-2"
-                  >
-                    <img
-                      src={flags.svg}
-                      alt={name}
-                      className="h-5 w-5 rounded-full object-cover"
-                    />
-                    {name}
-                  </Option>
-                ))}
-              </Select> */}
               <Select
                 size="lg"
                 label="Select Country"

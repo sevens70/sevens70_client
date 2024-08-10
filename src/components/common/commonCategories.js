@@ -79,6 +79,7 @@ function CommonCategories() {
         spaceBetween={30}
         autoplay={false}
         breakpoints={breakpoints}
+        loading="lazy"
         modules={[Autoplay, Navigation, Pagination]}
         navigation
         style={{
@@ -98,7 +99,7 @@ function CommonCategories() {
                 href={{
                   pathname: "/shop",
                   query: {
-                    search: `${name}`,
+                    category: `${name}`,
                   },
                 }}
               >
@@ -112,7 +113,9 @@ function CommonCategories() {
                       src={img}
                       alt="profile-picture"
                       className="object-cover object-center w-full h-full"
+                      loading="lazy"
                     />
+                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                   </CardHeader>
                   <CardBody className="text-center p-2">
                     <h6>{name}</h6>

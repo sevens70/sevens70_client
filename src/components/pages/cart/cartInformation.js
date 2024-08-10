@@ -93,12 +93,11 @@ function cartInformation() {
               onClick={() => setActiveTab(value)}
               className={
                 activeTab === value
-                  ? "text-dark-900 font-jost text-[24px] !font-sm flex justify-start w-auto mr-20"
-                  : "flex justify-start w-auto mr-20 font-jost text-[24px] text-light-400"
+                  ? "text-dark-900 font-jost md:text-[24px] text-[16px]  !font-sm flex justify-start w-auto lg:mr-20 md:mr-5 mr-0"
+                  : "flex justify-start w-auto mr-20 font-jost md:text-[24px] text-[16px] text-light-400 lg:mr-20 md:mr-5 mr-0"
               }
             >
               {label}
-              {/* <h6 className="!font-normal font-jost"></h6> */}
             </Tab>
           ))}
         </TabsHeader>

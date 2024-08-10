@@ -2,12 +2,10 @@
 
 import { Suspense } from "react";
 import Cart from "../../components/pages/cart";
-function SearchBarFallback() {
-  return <>placeholder</>;
-}
+import Loader from "../../components/common/Loader";
 export default function page() {
   return (
-    <Suspense fallback={<SearchBarFallback />}>
+    <Suspense fallback={<Loader />}>
       {" "}
       <div
         className="mx-auto"

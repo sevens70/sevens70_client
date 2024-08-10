@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-// import "react-image-gallery/styles/scss/image-gallery.scss";
-import ImageGallery from "react-image-gallery";
 import { FaCheck } from "react-icons/fa6";
 import { CiGrid2H } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
@@ -42,14 +40,12 @@ function CartGallery() {
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-10 w-full">
-        <div className="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 bg-red">
-          <div>
-            {" "}
-            {/* <ImageGallery items={images} /> */}
+        <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 cartGallery_main">
+          <div className="">
             <SwiperCartGallery />
           </div>
         </div>
-        <div className="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 bg-red">
+        <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6">
           <div>
             <p className="text-grey-200 text-sm mb-2">Womans</p>
             <h4>Different color Short Top</h4>

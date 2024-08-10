@@ -21,29 +21,6 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-const breakpoints = {
-  0: {
-    slidesPerView: 1,
-  },
-  400: {
-    slidesPerView: 1,
-  },
-  550: {
-    slidesPerView: 2,
-  },
-  865: {
-    slidesPerView: 2,
-  },
-  1000: {
-    slidesPerView: 3,
-  },
-  1500: {
-    slidesPerView: 4,
-  },
-  1700: {
-    slidesPerView: 4,
-  },
-};
 const products = [
   {
     name: "Ribbed modal T-shirt",
@@ -73,7 +50,7 @@ const products = [
     img: "./category/cate3.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -82,7 +59,7 @@ const products = [
     img: "./category/cate4.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -91,7 +68,7 @@ const products = [
     img: "./category/cate4.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -100,7 +77,7 @@ const products = [
     img: "./category/cate4.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -109,7 +86,7 @@ const products = [
     img: "./category/cate4.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -118,7 +95,7 @@ const products = [
     img: "./category/cate4.png",
   },
   {
-    name: "V-neck linen T-shirt                 ",
+    name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
     discount: "10% off",
@@ -240,7 +217,7 @@ function RightSidebar() {
                       href={{
                         pathname: "/cart",
                         query: {
-                          search: `${name}`,
+                          category: `${name}`,
                         },
                       }}
                     >

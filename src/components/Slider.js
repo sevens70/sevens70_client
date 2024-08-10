@@ -54,14 +54,12 @@ export default ({
       >
         {children}
       </Swiper>
-      {/* {paginationConfig && ( */}
 
       <div
         className="swiper-custom-pagination"
         style={rest.id === "home-banner-slider" ? { display: "none" } : {}}
         ref={paginationRef}
       ></div>
-      {/* )} */}
     </div>
   );
 };

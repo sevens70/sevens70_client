@@ -2,16 +2,14 @@
 
 import { Suspense } from "react";
 import ShopList from "../../components/pages/shopList";
-function SearchBarFallback() {
-  return <>placeholder</>;
-}
+import Loader from "../../components/common/Loader";
 export default function MainPage() {
   return (
     <div
       className="mx-auto"
       style={{ height: "auto", backgroundColor: "#fff" }}
     >
-      <Suspense fallback={<SearchBarFallback />}>
+      <Suspense fallback={<Loader/>}>
         <ShopList />
       </Suspense>
     </div>

@@ -14,7 +14,7 @@ function ShopList() {
           <a href="#" className="opacity-60 text-primaryRed text-sm">
             Home
           </a>
-          <a href="#">{searchParams.get("search")}</a>
+          <a href="#">{searchParams.get("category")}</a>
         </Breadcrumbs>
       </div>
       <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
