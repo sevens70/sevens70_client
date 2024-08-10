@@ -7,6 +7,7 @@ import { CiGrid2H } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Radio } from "@material-tailwind/react";
+import SwiperCartGallery from "./swiperCartGallery";
 function CartGallery() {
   function StarIcon() {
     return (
@@ -44,7 +45,8 @@ function CartGallery() {
         <div className="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 bg-red">
           <div>
             {" "}
-            <ImageGallery items={images} />
+            {/* <ImageGallery items={images} /> */}
+            <SwiperCartGallery />
           </div>
         </div>
         <div className="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 bg-red">
