@@ -77,7 +77,7 @@ function CommonCategories() {
         pagination={true}
         slidesPerView={6}
         spaceBetween={30}
-        autoplay={false}
+        autoplay={true}
         breakpoints={breakpoints}
         loading="lazy"
         modules={[Autoplay, Navigation, Pagination]}

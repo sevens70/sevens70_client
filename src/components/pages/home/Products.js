@@ -131,7 +131,7 @@ function Products() {
         pagination={true}
         slidesPerView={4}
         spaceBetween={30}
-        autoplay={false}
+        autoplay={true}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation

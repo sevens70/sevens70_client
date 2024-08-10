@@ -95,7 +95,7 @@ function BlogNews() {
         pagination={false}
         slidesPerView={6}
         spaceBetween={30}
-        autoplay={false}
+        autoplay={true}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation

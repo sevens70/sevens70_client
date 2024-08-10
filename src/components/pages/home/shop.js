@@ -58,7 +58,7 @@ function Shop() {
         slidesPerView={2}
         spaceBetween={10}
         autoPlayEnabled={false}
-        autoplay={false}
+        autoplay={true}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation={false}

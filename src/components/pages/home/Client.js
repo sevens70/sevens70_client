@@ -103,7 +103,7 @@ function Client() {
         pagination={true}
         slidesPerView={6}
         spaceBetween={30}
-        autoplay={false}
+        autoplay={true}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation={false}

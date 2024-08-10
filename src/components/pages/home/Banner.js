@@ -42,7 +42,7 @@ function Banner() {
         id="home-banner-slider"
         slidesPerView={1}
         spaceBetween={30}
-        autoplay={false}
+        autoplay={true}
         pagination={false}
         navigation={true}
         modules={[Autoplay, Navigation, Pagination]}
