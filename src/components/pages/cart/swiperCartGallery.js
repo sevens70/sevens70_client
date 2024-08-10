@@ -16,7 +16,6 @@ export default function SwiperCartGallery() {
 
   useEffect(() => {
     if (mainSwiper && thumbsSwiper) {
-      // Safe to apply thumbs synchronization now
       mainSwiper.thumbs.swiper = thumbsSwiper;
       mainSwiper.thumbs.init();
       mainSwiper.thumbs.update();
@@ -35,6 +34,10 @@ export default function SwiperCartGallery() {
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper cardImgArea gallery-thumbs"
+        style={{
+          "--swiper-navigation-size": "18px",
+          "--swiper-theme-color": "black-dark-900",
+        }}
       >
         <SwiperSlide className="cardImg">
           <img
