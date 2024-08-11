@@ -173,8 +173,8 @@ input::placeholder {
     min-height: auto;
   }
 }
-@media only screen and (max-width: 550px) {
+/* @media only screen and (max-width: 550px) {
   .cartGallery_main {
     display: none;
   }
-}
+} */

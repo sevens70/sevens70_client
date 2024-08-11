@@ -1,179 +1,114 @@
-import React, { useState, useEffect } from "react";
+"use client";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Thumbs, Mousewheel } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import "./styles.css";
+import { useState } from "react";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-// Import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+const slides = [
+  "https://picsum.photos/1920/1080",
+  "https://picsum.photos/1920/1081",
+  "https://picsum.photos/1920/1082",
+  "https://picsum.photos/1920/1083",
+  "https://picsum.photos/1920/1084",
+];
 
 export default function SwiperCartGallery() {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  const [mainSwiper, setMainSwiper] = useState(null);
-
-  useEffect(() => {
-    if (mainSwiper && thumbsSwiper) {
-      mainSwiper.thumbs.swiper = thumbsSwiper;
-      mainSwiper.thumbs.init();
-      mainSwiper.thumbs.update();
-    }
-  }, [mainSwiper, thumbsSwiper]);
-
+  const [imagesNavSlider, setImagesNavSlider] = useState(null);
   return (
-    <div className="flex gap-3 gallery-container">
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        direction="vertical"
-        loop={true}
-        spaceBetween={10}
-        slidesPerView={3}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper cardImgArea gallery-thumbs"
-        style={{
-          "--swiper-navigation-size": "18px",
-          "--swiper-theme-color": "black-dark-900",
-        }}
-      >
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-1.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-2.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-3.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-4.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-5.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-6.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-7.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-8.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-9.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-10.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-      </Swiper>
+    <div className="cart_swiper-area" style={{ width: "100%", height: "100%" }}>
+      <section className="slider">
+        <div className="slider__flex">
+          <div className="slider__col">
+            <div className="slider__thumbs">
+              <Swiper
+                onSwiper={setImagesNavSlider}
+                direction="vertical"
+                spaceBetween={24}
+                slidesPerView={3}
+                loop={true}
+                navigation={{
+                  nextEl: ".slider__next",
+                  prevEl: ".slider__prev",
+                }}
+                className="swiper-container1"
+                breakpoints={{
+                  0: {
+                    direction: "horizontal",
+                  },
+                  768: {
+                    direction: "vertical",
+                  },
+                }}
+                modules={[Navigation, Thumbs]}
+              >
+                {slides.map((slide, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <div className="slider__image">
+                        <img src={slide} alt="" />
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </div>
 
-      <Swiper
-        onSwiper={setMainSwiper}
-        style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
-        }}
-        loop={true}
-        spaceBetween={10}
-        navigation={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2 gallery-main"
-      >
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-1.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-2.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-3.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-4.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-5.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-6.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-7.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-8.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-9.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="cardImg">
-          <img
-            src="https://swiperjs.com/demos/images/nature-10.jpg"
-            alt="nature"
-          />
-        </SwiperSlide>
-      </Swiper>
+            {/* <div className="slider__next">Next</div> */}
+          </div>
+
+          <div className="slider__images">
+            <Swiper
+              thumbs={{
+                swiper:
+                  imagesNavSlider && !imagesNavSlider.destroyed
+                    ? imagesNavSlider
+                    : null,
+              }}
+              direction="horizontal"
+              slidesPerView={1}
+              spaceBetween={32}
+              loop={true}
+              // mousewheel={true}
+              navigation={{
+                nextEl: ".slider__next",
+                prevEl: ".slider__prev",
+              }}
+              breakpoints={{
+                0: {
+                  direction: "horizontal",
+                },
+                768: {
+                  direction: "horizontal",
+                },
+              }}
+              className="swiper-container2"
+              modules={[Navigation, Thumbs, Mousewheel]}
+            >
+              {slides.map((slide, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <div className="slider__image">
+                      <img src={slide} alt="" />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+              <div className="slider__prev absolute top-1/2 left-3 bg-primaryRed z-[1000]">
+                <MdKeyboardArrowLeft className="fill-white" />
+              </div>
+              <div className="slider__next absolute top-1/2 right-3 bg-primaryRed z-[1000]">
+                <MdKeyboardArrowRight className="fill-white" />
+              </div>
+            </Swiper>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

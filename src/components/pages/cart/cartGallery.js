@@ -39,7 +39,7 @@ function CartGallery() {
   ];
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
-      <div className="grid grid-cols-12 gap-3 w-full">
+      <div className="grid grid-cols-12 gap-5 w-full">
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 cartGallery_main">
           <div className="">
             <SwiperCartGallery />
@@ -115,7 +115,6 @@ function CartGallery() {
                 label={<p className="text-xsm text-dark-900">S</p>}
               />
             </div>
-            {/* =============== */}
             <div className="flex flex-wrap justify-start items-center gap-3">
               <div
                 size="md"

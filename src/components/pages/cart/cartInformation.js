@@ -113,11 +113,11 @@ function cartInformation() {
                   <p className="text-xsm font-jost my-3">{desc}</p>
                   {info.map(({ title, text }, idx) => (
                     <React.Fragment key={idx}>
-                      <p class="mb-2 font-jost text-xsm text-grey-700 mt-5">
+                      <p className="mb-2 font-jost text-xsm text-grey-700 mt-5">
                         {title}
                       </p>
 
-                      <ul class="max-w-md font-jost text-xsm space-y-1 ml-3 text-grey-700 list-disc list-inside">
+                      <ul className="max-w-md font-jost text-xsm space-y-1 ml-3 text-grey-700 list-disc list-inside">
                         {text.map((item, idx) => (
                           <>
                             {
