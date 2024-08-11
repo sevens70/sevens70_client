@@ -70,8 +70,9 @@ a {
 input::placeholder {
   font-weight: 400;
   opacity: 0.5;
-  font-size: 14px;
-  /* color: red; */
+  font-family: Jost !important;
+  font-size: 14px !important;
+  /* color: #323b49; */
 }
 .swiper-button-next,
 .swiper-button-prev {

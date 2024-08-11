@@ -131,7 +131,7 @@ function Products() {
         pagination={true}
         slidesPerView={4}
         spaceBetween={30}
-        autoplay={true}
+        autoplay={false}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation
@@ -146,11 +146,23 @@ function Products() {
             <SwiperSlide key={idx} className="h-full">
               {" "}
               <div key={idx} className="group">
-                <Card className="h-[400px] shadow-sm">
+                <Card className="h-[400px] shadow-sm relative">
                   <CardHeader
                     floated={false}
-                    className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
+                    className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 "
                   >
+                    <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
+                      <Link href="cart">
+                        {" "}
+                        <Button
+                          size="sm"
+                          className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                        >
+                          <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                          Add To Carts
+                        </Button>
+                      </Link>
+                    </div>
                     <img
                       src={img}
                       alt="profile-picture"
@@ -182,7 +194,7 @@ function Products() {
                       </IconButton>
                     </div>
 
-                    <div className="hidden group-hover:block  absolute bottom-3 left-[22%]">
+                    {/* <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
                       <Link href="cart">
                         {" "}
                         <Button
@@ -193,8 +205,9 @@ function Products() {
                           Add To Carts
                         </Button>
                       </Link>
-                    </div>
+                    </div> */}
                   </CardHeader>
+
                   <CardBody className="text-center px-2 mb-1 mt-1">
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-grey-600">{tag}</p>

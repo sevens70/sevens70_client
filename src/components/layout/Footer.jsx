@@ -81,6 +81,11 @@ const Footer = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="!h-14 !border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-grey-600 placeholder:text-xsm placeholder:opacity-100"
+                style={{
+                  color: "#323B49",
+                  fontSize: "14px !important",
+                  fontFamily: "Jost !important",
+                }}
                 labelProps={{
                   className: "hidden",
                 }}

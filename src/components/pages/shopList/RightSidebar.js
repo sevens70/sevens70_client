@@ -211,7 +211,7 @@ function RightSidebar() {
                       <FaRegUser className="h-5 w-5" />
                     </IconButton>
                   </div>
-                  <div className="hidden group-hover:block  absolute bottom-3 left-[22%]">
+                  <div className="md:hidden group-hover:block  absolute bottom-3 md:left-[22%] left-[25%]">
                     <Link
                       // href="cart"
                       href={{

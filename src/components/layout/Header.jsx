@@ -131,19 +131,19 @@ const Header = () => {
             <div className="w-11/12 md:w-10/12 mx-auto py-1 flex justify-center md:justify-between items-center">
               <div className="md:flex md:flex sm:flex justify-end items-center">
                 <Link
-                  href={"/faqs"}
+                  href={"/shop"}
                   className={`font-montserrat text-grey-700  text-xsm font-normal mx-3 underline hover:underline`}
                 >
                   FAQs
                 </Link>
                 <Link
-                  href={"/track"}
+                  href={"/shop"}
                   className="font-montserrat text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Track Order
                 </Link>
                 <Link
-                  href={"/support"}
+                  href={"/shop"}
                   className="font-montserrat text-grey-700 text-xsm font-normal mx-3 hover:underline"
                 >
                   Support
@@ -216,31 +216,31 @@ const Header = () => {
           <div className="border-b border-b-grey-300 ">
             {" "}
             <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
-              <a href="/">
+              <Link href="/">
                 <img
                   priority="true"
                   src="/Logo.png"
-                  alt=""
+                  alt="logo"
                   className="max-w-[150px] w-full h-full"
                   width={300}
                   height={300}
                 />
-              </a>
+              </Link>
 
               <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]">
                 <Input
                   size="md"
                   type="email"
                   placeholder="Search product..."
-                  className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent !placeholder:text-grey-600 !placeholder:text-base !placeholder:text-jost placeholder:opacity-100"
+                  className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:opacity-100"
+                  style={{
+                    color: "#323B49",
+                    fontSize: "14px !important", 
+                    fontFamily: "Jost !important",
+                  }}
                   labelProps={{
                     className: "hidden",
                   }}
-                  containerProps={
-                    {
-                      // className: "lg: !min-w-[250px] sm:!min-w-[150px]",
-                    }
-                  }
                 />
                 <Button
                   size="sm"
