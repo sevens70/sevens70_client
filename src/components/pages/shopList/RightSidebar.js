@@ -21,8 +21,12 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
+import { addToCart } from "../../../lib/features/cartSlice";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "../../../lib/hooks";
 const products = [
   {
+    id: 1,
     name: "Ribbed modal T-shirt",
     img: "./category/cate1.png",
     discount: "10% off",
@@ -30,8 +34,15 @@ const products = [
     disc_price: "$45.00",
     rating: "5.0",
     tag: "shirt",
+    category: "Man",
+    prd_category: "Dress",
+    color: ["light brown", "blue"],
+    brand: "Abs Fashion",
+    size: ["S", "M", "L", "XL", "XXL"],
+    stock: "In Stock",
   },
   {
+    id: 2,
     name: "Loose Fit Hoodie",
     price: "$45.00",
     discount: "10% off",
@@ -39,8 +50,15 @@ const products = [
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate2.png",
+    category: "Woman",
+    prd_category: "Sneaker",
+    color: ["blue", "light purple"],
+    brand: "Squire Style",
+    size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+    stock: "In Stock",
   },
   {
+    id: 3,
     name: "Ribbed Tank Top",
     price: "$45.00",
     disc_price: "$45.00",
@@ -48,8 +66,15 @@ const products = [
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate3.png",
+    category: "New Arrival",
+    prd_category: "Handbag",
+    color: ["light purple", "pele"],
+    brand: "Nice Fashion",
+    size: ["S", "M", "L", "XL"],
+    stock: "Out of Stock",
   },
   {
+    id: 4,
     name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
@@ -57,8 +82,15 @@ const products = [
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate4.png",
+    category: "Kids",
+    prd_category: "Cosmetics",
+    color: ["pele", "gray"],
+    brand: "Xozo Fashion",
+    size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+    stock: "In Stock",
   },
   {
+    id: 5,
     name: "V-neck linen T-shirt",
     price: "$45.00",
     disc_price: "$45.00",
@@ -66,47 +98,18 @@ const products = [
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate4.png",
-  },
-  {
-    name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
-    discount: "10% off",
-    rating: "5.0",
-    tag: "shirt",
-    img: "./category/cate4.png",
-  },
-  {
-    name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
-    discount: "10% off",
-    rating: "5.0",
-    tag: "shirt",
-    img: "./category/cate4.png",
-  },
-  {
-    name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
-    discount: "10% off",
-    rating: "5.0",
-    tag: "shirt",
-    img: "./category/cate4.png",
-  },
-  {
-    name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
-    discount: "10% off",
-    rating: "5.0",
-    tag: "shirt",
-    img: "./category/cate4.png",
+    category: "Winter Collection",
+    prd_category: "Smart Watch",
+    color: ["gray", "jean blue", "dark blue", "red"],
+    brand: "Style Zone",
+    size: ["S", "M", "L", "XL", "XXL"],
+    stock: "Out of Stock",
   },
 ];
 function RightSidebar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   return (
     <div>
       <div className="my-5 md:flex md:flex-row gap-3 lg:justify-between items-center">
@@ -175,8 +178,10 @@ function RightSidebar() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4">
-        {products?.map(
-          ({ name, disc_price, price, img, discount, rating, tag }, idx) => (
+        {products?.map((item, idx) => {
+          const { id, name, disc_price, price, img, discount, rating, tag } =
+            item;
+          return (
             <div
               key={idx}
               className="group col-span-12 sm:col-span-6 md:col-span-12 lg:col-span-6 xl:col-span-4"
@@ -212,10 +217,13 @@ function RightSidebar() {
                     </IconButton>
                   </div>
                   <div className="md:hidden group-hover:block  absolute bottom-3 md:left-[22%] left-[25%]">
-                    <Link
-                      // href="cart"
+                    {/* <Link
+                        onClick={() => {
+                          dispatch(addToCart(item));
+                          // router.push(`/product/${id}`);
+                        }}
                       href={{
-                        pathname: "/cart",
+                        pathname: `/product/${id}`,
                         query: {
                           category: `${name}`,
                         },
@@ -229,7 +237,22 @@ function RightSidebar() {
                         <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
                         Add To Carts
                       </Button>
-                    </Link>
+                    </Link> */}
+                    <div
+                      onClick={() => {
+                        dispatch(addToCart(item));
+                        router.push(`/product/${id}`);
+                      }}
+                    >
+                      {" "}
+                      <Button
+                        size="sm"
+                        className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                      >
+                        <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                        Add To Carts
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardBody className="text-center px-2 mb-1 mt-1">
@@ -250,8 +273,8 @@ function RightSidebar() {
                 </CardBody>
               </Card>
             </div>
-          )
-        )}
+          );
+        })}
       </div>
       <div className="flex justify-center">
         <Button

@@ -52,7 +52,7 @@ const Footer = () => {
               priority="true"
               src="./FooterLogo.png"
               className="w-full max-w-[150px] bg-white mb-3 rounded-none md:mx-0 h-full"
-              alt=""
+              alt="footer_logo"
               width={300}
               height={300}
             />

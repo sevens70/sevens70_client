@@ -6,7 +6,11 @@ import { FaRegHeart } from "react-icons/fa";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Radio } from "@material-tailwind/react";
 import SwiperCartGallery from "./swiperCartGallery";
-function CartGallery() {
+import {useAppSelector} from "../../../lib/hooks";
+import { getCart } from "../../../lib/features/cartSlice";
+function CartGallery({singleProduct}) {
+  const cart = useAppSelector(getCart);
+  console.log("total cart", cart)
   function StarIcon() {
     return (
       <svg
@@ -47,8 +51,8 @@ function CartGallery() {
         </div>
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6">
           <div>
-            <p className="text-grey-200 text-sm mb-2">Womans</p>
-            <h4>Different color Short Top</h4>
+            <p className="text-grey-200 text-sm mb-2">{singleProduct?.category}</p>
+            <h4>{singleProduct?.name}</h4>
 
             <div className="flex flex-wrap items-center gap-1 my-2">
               {Array.from({ length: 5 }).map((_, index) => (
@@ -61,9 +65,9 @@ function CartGallery() {
               </p>
             </div>
             <h6 className="text-dark-900 flex justify-start items-center gap-3">
-              $89.00
+              ${singleProduct?.disc_price}
               <h6 className="font-medium text-priceColor line-through">
-                $104.00
+                ${singleProduct?.price}
               </h6>
             </h6>
             <p className="text-dark-700 text-sm mt-2">color: Yellow</p>
@@ -162,7 +166,7 @@ function CartGallery() {
                 MKS : <p className="text-dark-900">J-8521</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                Category : <p className="text-dark-900">Handbag</p>
+                Category : <p className="text-dark-900">{singleProduct?.prd_category}</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Tags : <p className="text-dark-900">Bag, Lades bag, Fashion</p>

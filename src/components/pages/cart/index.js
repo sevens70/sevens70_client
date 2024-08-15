@@ -5,8 +5,10 @@ import CartGallery from "./cartGallery";
 import CartInfo from "./cartInformation";
 import CommonCategories from "../../common/commonCategories";
 import { useSearchParams } from "next/navigation";
-function Cart() {
-  const searchParams = useSearchParams();
+import { useApi } from "../../../lib/utils/useApi";
+import Loader from "../../common/Loader";
+function Cart({ singleProduct }) {
+  // const searchParams = useSearchParams();
   return (
     <section className="">
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">
@@ -15,17 +17,22 @@ function Cart() {
           <a href="#" className="opacity-60 text-primaryRed text-sm">
             Home
           </a>
-          <a href="#">{searchParams.get("category")}</a>
+          {/* <a href="#">{searchParams.get("category")}</a> */}
+          <a href="#">{singleProduct?.name}</a>
         </Breadcrumbs>
       </div>
-      <CartGallery />
+      <CartGallery singleProduct={singleProduct} />
       <CartInfo />
-      <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
-        <h3 className="text-left text-xmd my-10 capitalize">
-          People Also bought
-        </h3>
-        <CommonCategories />
-      </section>
+      {singleProduct ? (
+        <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
+          <h3 className="text-left text-xmd my-10 capitalize">
+            People Also bought
+          </h3>
+          <CommonCategories />
+        </section>
+      ) : (
+        <Loader />
+      )}
     </section>
   );
 }
