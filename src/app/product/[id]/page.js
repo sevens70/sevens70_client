@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useCallback } from "react";
 import Cart from "../../../components/pages/cart";
 import Loader from "../../../components/common/Loader";
-import { useApi } from "../../../lib/utils/useApi";
+import {useApi} from "../../../lib/utils/useApi";
 
 export default function Page() {
   const { id } = useParams();
@@ -16,15 +16,13 @@ export default function Page() {
   useEffect(() => {
     fetchProduct();
   }, [fetchProduct]);
-  console.log("id", id);
 
   return (
     <div
       className="mx-auto"
       style={{ height: "auto", backgroundColor: "#fff" }}
     >
-      {/* {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />} */}
-      <p>Dynamic route is found</p>
+      {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />}
     </div>
   );
 }
