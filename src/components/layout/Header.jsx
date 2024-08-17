@@ -27,7 +27,7 @@ import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
 import { useAppSelector } from "../../lib/hooks";
-import CartContainer from "../../components/cartList";
+import CartList from "../checkout/cartList";
 
 const menu = [
   {
@@ -361,7 +361,7 @@ const Header = () => {
                     </ListItem>
                   </MenuHandler>{" "}
                   <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-                    <CartContainer />
+                    <CartList />
                   </MenuList>
                 </Menu>
 

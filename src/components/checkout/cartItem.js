@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { MdDelete } from "react-icons/md";

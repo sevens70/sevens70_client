@@ -1,12 +1,13 @@
+"use client";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart, getCartTotal } from "../lib/features/cartSlice";
-import CartItem from "./CartItem";
+import { clearCart, getCartTotal } from "../../lib/features/cartSlice";
 import { Button } from "@material-tailwind/react";
+import CartItem from "./cartItem";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 
-const CartContainer = () => {
-  const { totalAmount, items } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+const CartList = () => {
+  const { totalAmount, items } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getCartTotal());
@@ -56,4 +57,4 @@ const CartContainer = () => {
   );
 };
 
-export default CartContainer;
+export default CartList;
