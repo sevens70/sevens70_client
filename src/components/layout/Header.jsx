@@ -13,6 +13,7 @@ import {
   MenuList,
   Avatar,
   Drawer,
+  ListItem,
 } from "@material-tailwind/react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -25,6 +26,8 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
+import { useAppSelector } from "../../lib/hooks";
+import CartContainer from "../../components/cartList";
 
 const menu = [
   {
@@ -65,6 +68,7 @@ const Header = () => {
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { totalCount } = useAppSelector((state) => state.cart);
 
   React.useEffect(() => {
     window.addEventListener(
@@ -235,7 +239,7 @@ const Header = () => {
                   className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:opacity-100"
                   style={{
                     color: "#323B49",
-                    fontSize: "14px !important", 
+                    fontSize: "14px !important",
                     fontFamily: "Jost !important",
                   }}
                   labelProps={{
@@ -337,12 +341,30 @@ const Header = () => {
                 <IconButton color="white" size="sm">
                   <GiSelfLove className="h-5 w-5" />
                 </IconButton>
+                <Menu
+                  open={isMenuOpen}
+                  handler={setIsMenuOpen}
+                  placement="bottom"
+                >
+                  {" "}
+                  <MenuHandler>
+                    <ListItem
+                      selected={isMenuOpen}
+                      className="pb-0 px-0 mr-0 !pr-0 max-w-[50px]"
+                    >
+                      {" "}
+                      <Badge content={totalCount ? totalCount : 0}>
+                        <IconButton color="white" size="sm">
+                          <FaCartShopping className="h-5 w-5" />
+                        </IconButton>
+                      </Badge>
+                    </ListItem>
+                  </MenuHandler>{" "}
+                  <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
+                    <CartContainer />
+                  </MenuList>
+                </Menu>
 
-                <Badge content="5">
-                  <IconButton color="white" size="sm">
-                    <FaCartShopping className="h-5 w-5" />
-                  </IconButton>
-                </Badge>
                 <IconButton color="white" size="sm">
                   <FaRegUser className="h-5 w-5" />
                 </IconButton>

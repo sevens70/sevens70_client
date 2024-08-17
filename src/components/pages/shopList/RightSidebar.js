@@ -30,8 +30,8 @@ const products = [
     name: "Ribbed modal T-shirt",
     img: "./category/cate1.png",
     discount: "10% off",
-    price: "$45.00",
-    disc_price: "$45.00",
+    price: "45.00",
+    disc_price: "45.00",
     rating: "5.0",
     tag: "shirt",
     category: "Man",
@@ -44,9 +44,9 @@ const products = [
   {
     id: 2,
     name: "Loose Fit Hoodie",
-    price: "$45.00",
+    price: "45.00",
     discount: "10% off",
-    disc_price: "$45.00",
+    disc_price: "45.00",
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate2.png",
@@ -60,8 +60,8 @@ const products = [
   {
     id: 3,
     name: "Ribbed Tank Top",
-    price: "$45.00",
-    disc_price: "$45.00",
+    price: "45.00",
+    disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
@@ -76,8 +76,8 @@ const products = [
   {
     id: 4,
     name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
+    price: "45.00",
+    disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
@@ -92,8 +92,8 @@ const products = [
   {
     id: 5,
     name: "V-neck linen T-shirt",
-    price: "$45.00",
-    disc_price: "$45.00",
+    price: "45.00",
+    disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
@@ -265,9 +265,9 @@ function RightSidebar() {
                   </div>
                   <h6 className="text-left text-dark-700">{name}</h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                    {disc_price}
+                    ${disc_price}
                     <span className="font-normal line-through text-grey-600">
-                      {price}
+                      ${price}
                     </span>
                   </h6>
                 </CardBody>

@@ -1,16 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { CiGrid2H } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Radio } from "@material-tailwind/react";
 import SwiperCartGallery from "./swiperCartGallery";
-import {useAppSelector} from "../../../lib/hooks";
-import { getCart } from "../../../lib/features/cartSlice";
-function CartGallery({singleProduct}) {
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import {
+  decrease,
+  getCart,
+  getCartTotal,
+  increase,
+} from "../../../lib/features/cartSlice";
+function CartGallery({ singleProduct }) {
+  const dispatch = useAppDispatch();
   const cart = useAppSelector(getCart);
-  console.log("total cart", cart)
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [cart]);
   function StarIcon() {
     return (
       <svg
@@ -41,6 +49,8 @@ function CartGallery({singleProduct}) {
       thumbnail: "https://picsum.photos/id/1019/250/150/",
     },
   ];
+  const matchingItem = cart.find((item) => item.id === singleProduct.id);
+
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-5 w-full">
@@ -51,7 +61,9 @@ function CartGallery({singleProduct}) {
         </div>
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6">
           <div>
-            <p className="text-grey-200 text-sm mb-2">{singleProduct?.category}</p>
+            <p className="text-grey-200 text-sm mb-2">
+              {singleProduct?.category}
+            </p>
             <h4>{singleProduct?.name}</h4>
 
             <div className="flex flex-wrap items-center gap-1 my-2">
@@ -94,7 +106,6 @@ function CartGallery({singleProduct}) {
                 className="h-8 w-8 text-primaryRed bg-priceColor"
               />
             </div>
-            {/* ================= */}
             <p className="text-dark-900 text-sm">Size</p>
             <div className="flex w-max gap-5">
               <Radio
@@ -127,14 +138,17 @@ function CartGallery({singleProduct}) {
                 <Button
                   size="md"
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
+                  disabled={matchingItem?.amount < 2}
+                  onClick={() => dispatch(decrease(singleProduct?.id))}
                 >
                   {" "}
                   -{" "}
                 </Button>{" "}
-                1{" "}
+                {matchingItem ? matchingItem.amount : 1}
                 <Button
                   size="md"
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
+                  onClick={() => dispatch(increase(singleProduct?.id))}
                 >
                   +
                 </Button>
@@ -166,7 +180,8 @@ function CartGallery({singleProduct}) {
                 MKS : <p className="text-dark-900">J-8521</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                Category : <p className="text-dark-900">{singleProduct?.prd_category}</p>
+                Category :{" "}
+                <p className="text-dark-900">{singleProduct?.prd_category}</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Tags : <p className="text-dark-900">Bag, Lades bag, Fashion</p>
