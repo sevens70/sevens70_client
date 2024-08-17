@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { useAppDispatch } from "../lib/hooks";
+import { useAppDispatch } from "../../lib/hooks";
 import { MdDelete } from "react-icons/md";
-import { remove } from "../lib/features/cartSlice";
 import { IconButton } from "@material-tailwind/react";
+import { remove } from "../../lib/features/cartSlice";
 const CartItem = ({ ...item }) => {
   const dispatch = useAppDispatch();
   return (

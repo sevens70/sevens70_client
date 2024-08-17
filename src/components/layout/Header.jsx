@@ -345,12 +345,13 @@ const Header = () => {
                   open={isMenuOpen}
                   handler={setIsMenuOpen}
                   placement="bottom"
+                  // className="hover: bg-hidden"
                 >
                   {" "}
                   <MenuHandler>
                     <ListItem
                       selected={isMenuOpen}
-                      className="pb-0 px-0 mr-0 !pr-0 max-w-[50px]"
+                      className="pb-0 px-0 mr-0 !pr-0 max-w-[45px] !active:bg-hidden !hover: bg-white"
                     >
                       {" "}
                       <Badge content={totalCount ? totalCount : 0}>
