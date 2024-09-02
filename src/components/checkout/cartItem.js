@@ -1,10 +1,13 @@
 "use client";
 import React from "react";
-import { useAppDispatch } from "../../lib/hooks";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { MdDelete } from "react-icons/md";
 import { IconButton } from "@material-tailwind/react";
 import { remove } from "../../lib/features/cartSlice";
+import { getCarrency } from "../../lib/features/currencySlice";
+
 const CartItem = ({ ...item }) => {
+  const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
   return (
     <div className="flex justify-evenly items-center gap-3 mb-3">
@@ -20,7 +23,8 @@ const CartItem = ({ ...item }) => {
         }}
       />
       <h5 className="font-jost" style={{ color: "#617d98" }}>
-        ${item?.price}
+        {currencyData.symbol}
+        {item?.price}
       </h5>
       <p className="font-jost">{item?.amount}</p>
       <IconButton

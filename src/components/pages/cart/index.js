@@ -7,6 +7,7 @@ import CommonCategories from "../../common/commonCategories";
 import { useSearchParams } from "next/navigation";
 import { useApi } from "../../../lib/utils/useApi";
 import Loader from "../../common/Loader";
+import Link from "next/link";
 function Cart({ singleProduct }) {
   // const searchParams = useSearchParams();
   return (
@@ -14,9 +15,9 @@ function Cart({ singleProduct }) {
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">
         <h3 className="text-xmd capitalize">Shop List</h3>
         <Breadcrumbs>
-          <a href="#" className="opacity-60 text-primaryRed text-sm">
+          <Link href="/" className="opacity-60 text-primaryRed text-sm">
             Home
-          </a>
+          </Link>
           {/* <a href="#">{searchParams.get("category")}</a> */}
           <a href="#">{singleProduct?.name}</a>
         </Breadcrumbs>

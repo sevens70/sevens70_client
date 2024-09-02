@@ -4,8 +4,12 @@ import { clearCart, getCartTotal } from "../../lib/features/cartSlice";
 import { Button } from "@material-tailwind/react";
 import CartItem from "./cartItem";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
+import { useRouter } from "next/navigation";
+import { getCarrency } from "../../lib/features/currencySlice";
 
 const CartList = () => {
+  const router = useRouter();
+  const currencyData = useAppSelector(getCarrency);
   const { totalAmount, items } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
@@ -22,9 +26,12 @@ const CartList = () => {
         >
           Your Shopping is Empty
         </h6>
-        {/* <Button className="mx-2" onClick={() => router.push("/")}>
+        <Button
+          className="mx-2 mt-3 capitalize text-base bg-primaryRed text-white font-jost"
+          onClick={() => router.push("/")}
+        >
           Get To Product
-        </Button> */}
+        </Button>
       </>
     );
   }
@@ -41,7 +48,11 @@ const CartList = () => {
         <hr />
         <div>
           <h6 className="font-jost flex justify-evenly my-2">
-            Total <span>${totalAmount}</span>
+            Total{" "}
+            <span>
+              {currencyData.symbol}
+              {totalAmount}
+            </span>
           </h6>
         </div>
 

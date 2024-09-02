@@ -7,6 +7,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Radio } from "@material-tailwind/react";
 import SwiperCartGallery from "./swiperCartGallery";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { getCarrency } from "../../../lib/features/currencySlice";
 import {
   decrease,
   getCart,
@@ -14,6 +15,7 @@ import {
   increase,
 } from "../../../lib/features/cartSlice";
 function CartGallery({ singleProduct }) {
+  const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
   const cart = useAppSelector(getCart);
   useEffect(() => {
@@ -49,7 +51,7 @@ function CartGallery({ singleProduct }) {
       thumbnail: "https://picsum.photos/id/1019/250/150/",
     },
   ];
-  const matchingItem = cart.find((item) => item.id === singleProduct.id);
+  const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
 
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
@@ -67,7 +69,7 @@ function CartGallery({ singleProduct }) {
             <h4>{singleProduct?.name}</h4>
 
             <div className="flex flex-wrap items-center gap-1 my-2">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array?.from({ length: 5 }).map((_, index) => (
                 <StarIcon key={index} />
               ))}
               <p className="text-xsm text-grey-200 ml-3">(8 Reviews)</p>
@@ -77,9 +79,11 @@ function CartGallery({ singleProduct }) {
               </p>
             </div>
             <h6 className="text-dark-900 flex justify-start items-center gap-3">
-              ${singleProduct?.disc_price}
+              {currencyData.symbol}
+              {singleProduct?.disc_price}
               <h6 className="font-medium text-priceColor line-through">
-                ${singleProduct?.price}
+                {currencyData.symbol}
+                {singleProduct?.price}
               </h6>
             </h6>
             <p className="text-dark-700 text-sm mt-2">color: Yellow</p>
@@ -138,15 +142,16 @@ function CartGallery({ singleProduct }) {
                 <Button
                   size="md"
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
-                  disabled={matchingItem?.amount < 2}
+                  disabled={matchingItem?.amount < 2 || !matchingItem}
                   onClick={() => dispatch(decrease(singleProduct?.id))}
                 >
                   {" "}
                   -{" "}
                 </Button>{" "}
-                {matchingItem ? matchingItem.amount : 1}
+                {matchingItem ? matchingItem.amount : 0}
                 <Button
                   size="md"
+                  disabled={!matchingItem}
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
                   onClick={() => dispatch(increase(singleProduct?.id))}
                 >

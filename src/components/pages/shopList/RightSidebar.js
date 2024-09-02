@@ -23,7 +23,8 @@ import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { addToCart } from "../../../lib/features/cartSlice";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "../../../lib/hooks";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { getCarrency } from "../../../lib/features/currencySlice";
 const products = [
   {
     id: 1,
@@ -107,6 +108,7 @@ const products = [
   },
 ];
 function RightSidebar() {
+  const currencyData = useAppSelector(getCarrency);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -265,9 +267,11 @@ function RightSidebar() {
                   </div>
                   <h6 className="text-left text-dark-700">{name}</h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                    ${disc_price}
+                    {currencyData.symbol}
+                    {disc_price}
                     <span className="font-normal line-through text-grey-600">
-                      ${price}
+                      {currencyData.symbol}
+                      {price}
                     </span>
                   </h6>
                 </CardBody>

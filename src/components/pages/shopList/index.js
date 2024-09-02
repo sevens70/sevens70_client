@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@material-tailwind/react";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 function ShopList() {
   const searchParams = useSearchParams();
   return (
@@ -11,9 +12,9 @@ function ShopList() {
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">
         <h3 className="text-xmd capitalize">Shop List</h3>
         <Breadcrumbs>
-          <a href="#" className="opacity-60 text-primaryRed text-sm">
+          <Link href="/" className="opacity-60 text-primaryRed text-sm">
             Home
-          </a>
+          </Link>
           <a href="#">{searchParams.get("category")}</a>
         </Breadcrumbs>
       </div>
