@@ -267,10 +267,10 @@ function RightSidebar() {
                   </div>
                   <h6 className="text-left text-dark-700">{name}</h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                    {currencyData.symbol}
+                    {currencyData?.symbol}
                     {disc_price}
                     <span className="font-normal line-through text-grey-600">
-                      {currencyData.symbol}
+                      {currencyData?.symbol}
                       {price}
                     </span>
                   </h6>

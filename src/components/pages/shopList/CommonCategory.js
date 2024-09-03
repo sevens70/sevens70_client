@@ -1,44 +1,17 @@
 "use client";
 import React from "react";
 import {
-  Card,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
   ListItemSuffix,
-  Chip,
   Accordion,
   AccordionHeader,
   AccordionBody,
-  Radio,
+  Checkbox,
 } from "@material-tailwind/react";
-import {
-  PresentationChartBarIcon,
-  ShoppingBagIcon,
-  UserCircleIcon,
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-} from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-
-function Icon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-3 w-3"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-    >
-      <path
-        fillRule="evenodd"
-        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-}
 function CommonCategory({ data }) {
   // const [open, setOpen] = React.useState(0);
 
@@ -92,22 +65,23 @@ function CommonCategory({ data }) {
                     {(data.category === "Prodcut Category" ||
                       data.category === "Filter by size" ||
                       data.category === "Brand") && (
-                      <Radio
-                        name="type"
-                        ripple={false}
-                        icon={<Icon />}
-                        containerProps={{
-                          className: "p-0 !mr-0",
-                        }}
-                        className="border-gray-900/10 bg-gray-900/5 h-4 w-4 p-0 transition-all hover:before:opacity-0"
-                      />
+                      <>
+                        <Checkbox
+                          // defaultChecked
+                          ripple={false}
+                          className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent"
+                        />
+                      </>
                     )}
 
                     {data.category === "Filter by color" && (
-                      <div
-                        style={{ backgroundColor: color }}
-                        className={`h-6 w-6 bg-dark-500 rounded-full`}
-                      ></div>
+                      <>
+                        <Checkbox
+                          style={{ backgroundColor: color }}
+                          ripple={false}
+                          className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
+                        />{" "}
+                      </>
                     )}
                   </ListItemPrefix>
                   {title}
@@ -121,8 +95,6 @@ function CommonCategory({ data }) {
             </List>
           </AccordionBody>
         </Accordion>
-
-        {/* <hr className="my-2 border-blue-gray-50" /> */}
       </List>
     </div>
   );

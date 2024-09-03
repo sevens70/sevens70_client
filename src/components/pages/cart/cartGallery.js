@@ -79,10 +79,10 @@ function CartGallery({ singleProduct }) {
               </p>
             </div>
             <h6 className="text-dark-900 flex justify-start items-center gap-3">
-              {currencyData.symbol}
+              {currencyData?.symbol}
               {singleProduct?.disc_price}
               <h6 className="font-medium text-priceColor line-through">
-                {currencyData.symbol}
+                {currencyData?.symbol}
                 {singleProduct?.price}
               </h6>
             </h6>
