@@ -22,9 +22,10 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { addToCart } from "../../../lib/features/cartSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
+import { convertStringToQueriesObject } from "./LeftSidebar";
 const products = [
   {
     id: 1,
@@ -35,76 +36,86 @@ const products = [
     disc_price: "45.00",
     rating: "5.0",
     tag: "shirt",
-    category: "Man",
+    categories: ["women cloth"],
     prd_category: "Dress",
     color: ["light brown", "blue"],
+    colors: ["green"],
     brand: "Abs Fashion",
-    size: ["S", "M", "L", "XL", "XXL"],
+    size: ["m"],
     stock: "In Stock",
+    createdAt: "10/12/2023",
   },
   {
     id: 2,
     name: "Loose Fit Hoodie",
-    price: "45.00",
+    price: "41.00",
     discount: "10% off",
     disc_price: "45.00",
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate2.png",
-    category: "Woman",
+    categories: ["women cloth"],
     prd_category: "Sneaker",
     color: ["blue", "light purple"],
+    colors: ["red"],
     brand: "Squire Style",
-    size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+    size: ["xl"],
     stock: "In Stock",
+    createdAt: "15/08/2023",
   },
   {
     id: 3,
     name: "Ribbed Tank Top",
-    price: "45.00",
+    price: "35.00",
     disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate3.png",
-    category: "New Arrival",
+    categories: ["men cloth"],
     prd_category: "Handbag",
     color: ["light purple", "pele"],
+    colors: ["white"],
     brand: "Nice Fashion",
-    size: ["S", "M", "L", "XL"],
+    size: ["xxl"],
     stock: "Out of Stock",
+    createdAt: "10/11/2023",
   },
   {
     id: 4,
     name: "V-neck linen T-shirt",
-    price: "45.00",
+    price: "55.00",
     disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate4.png",
-    category: "Kids",
+    categories: ["men cloth"],
     prd_category: "Cosmetics",
     color: ["pele", "gray"],
+    colors: ["blue"],
     brand: "Xozo Fashion",
-    size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+    size: ["s"],
     stock: "In Stock",
+    createdAt: "10/12/2024",
   },
   {
     id: 5,
     name: "V-neck linen T-shirt",
-    price: "45.00",
+    price: "65.00",
     disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
     tag: "shirt",
     img: "./category/cate4.png",
-    category: "Winter Collection",
+    categories: ["men cloth"],
     prd_category: "Smart Watch",
     color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["black"],
     brand: "Style Zone",
-    size: ["S", "M", "L", "XL", "XXL"],
+    size: ["l"],
     stock: "Out of Stock",
+    createdAt: "04/06/2023",
   },
 ];
 function RightSidebar() {
@@ -112,6 +123,65 @@ function RightSidebar() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  const paramsObj = convertStringToQueriesObject(searchParams);
+  console.log("paramsObj", paramsObj);
+
+  let filteredProducts = products.filter((product) => {
+    const hasCategories = isAvailable(
+      product.categories,
+      paramsObj?.categories
+    );
+    const hasColors = isAvailable(product.colors, paramsObj?.colors);
+    const hasSize = isAvailable(product.size, paramsObj?.sizes);
+    console.log("paramsObj01", hasCategories, hasColors, hasSize);
+
+    return hasSize || hasColors || hasCategories;
+  });
+
+  // Check if paramsObj has only the sort parameter or is empty
+  if (
+    Object.keys(paramsObj).length === 0 ||
+    (Object.keys(paramsObj).length === 1 && paramsObj.sort)
+  ) {
+    // if only sorting is applied or no filters are selected
+    filteredProducts = products.sort((p1, p2) => {
+      const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
+      console.log("sortKey", sortKey);
+      switch (sortKey) {
+        case "newest":
+          return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
+        case "price high - low":
+          return parseFloat(p2.price) - parseFloat(p1.price);
+        case "price low - high":
+          return parseFloat(p1.price) - parseFloat(p2.price);
+        default:
+          return 0;
+      }
+    });
+  } else {
+    // if additional filters are applied
+    filteredProducts = filteredProducts.sort((p1, p2) => {
+      const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
+      console.log("sortKey", sortKey);
+      switch (sortKey) {
+        case "newest":
+          return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
+        case "price high - low":
+          return parseFloat(p2.price) - parseFloat(p1.price);
+        case "price low - high":
+          return parseFloat(p1.price) - parseFloat(p2.price);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  console.log("Filtered and sorted products:", filteredProducts);
+  if (filteredProducts.length === 0) {
+    return <p className="text-center text-slate-700">No products Available</p>;
+  }
+
   return (
     <div>
       <div className="my-5 md:flex md:flex-row gap-3 lg:justify-between items-center">
@@ -180,7 +250,7 @@ function RightSidebar() {
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4">
-        {products?.map((item, idx) => {
+        {filteredProducts?.map((item, idx) => {
           const { id, name, disc_price, price, img, discount, rating, tag } =
             item;
           return (
@@ -290,6 +360,12 @@ function RightSidebar() {
       </div>
     </div>
   );
+}
+function isAvailable(arr1, arr2) {
+  if (!arr1) {
+    return true;
+  }
+  return arr1.some((item) => arr2?.includes(item)); // Check if any element in arr1 is in arr2
 }
 
 export default RightSidebar;
