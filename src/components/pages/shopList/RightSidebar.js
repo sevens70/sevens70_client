@@ -40,7 +40,7 @@ const products = [
     prd_category: "Dress",
     color: ["light brown", "blue"],
     colors: ["green"],
-    brand: "Abs Fashion",
+    brand: "Abc Fashion",
     size: ["m"],
     stock: "In Stock",
     createdAt: "10/12/2023",
@@ -124,8 +124,20 @@ function RightSidebar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const paramsObj = convertStringToQueriesObject(searchParams);
-  console.log("paramsObj", paramsObj);
+  let selectedQueries = {};
+  searchParams.forEach((values, key) => {
+    if (key !== "category") {
+      const queries = values.split(",");
+      if (selectedQueries[key]) {
+        selectedQueries[key].push(...queries);
+      } else {
+        selectedQueries[key] = queries;
+      }
+    }
+  });
+
+  // const paramsObj = convertStringToQueriesObject(searchParams); //note : if category become part of filter remove selectQueries and apply this line
+  const paramsObj = selectedQueries;
 
   let filteredProducts = products.filter((product) => {
     const hasCategories = isAvailable(
@@ -134,9 +146,13 @@ function RightSidebar() {
     );
     const hasColors = isAvailable(product.colors, paramsObj?.colors);
     const hasSize = isAvailable(product.size, paramsObj?.sizes);
-    console.log("paramsObj01", hasCategories, hasColors, hasSize);
+    const hasBrand = isAvailable(
+      [product.brand.toLowerCase()],
+      paramsObj?.brand
+    );
+    console.log("brand22", product.brand, paramsObj.brand);
 
-    return hasSize || hasColors || hasCategories;
+    return hasSize || hasColors || hasCategories || hasBrand;
   });
 
   // Check if paramsObj has only the sort parameter or is empty

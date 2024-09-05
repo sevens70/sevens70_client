@@ -98,9 +98,9 @@ function CommonCategories() {
                 className="cursor-pointer"
                 href={{
                   pathname: "/shop",
-                  // query: {
-                  //   category: `${name}`,
-                  // }, //after work add this don't forget==============================
+                  query: {
+                    category: `${name}`,
+                  },
                 }}
               >
                 {" "}

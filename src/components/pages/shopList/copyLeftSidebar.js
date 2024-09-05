@@ -54,7 +54,6 @@ const colorData = {
       value: 8,
       color: "green",
     },
-
     {
       title: "Pele Gray",
       value: 7,
@@ -125,7 +124,6 @@ const brandData = {
       title: "Nice fashion",
       value: 8,
     },
-
     {
       title: "xozo fashion",
       value: 7,
@@ -145,28 +143,10 @@ const brandData = {
   ],
 };
 // ====================
-const colors = [
-  "darkOrange",
-  "red",
-  "green",
-  "blue",
-  "thistle",
-  "yellow",
-  "powderBlue",
-  "lightGray",
-];
+const colors = ["Red", "Green", "Blue", "Black"];
 const categories = ["Men cloth", "Women Cloth"];
 const sizes = ["S", "M", "L", "XL", "XXL"];
 const sortingOrder = ["Newest", "Price Low - High", "Price High - Low"];
-const brands = [
-  "Abc Fashion",
-  "squire style",
-  "Nice fashion",
-  "xozo fashion",
-  "style zone",
-  "Cool style",
-  "Modern look",
-];
 const filterOptions = [
   {
     id: "sort",
@@ -176,26 +156,20 @@ const filterOptions = [
   },
   {
     id: "categories",
-    title: "Prodcut Category",
+    title: "Categories",
     options: categories,
     type: "checkbox",
   },
   {
     id: "sizes",
-    title: "Filter by size",
+    title: "Sizes",
     options: sizes,
     type: "checkbox",
   },
   {
     id: "colors",
-    title: "Filter by color",
+    title: "Colors",
     options: colors,
-    type: "checkbox",
-  },
-  {
-    id: "brand",
-    title: "Brand",
-    options: brands,
     type: "checkbox",
   },
 ];
@@ -222,7 +196,6 @@ function convertValidStringQueries(queries) {
   }
   return q;
 }
-// =================
 
 function LeftSidebar() {
   const router = useRouter();
@@ -259,7 +232,14 @@ function LeftSidebar() {
     } else if (selectedQueries) {
       selectedQueries[name] = [value];
     }
+    console.log("e.target.value=1", selectedQueries);
+    // router.push(`/?${convertValidStringQueries(selectedQueries)}`, {
+    //   scroll: false,
+    // });
+
     const queryString = convertValidStringQueries(selectedQueries);
+
+    // Push the new URL with the correct base path
     router.push(`${pathname}?${queryString}`, {
       scroll: false,
     });
@@ -274,17 +254,61 @@ function LeftSidebar() {
 
   return (
     <div>
-      {filterOptions.map((value) => {
+      {/* <CommonCategory data={prdData} />
+      <CommonCategory data={colorData} />
+      <CommonCategory data={sizeData} />
+      <CommonCategory data={brandData} /> */}
+      {filterOptions.map(({ id, title, type, options }) => {
         return (
-          <CommonCategory
-            data={value}
-            onChange={handleSelectFilterOptions}
-            isChecked={isChecked}
-          />
+          <div className="border-b pb-4" key={id}>
+            <p className="font-medium mb-4">{title}</p>
+            <div className="space-y-2">
+              {options.map((value) => {
+                return (
+                  <CheckboxAndRadioGroup key={value}>
+                    <CheckboxAndRadioItem
+                      type={type}
+                      name={id}
+                      id={value.toLowerCase().trim()}
+                      label={value}
+                      value={value.toLowerCase().trim()}
+                      checked={isChecked(id, value)}
+                      onChange={handleSelectFilterOptions}
+                    />
+                  </CheckboxAndRadioGroup>
+                );
+              })}
+            </div>
+          </div>
         );
       })}
     </div>
   );
 }
 
+function CheckboxAndRadioGroup({ children }) {
+  return <div className="flex items-center gap-4">{children}</div>;
+}
+function CheckboxAndRadioItem({ id, label, type, ...props }) {
+  return (
+    <>
+      {type === "checkbox" && (
+        <Checkbox
+          // defaultChecked
+          ripple={false}
+          className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent"
+          {...props}
+        />
+      )}
+      {type === "radio" && (
+        <>
+          <input type="radio" id={id} className="w-4 h-4 shrink-0" {...props} />
+          <label htmlFor={id} className="text-sm">
+            {label}
+          </label>
+        </>
+      )}
+    </>
+  );
+}
 export default LeftSidebar;
