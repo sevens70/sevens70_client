@@ -56,6 +56,12 @@ a {
     @apply text-2xl;
     /* 24px */
   }
+  /* td {
+    font-family: jost !important;
+  }
+  td p {
+    font-family: jost !important;
+  } */
 }
 @layer utilities {
   .rounded-tl-48 {

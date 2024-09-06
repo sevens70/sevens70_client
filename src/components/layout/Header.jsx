@@ -27,8 +27,9 @@ import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
-import CartList from "../checkout/cartList";
+// import CartList from "../checkout/cartList";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
+import { useRouter } from "next/navigation";
 
 const menu = [
   {
@@ -85,6 +86,7 @@ const currency = [
 
 const Header = () => {
   const currencyData = useAppSelector(getCarrency);
+  const router = useRouter();
   const { totalCount } = useAppSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -396,10 +398,25 @@ const Header = () => {
             <nav className="hidden lg:block">{navList}</nav>
             <nav className="gap-1 items-center hidden 2xl:flex lg:hidden md:flex flex">
               <div className="flex items-end gap-4">
-                <IconButton color="white" size="sm">
+                <IconButton
+                  onClick={() => router.push("/favourite")}
+                  color="white"
+                  size="sm"
+                  className="shadow-none"
+                >
                   <GiSelfLove className="h-5 w-5" />
                 </IconButton>
-                <Menu
+                <Badge content={totalCount ? totalCount : 0}>
+                  <IconButton
+                    onClick={() => router.push("/cart")}
+                    color="white"
+                    size="sm"
+                    className="shadow-none"
+                  >
+                    <FaCartShopping className="h-5 w-5" />
+                  </IconButton>
+                </Badge>
+                {/* <Menu
                   open={isCardOpen}
                   handler={setIsCardOpen}
                   placement="bottom"
@@ -413,7 +430,11 @@ const Header = () => {
                     >
                       {" "}
                       <Badge content={totalCount ? totalCount : 0}>
-                        <IconButton color="white" size="sm">
+                        <IconButton
+                          onClick={() => router.push("/cart")}
+                          color="white"
+                          size="sm"
+                        >
                           <FaCartShopping className="h-5 w-5" />
                         </IconButton>
                       </Badge>
@@ -422,7 +443,7 @@ const Header = () => {
                   <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
                     <CartList />
                   </MenuList>
-                </Menu>
+                </Menu> */}
                 <Menu
                   // open={isMenuOpen}
                   // handler={setIsMenuOpen}
@@ -432,9 +453,13 @@ const Header = () => {
                   <MenuHandler>
                     <ListItem
                       // selected={isMenuOpen}
-                      className="px-0 py-0 w-[auto]"
+                      className="px-0 py-0 w-[30px]"
                     >
-                      <IconButton color="white" size="sm">
+                      <IconButton
+                        color="white"
+                        size="sm"
+                        className="shadow-none"
+                      >
                         <FaRegUser className="h-5 w-5" />
                       </IconButton>
                     </ListItem>
@@ -606,7 +631,7 @@ const Header = () => {
           </Link> */}
         </nav>
         {/* =================== */}
-        <nav className="gap-1 items-center 2xl:hidden lg:flex md:hidden flex justify-center mt-3">
+        {/* <nav className="gap-1 items-center 2xl:hidden lg:flex md:hidden flex justify-center mt-3">
           <div className="flex items-end gap-4">
             <IconButton color="white" size="sm">
               <GiSelfLove className="h-5 w-5" />
@@ -720,7 +745,7 @@ const Header = () => {
               </MenuList>
             </Menu>
           </div>
-        </nav>
+        </nav> */}
         {/* =================== */}
       </Drawer>
     </>

@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { CiGrid2H } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 import "react-image-gallery/styles/css/image-gallery.css";
 import { Button, Radio } from "@material-tailwind/react";
 import SwiperCartGallery from "./swiperCartGallery";
@@ -146,7 +148,7 @@ function CartGallery({ singleProduct }) {
                   onClick={() => dispatch(decrease(singleProduct?.id))}
                 >
                   {" "}
-                  -{" "}
+                  <FaMinus />
                 </Button>{" "}
                 {matchingItem ? matchingItem.amount : 0}
                 <Button
@@ -155,7 +157,7 @@ function CartGallery({ singleProduct }) {
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
                   onClick={() => dispatch(increase(singleProduct?.id))}
                 >
-                  +
+                  <FaPlus />
                 </Button>
               </div>
               <Button

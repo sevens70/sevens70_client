@@ -20,12 +20,13 @@ import { FaCartShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
-import Link from "next/link";
+// import Link from "next/link";
 import { addToCart } from "../../../lib/features/cartSlice";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
-import { convertStringToQueriesObject } from "./LeftSidebar";
+// import { convertStringToQueriesObject } from "./LeftSidebar";
+import { addToFav } from "../../../lib/features/favouriteSlice";
 const products = [
   {
     id: 1,
@@ -120,6 +121,8 @@ const products = [
 ];
 function RightSidebar() {
   const currencyData = useAppSelector(getCarrency);
+  const { items: favItems } = useAppSelector((state) => state.favourites);
+  console.log("items for fav", favItems);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -267,8 +270,24 @@ function RightSidebar() {
       </div>
       <div className="grid grid-cols-12 gap-4">
         {filteredProducts?.map((item, idx) => {
-          const { id, name, disc_price, price, img, discount, rating, tag } =
-            item;
+          const {
+            id,
+            name,
+            disc_price,
+            price,
+            img,
+            discount,
+            rating,
+            tag,
+            categories,
+          } = item;
+          console.log("items favItems", favItems);
+          const isFavorite = favItems.some(
+            (fav) =>
+              fav.id === id &&
+              fav.categories.some((cat) => categories.includes(cat))
+          );
+          console.log("items favItems0101", favItems, isFavorite);
           return (
             <div
               key={idx}
@@ -291,12 +310,33 @@ function RightSidebar() {
                     {discount}
                   </button>
                   <div className="hidden group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
-                    <IconButton color="white" size="sm">
-                      <GiSelfLove stroke="1" className="h-5 w-5 font-normal" />
+                    <IconButton
+                      onClick={() => {
+                        dispatch(addToFav(item));
+                        // router.push(`/product/${id}`);
+                      }}
+                      color="white"
+                      size="sm"
+                    >
+                      {isFavorite ? (
+                        <GiSelfLove
+                          className="h-5 w-5 font-normal !fill-primaryRed"
+                          // style={{ fill: "red" }}
+                        />
+                      ) : (
+                        <GiSelfLove className="h-5 w-5 font-normal" />
+                      )}
                     </IconButton>
 
                     {/* <Badge content="5"> */}
-                    <IconButton color="white" size="sm">
+                    <IconButton
+                      onClick={() => {
+                        dispatch(addToCart(item));
+                        router.push(`/product/${id}`);
+                      }}
+                      color="white"
+                      size="sm"
+                    >
                       <FaCartShopping className="h-5 w-5" />
                     </IconButton>
                     {/* </Badge> */}
