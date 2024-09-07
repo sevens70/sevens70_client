@@ -79,6 +79,8 @@ const products = [
     size: ["m"],
     stock: "In Stock",
     createdAt: "10/12/2023",
+    categoriesType: "men's shoes",
+    showType: "sneakers",
   },
   {
     id: 2,
@@ -97,6 +99,8 @@ const products = [
     size: ["xl"],
     stock: "In Stock",
     createdAt: "15/08/2023",
+    categoriesType: "unisex shoes",
+    showType: "boats",
   },
   {
     id: 3,
@@ -115,6 +119,8 @@ const products = [
     size: ["xxl"],
     stock: "Out of Stock",
     createdAt: "10/11/2023",
+    categoriesType: "kid's shoes",
+    showType: "sandals",
   },
   {
     id: 4,
@@ -133,6 +139,8 @@ const products = [
     size: ["s"],
     stock: "In Stock",
     createdAt: "10/12/2024",
+    categoriesType: "women's shoes",
+    showType: "loafers",
   },
   {
     id: 5,
@@ -151,6 +159,8 @@ const products = [
     size: ["l"],
     stock: "Out of Stock",
     createdAt: "04/06/2023",
+    categoriesType: "women's shoes",
+    showType: "formal shoes",
   },
 ];
 function RightSidebar() {
@@ -169,7 +179,7 @@ function RightSidebar() {
   const pathname = usePathname();
   let selectedQueries = {};
   searchParams?.forEach((values, key) => {
-    if (key !== "category" && key !== "view") {
+    if (key !== "view") {
       const queries = values.split(",");
       if (selectedQueries[key]) {
         selectedQueries[key].push(...queries);
@@ -210,6 +220,14 @@ function RightSidebar() {
       [product.brand.toLowerCase()],
       paramsObj?.brand
     );
+    const hasCategoriesType = isAvailable(
+      [product.categoriesType.toLowerCase()],
+      paramsObj?.category
+    );
+    const hasShoesType = isAvailable(
+      [product.showType.toLowerCase()],
+      paramsObj?.type
+    );
 
     // Check if the product's discount price falls within the price range
     const priceRange = paramsObj?.price?.[0]?.split("-");
@@ -222,13 +240,21 @@ function RightSidebar() {
 
     console.log("Filtered Products012", maxPrice, hasPrice);
 
-    return (hasSize || hasColors || hasCategories || hasBrand) && hasPrice;
+    return (
+      (hasSize ||
+        hasColors ||
+        hasCategories ||
+        hasBrand ||
+        hasShoesType ||
+        hasCategoriesType) &&
+      hasPrice
+    );
   });
   console.log(
-    "Filtered Products",
+    "Filtered Products007",
     filteredProducts,
     Object.keys(paramsObj).length,
-    paramsObj.price
+    paramsObj
   );
   // Check if paramsObj has only the sort parameter or is empty
   if (
@@ -492,7 +518,6 @@ function RightSidebar() {
                     </IconButton>
                   </div>
                   <div
-                    // className="md:hidden group-hover:block  absolute bottom-3 md:left-[22%] left-[25%]"
                     className={`md:hidden group-hover:block absolute bottom-3 ${
                       currentView === "grid"
                         ? "md:left-[10%] left-[30%]"
