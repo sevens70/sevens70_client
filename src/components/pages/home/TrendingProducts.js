@@ -43,7 +43,7 @@ function TrendingProducts() {
     {
       name: "Ribbed modal T-shirt",
       text: "Button-up shirt sleeves and a relaxed silhouette. It’s tailored with drapey, crinkle-texture fabric",
-      img: "./trending/tr1.png",
+      img: "/trending/tr1.png",
       discount: "10% off",
       price: "$45.00",
       disc_price: "$45.00",
@@ -58,7 +58,7 @@ function TrendingProducts() {
       disc_price: "$45.00",
       rating: "5.0",
       tag: "shirt",
-      img: "./trending/tr2.png",
+      img: "/trending/tr2.png",
     },
     {
       name: "Trending new hoddie",
@@ -68,7 +68,7 @@ function TrendingProducts() {
       disc_price: "$45.00",
       rating: "5.0",
       tag: "shirt",
-      img: "./trending/tr2.png",
+      img: "/trending/tr2.png",
     },
   ];
   return (

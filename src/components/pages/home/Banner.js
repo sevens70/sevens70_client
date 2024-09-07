@@ -7,7 +7,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 const slidersInfo = [
   {
-    img: "./bannerImg.png",
+    img: "/bannerImg.png",
     title: `Style Haven Unveiled Your Exclusive Dress Fashion`,
     offer: "50% Off",
     tag: "Summer Super Sale",
@@ -16,7 +16,7 @@ const slidersInfo = [
     route: "/",
   },
   {
-    img: "./bannerImg.png",
+    img: "/bannerImg.png",
     title: "Industrial Contractor",
     offer: "50% OFF",
     tag: "Summer Super Sale",
@@ -25,7 +25,7 @@ const slidersInfo = [
     route: "/",
   },
   {
-    img: "./bannerImg.png",
+    img: "/bannerImg.png",
     title: "All Construction Services",
     offer: "50% OFF",
     tag: "Summer Super Sale",

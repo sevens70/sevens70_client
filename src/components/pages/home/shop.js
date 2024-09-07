@@ -10,19 +10,19 @@ const shop = [
     tag: "New Arrivals",
     title: "Natural Luxury Summer Denim Jacket",
     text: "25% Discount This Week",
-    img: "./shop/s1.png",
+    img: "/shop/s1.png",
   },
   {
     tag: "Big Sale",
     title: "Hot Summer Sale Collections",
     text: "25% Discount This Week",
-    img: "./shop/s2.png",
+    img: "/shop/s2.png",
   },
   {
     tag: "Big Sale",
     title: "Hot Summer Sale Collections",
     text: "25% Discount This Week",
-    img: "./shop/s2.png",
+    img: "/shop/s2.png",
   },
 ];
 const breakpoints = {

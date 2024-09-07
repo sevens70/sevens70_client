@@ -62,6 +62,12 @@ a {
   td p {
     font-family: jost !important;
   } */
+  input {
+    font-family: jost !important;
+  }
+  input::placeholder {
+    font-family: jost !important;
+  }
 }
 @layer utilities {
   .rounded-tl-48 {

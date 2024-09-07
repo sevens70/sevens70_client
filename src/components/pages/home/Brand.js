@@ -29,28 +29,28 @@ const breakpoints = {
 };
 const brand = [
   {
-    img: "./brand/b1.png",
+    img: "/brand/b1.png",
   },
   {
-    img: "./brand/b2.png",
+    img: "/brand/b2.png",
   },
   {
-    img: "./brand/b3.png",
+    img: "/brand/b3.png",
   },
   {
-    img: "./brand/b4.png",
+    img: "/brand/b4.png",
   },
   {
-    img: "./brand/b5.png",
+    img: "/brand/b5.png",
   },
   {
-    img: "./brand/b6.png",
+    img: "/brand/b6.png",
   },
   {
-    img: "./brand/b6.png",
+    img: "/brand/b6.png",
   },
   {
-    img: "./brand/b6.png",
+    img: "/brand/b6.png",
   },
 ];
 function Brand() {

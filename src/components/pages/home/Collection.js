@@ -10,19 +10,19 @@ const shop = [
     tag: "Get 67% off !",
     title: "Stylish dress collection",
     text: "Crafted to convey a sense of discovery and exclusivity, enticing readers to explore indulge in the latest trends and offerings",
-    img: "./collection/collection.png",
+    img: "/collection/collection.png",
   },
   {
     tag: "Get 80% off !",
     title: "New Product collection For Bangladesh",
     text: "Crafted to convey a sense of discovery and exclusivity, enticing readers to explore indulge in the latest trends and offerings",
-    img: "./collection/collection.png",
+    img: "/collection/collection.png",
   },
   //   {
   //     tag: "Big Sale",
   //     title: "Hot Summer Sale Collections",
   //     text: "25% Discount This Week",
-  //     img: "./shop/s2.png",
+  //     img: "/shop/s2.png",
   //   },
 ];
 function Collection() {

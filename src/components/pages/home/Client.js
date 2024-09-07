@@ -48,7 +48,7 @@ const products = [
   {
     name: "Best Online Fashion Dress",
     text: "I always find something stylish and affordable on this web fashion site",
-    img: "./clients/c1.png",
+    img: "/clients/c1.png",
     userName: "Robert Smiths",
     location: "Customer from USA",
     ratings: 5,
@@ -56,7 +56,7 @@ const products = [
   {
     name: "Best Online Fashion Dress",
     text: "I always find something stylish and affordable on this web fashion site",
-    img: "./clients/c2.png",
+    img: "/clients/c2.png",
     userName: "Robert Smiths",
     location: "Customer from USA",
     ratings: 3,
@@ -64,7 +64,7 @@ const products = [
   {
     name: "Best Online Fashion Dress",
     text: "I always find something stylish and affordable on this web fashion site",
-    img: "./clients/c3.png",
+    img: "/clients/c3.png",
     userName: "Robert Smiths",
     location: "Customer from USA",
     ratings: 4,
@@ -72,7 +72,7 @@ const products = [
   {
     name: "Best Online Fashion Dress",
     text: "I always find something stylish and affordable on this web fashion site",
-    img: "./clients/c3.png",
+    img: "/clients/c3.png",
     userName: "Robert Smiths",
     location: "Customer from USA",
     ratings: 4,
@@ -80,7 +80,7 @@ const products = [
   {
     name: "Best Online Fashion Dress",
     text: "I always find something stylish and affordable on this web fashion site",
-    img: "./clients/c3.png",
+    img: "/clients/c3.png",
     userName: "Robert Smiths",
     location: "Customer from USA",
     ratings: 4,

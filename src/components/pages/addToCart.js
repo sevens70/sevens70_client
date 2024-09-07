@@ -227,7 +227,7 @@ export default function AddToCart() {
                 </Button>
                 <Button
                   color="dark"
-                  //   onClick={() => dispatch(clearCart())}
+                  onClick={() => router.push("/placeOrder")}
                   className="mt-10 bg-primaryRed"
                 >
                   Checkout
