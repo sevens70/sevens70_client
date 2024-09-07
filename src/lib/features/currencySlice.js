@@ -2,7 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const currencySlice = createSlice({
   name: "currency",
-  initialState: { currency: null },
+  initialState: {
+    currency: {
+      label: "BDT",
+      value: "BDT",
+      symbol: "৳",
+      flag: "/header/c2.png",
+    },
+  },
   reducers: {
     addToCurrency: (state, action) => {
       state.currency = action.payload;

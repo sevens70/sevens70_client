@@ -175,6 +175,12 @@ const filterOptions = [
     type: "radio",
   },
   {
+    id: "prices",
+    title: "Filter by price",
+    options: [],
+    type: "slider",
+  },
+  {
     id: "categories",
     title: "Prodcut Category",
     options: categories,
@@ -214,7 +220,7 @@ export function convertStringToQueriesObject(searchParams) {
   });
   return selectedQueries;
 }
-function convertValidStringQueries(queries) {
+export function convertValidStringQueries(queries) {
   console.log("e.target.value= queries", queries);
   let q = "";
   for (let [key, value] of Object.entries(queries)) {
@@ -222,25 +228,32 @@ function convertValidStringQueries(queries) {
   }
   return q;
 }
-// =================
 
 function LeftSidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
-  console.log("'pathname'", pathname);
+  const [price, setPrice] = useState(0);
+
+  const handlePriceChange = (e) => {
+    setPrice(parseInt(e?.target.value));
+    let queries = { ...selectedFilterQueries };
+    queries.price = [`${0}-${parseInt(e?.target.value)}`];
+    const queryString = convertValidStringQueries(queries);
+    router.push(`${pathname}?${queryString}`, {
+      scroll: false,
+    });
+  };
   useEffect(() => {
     const paramsObj = convertStringToQueriesObject(searchParams);
     setSelectedFilterQueries(paramsObj);
   }, [searchParams]);
 
   function handleSelectFilterOptions(e) {
-    console.log("e.target.value=", e.target.value, e);
     const name = e.target.name;
     const value = e.target.value;
     const type = e.target.type;
-    console.log("select0101", name, value, type);
     let selectedQueries = selectedFilterQueries;
 
     if (selectedQueries[name]) {
@@ -280,6 +293,8 @@ function LeftSidebar() {
             data={value}
             onChange={handleSelectFilterOptions}
             isChecked={isChecked}
+            price={price}
+            handlePriceChange={handlePriceChange}
           />
         );
       })}

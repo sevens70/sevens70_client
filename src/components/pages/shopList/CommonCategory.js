@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   List,
@@ -10,9 +10,19 @@ import {
   AccordionHeader,
   AccordionBody,
   Checkbox,
+  Slider,
 } from "@material-tailwind/react";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-function CommonCategory({ data, onChange, isChecked }) {
+import { useAppSelector } from "../../../lib/hooks";
+import { getCarrency } from "../../../lib/features/currencySlice";
+function CommonCategory({
+  data,
+  onChange,
+  isChecked,
+  price,
+  handlePriceChange,
+}) {
+  const currencyData = useAppSelector(getCarrency);
   return (
     <div>
       <List>
@@ -47,60 +57,80 @@ function CommonCategory({ data, onChange, isChecked }) {
           </ListItem>
           <AccordionBody className="py-1">
             <List className="p-0 hover:bg-none hover:bg-none">
-              {data.options.map((value, idx) => (
-                <ListItem
-                  key={idx}
-                  className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm ${
-                    data.title === "Filter by size" ? "uppercase" : "capitalize"
-                  }`}
-                >
-                  <ListItemPrefix>
-                    {(data.title === "Sorting Order" ||
-                      data.title === "Prodcut Category" ||
-                      data.title === "Filter by size" ||
-                      data.title === "Brand") && (
-                      <>
-                        <CheckboxAndRadioGroup key={value}>
-                          <CheckboxAndRadioItem
-                            type={data.type}
-                            name={data.id}
-                            id={value.toLowerCase().trim()}
-                            label={value}
-                            value={value.toLowerCase().trim()}
-                            checked={isChecked(data.id, value)}
-                            onChange={onChange}
-                            className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent"
-                          />
-                        </CheckboxAndRadioGroup>
-                      </>
-                    )}
+              {data.type === "slider" ? (
+                <div className="price-filter px-3">
+                  <Slider
+                    // defaultValue={50}
+                    size="sm"
+                    className="text-[#F87643]"
+                    barClassName="rounded-none bg-[#F87643]"
+                    thumbClassName="[&::-moz-range-thumb]:rounded [&::-webkit-slider-thumb]:rounded [&::-moz-range-thumb]:-mt-[4px] [&::-webkit-slider-thumb]:-mt-[4px]"
+                    trackClassName="[&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent rounded-none !bg-[#F87643]/10 border border-[#F87643]/20"
+                    value={price}
+                    onChange={handlePriceChange}
+                  />
+                  <p className="text-xsm text-dark-700 mt-2">
+                    {`Price: ${currencyData?.symbol} 0 - ${currencyData?.symbol} ${price}`}
+                  </p>{" "}
+                </div>
+              ) : (
+                data.options?.map((value, idx) => (
+                  <ListItem
+                    key={idx}
+                    className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm ${
+                      data.title === "Filter by size"
+                        ? "uppercase"
+                        : "capitalize"
+                    }`}
+                  >
+                    <ListItemPrefix>
+                      {(data.title === "Sorting Order" ||
+                        data.title === "Prodcut Category" ||
+                        data.title === "Filter by size" ||
+                        data.title === "Brand") && (
+                        <>
+                          <CheckboxAndRadioGroup key={value}>
+                            <CheckboxAndRadioItem
+                              type={data.type}
+                              name={data.id}
+                              id={value.toLowerCase().trim()}
+                              label={value}
+                              value={value.toLowerCase().trim()}
+                              checked={isChecked(data.id, value)}
+                              onChange={onChange}
+                              className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent"
+                            />
+                          </CheckboxAndRadioGroup>
+                        </>
+                      )}
 
-                    {data.title === "Filter by color" && (
-                      <>
-                        <CheckboxAndRadioGroup key={value}>
-                          <CheckboxAndRadioItem
-                            type={data.type}
-                            name={data.id}
-                            id={value.toLowerCase().trim()}
-                            label={value}
-                            value={value.toLowerCase().trim()}
-                            checked={isChecked(data.id, value)}
-                            onChange={onChange}
-                            style={{ backgroundColor: value }}
-                            className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
-                          />
-                        </CheckboxAndRadioGroup>
-                      </>
+                      {data.title === "Filter by color" && (
+                        <>
+                          <CheckboxAndRadioGroup key={value}>
+                            <CheckboxAndRadioItem
+                              type={data.type}
+                              name={data.id}
+                              id={value.toLowerCase().trim()}
+                              label={value}
+                              value={value.toLowerCase().trim()}
+                              checked={isChecked(data.id, value)}
+                              onChange={onChange}
+                              style={{ backgroundColor: value }}
+                              className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
+                            />
+                          </CheckboxAndRadioGroup>
+                        </>
+                      )}
+                    </ListItemPrefix>
+                    {value}
+                    {data.title !== "Filter by color" && (
+                      <ListItemSuffix className="text-grey-200 text-base mr-1">
+                        ({1})
+                      </ListItemSuffix>
                     )}
-                  </ListItemPrefix>
-                  {value}
-                  {data.title !== "Filter by color" && (
-                    <ListItemSuffix className="text-grey-200 text-base mr-1">
-                      ({1})
-                    </ListItemSuffix>
-                  )}
-                </ListItem>
-              ))}
+                  </ListItem>
+                ))
+              )}
             </List>
           </AccordionBody>
         </Accordion>
