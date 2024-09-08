@@ -1,8 +1,9 @@
 import { Jost, Montserrat } from "next/font/google";
 import "./globals.css";
-import {ReduxProvider} from '../components/ReduxProvider'
+import { ReduxProvider } from "../components/ReduxProvider";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { Toaster } from "react-hot-toast";
 const jost = Jost({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <ReduxProvider>
           {" "}
           <Header />
+          <Toaster position="top-center" />
           {children}
           <Footer />
         </ReduxProvider>{" "}

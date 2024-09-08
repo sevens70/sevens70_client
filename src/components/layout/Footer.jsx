@@ -50,7 +50,7 @@ const Footer = () => {
           <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
             <img
               priority="true"
-              src="./FooterLogo.png"
+              src="/FooterLogo.png"
               className="w-full max-w-[150px] bg-white mb-3 rounded-none md:mx-0 h-full"
               alt="footer_logo"
               width={300}

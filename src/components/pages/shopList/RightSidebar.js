@@ -478,7 +478,7 @@ function RightSidebar() {
                     {/* <Badge content="5"> */}
                     <IconButton
                       onClick={() => {
-                        dispatch(addToCart(item));
+                        // dispatch(addToCart(item));
                         router.push(`/product/${id}`);
                       }}
                       color="white"
@@ -501,7 +501,7 @@ function RightSidebar() {
                   >
                     <div
                       onClick={() => {
-                        dispatch(addToCart(item));
+                        // dispatch(addToCart(item));
                         router.push(`/product/${id}`);
                       }}
                     >

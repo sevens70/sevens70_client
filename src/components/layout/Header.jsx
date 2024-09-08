@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaPhone } from "react-icons/fa";
+import { FaJediOrder } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
 import { FaChevronDown } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -486,6 +487,19 @@ const Header = () => {
                         className="text-xsm font-jost font-normal text-gray-600"
                       >
                         My Profile
+                      </h6>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => router.push("/orders")}
+                      className="flex items-center gap-2"
+                    >
+                      <FaJediOrder />
+
+                      <h6
+                        variant="small"
+                        className="text-xsm font-jost font-normal text-gray-600"
+                      >
+                        Orders
                       </h6>
                     </MenuItem>
                     <MenuItem className="flex items-center gap-2">

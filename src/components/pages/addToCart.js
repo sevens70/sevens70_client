@@ -105,7 +105,7 @@ export default function AddToCart() {
               </thead>
               <tbody>
                 {items.map(
-                  ({ id, name, img, category, amount, price }, index) => {
+                  ({ id, name, img, prd_category, amount, price }, index) => {
                     const isLast = index === items.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -135,7 +135,7 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <p className="font-xsm text-grey-600 font-jost">
-                            {category}
+                            {prd_category}
                           </p>
                         </td>
                         <td className={classes}>
@@ -143,21 +143,24 @@ export default function AddToCart() {
                             {/* {amount} */}
                             <div
                               size="sm"
-                              className="font-jost font-normal text-sm bg-transparent font-normal capitalize text-dark-900  border-[1px] border-grey-600 max-w-[132px] rounded flex items-center gap-3 bg-[#F1F1F1]"
+                              className="font-jost font-normal text-sm bg-transparent font-normal capitalize text-dark-900  border-[1px] border-grey-600 max-w-[120px] rounded flex items-center gap-3 bg-[#F1F1F1]"
                             >
                               <Button
                                 size="sm"
-                                className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 px-3 rounded-r-none bg-white"
+                                className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-3 pr-0 rounded-r-none bg-white"
                                 disabled={amount < 2}
                                 onClick={() => dispatch(decrease(id))}
                               >
                                 {" "}
                                 <FaMinus />
                               </Button>{" "}
-                              <div className="px-2"> {amount}</div>
+                              <div className="px-2 w-[70px] text-center">
+                                {" "}
+                                {amount}
+                              </div>
                               <Button
                                 size="sm"
-                                className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 px-3 rounded-l-none  bg-white"
+                                className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-0 pr-3 rounded-l-none  bg-white"
                                 onClick={() => dispatch(increase(id))}
                               >
                                 <FaPlus />
@@ -179,7 +182,8 @@ export default function AddToCart() {
                             variant="small"
                             className="font-normal text-gray-600"
                           >
-                            Total
+                            {currencyData?.symbol}
+                            {totalAmount}
                           </p>
                         </td>
                         <td className={classes}>

@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { FaCheck } from "react-icons/fa6";
 import { CiGrid2H } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
@@ -11,6 +12,7 @@ import SwiperCartGallery from "./swiperCartGallery";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
 import {
+  addToCart,
   decrease,
   getCart,
   getCartTotal,
@@ -20,6 +22,16 @@ function CartGallery({ singleProduct }) {
   const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
   const cart = useAppSelector(getCart);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [count, setCount] = useState(1);
+
+  const handleColorChange = (color) => {
+    setSelectedColor(color);
+  };
+  const handleSizeChange = (size) => {
+    setSelectedSize(size);
+  };
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
@@ -39,22 +51,52 @@ function CartGallery({ singleProduct }) {
       </svg>
     );
   }
-  const images = [
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
-    },
-  ];
+  // const images = [
+  //   {
+  //     original: "https://picsum.photos/id/1018/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1018/250/150/",
+  //   },
+  //   {
+  //     original: "https://picsum.photos/id/1015/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1015/250/150/",
+  //   },
+  //   {
+  //     original: "https://picsum.photos/id/1019/1000/600/",
+  //     thumbnail: "https://picsum.photos/id/1019/250/150/",
+  //   },
+  // ];
   const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
+  const handleIncrease = () => {
+    if (count < 4) {
+      setCount((prevCount) => prevCount + 1);
+    } else {
+      toast.error("No more than 4 products at a time");
+    }
+  };
 
+  const handleDecrease = () => {
+    setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
+  };
+  console.log("matchingItem", matchingItem);
+  const handleAddToCart = () => {
+    if (selectedColor && selectedSize) {
+      if (matchingItem?.amount >= 4) {
+        toast.success("Quantity of products must be 4 or less");
+      } else {
+        dispatch(
+          addToCart({
+            ...singleProduct,
+            colors: [selectedColor],
+            size: [selectedSize],
+            amount: count,
+          })
+        );
+        toast.success("Successfully Added in Cart.");
+      }
+    } else {
+      toast.error("Check color & size.");
+    }
+  };
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-5 w-full">
@@ -88,53 +130,36 @@ function CartGallery({ singleProduct }) {
                 {singleProduct?.price}
               </h6>
             </h6>
-            <p className="text-dark-700 text-sm mt-2">color: Yellow</p>
+            <p className="text-dark-700 text-sm mt-2 capitalize">
+              color: {selectedColor}
+            </p>
             <div className="flex w-max flex-wrap gap-0">
-              <Radio
-                name="color"
-                color="purple"
-                className="h-8 w-8 text-primaryRed bg-primaryRed"
-              />
-              <Radio
-                name="color"
-                color="gray"
-                defaultChecked
-                className="h-8 w-8 text-primaryRed bg-grey-700"
-              />
-              <Radio
-                name="color"
-                color="red"
-                className="h-8 w-8 text-primaryRed bg-white"
-              />
-              <Radio
-                name="color"
-                color="amber"
-                className="h-8 w-8 text-primaryRed bg-priceColor"
-              />
+              {singleProduct.colors?.map((item, idx) => (
+                <Radio
+                  key={idx}
+                  // name="color"
+                  // color="gray"
+                  checked={selectedColor === item}
+                  onChange={() => handleColorChange(item)}
+                  className="h-8 w-8 text-primaryRed border-none"
+                  style={{ backgroundColor: item }}
+                />
+              ))}
             </div>
-            <p className="text-dark-900 text-sm">Size</p>
+            <p className="text-dark-900 text-sm">Size:</p>
             <div className="flex w-max gap-5">
-              <Radio
-                name="color"
-                color="purple"
-                label={<p className="text-xsm text-dark-900">S</p>}
-              />
-              <Radio
-                name="color"
-                color="gray"
-                defaultChecked
-                label={<p className="text-xsm text-dark-900">L</p>}
-              />
-              <Radio
-                name="color"
-                color="red"
-                label={<p className="text-xsm text-dark-900">M</p>}
-              />
-              <Radio
-                name="color"
-                color="amber"
-                label={<p className="text-xsm text-dark-900">S</p>}
-              />
+              {singleProduct?.size?.map((item, idx) => (
+                <Radio
+                  key={idx}
+                  name="size"
+                  // color="purple"
+                  checked={selectedSize === item}
+                  onChange={() => handleSizeChange(item)}
+                  label={
+                    <p className="text-xsm text-dark-900 uppercase">{item}</p>
+                  }
+                />
+              ))}
             </div>
             <div className="flex flex-wrap justify-start items-center gap-3">
               <div
@@ -144,18 +169,20 @@ function CartGallery({ singleProduct }) {
                 <Button
                   size="md"
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
-                  disabled={matchingItem?.amount < 2 || !matchingItem}
-                  onClick={() => dispatch(decrease(singleProduct?.id))}
+                  disabled={count <= 1}
+                  onClick={handleDecrease}
                 >
                   {" "}
                   <FaMinus />
                 </Button>{" "}
-                {matchingItem ? matchingItem.amount : 0}
+                {/* {matchingItem ? matchingItem.amount : 1} */}{" "}
+                {/* {matchingItem ? matchingItem?.amount : count} */}
+                {count}
                 <Button
                   size="md"
-                  disabled={!matchingItem}
+                  // disabled={!matchingItem}
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
-                  onClick={() => dispatch(increase(singleProduct?.id))}
+                  onClick={handleIncrease}
                 >
                   <FaPlus />
                 </Button>
@@ -163,6 +190,11 @@ function CartGallery({ singleProduct }) {
               <Button
                 size="md"
                 className="font-jost text-sm bg-dark-900 font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
+                // onClick={() => handleCart(singleProduct)}
+                // disabled={
+                //   matchingItem && matchingItem?.amount > 4 ? true : false
+                // }
+                onClick={handleAddToCart}
               >
                 Add to cart
               </Button>
