@@ -166,7 +166,6 @@ const products = [
 function RightSidebar() {
   const currencyData = useAppSelector(getCarrency);
   const { items: favItems } = useAppSelector((state) => state.favourites);
-  console.log("items for fav", favItems);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [isNumber, setIsNumber] = useState(false);
@@ -238,7 +237,6 @@ function RightSidebar() {
       parseInt(product.disc_price) >= minPrice &&
       parseInt(product.disc_price) <= maxPrice;
 
-    console.log("Filtered Products012", maxPrice, hasPrice);
 
     return (
       (hasSize ||
@@ -250,12 +248,7 @@ function RightSidebar() {
       hasPrice
     );
   });
-  console.log(
-    "Filtered Products007",
-    filteredProducts,
-    Object.keys(paramsObj).length,
-    paramsObj
-  );
+
   // Check if paramsObj has only the sort parameter or is empty
   if (
     Object.keys(paramsObj).length === 0 ||
@@ -264,7 +257,6 @@ function RightSidebar() {
     // if only sorting is applied or no filters are selected
     filteredProducts = products.sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      console.log("sortKey", sortKey);
       switch (sortKey) {
         case "newest":
           return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
@@ -298,7 +290,6 @@ function RightSidebar() {
     // if additional filters are applied
     filteredProducts = filteredProducts.sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      console.log("sortKey", sortKey);
       switch (sortKey) {
         case "newest":
           return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
@@ -451,13 +442,11 @@ function RightSidebar() {
             tag,
             categories,
           } = item;
-          console.log("items favItems", favItems);
           const isFavorite = favItems.some(
             (fav) =>
               fav.id === id &&
               fav.categories.some((cat) => categories.includes(cat))
           );
-          console.log("items favItems0101", favItems, isFavorite);
           return (
             <div
               key={idx}

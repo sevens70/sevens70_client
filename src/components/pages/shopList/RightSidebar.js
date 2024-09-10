@@ -22,7 +22,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 // import Link from "next/link";
-import { addToCart } from "../../../lib/features/cartSlice";
+import { addToCart, getCart } from "../../../lib/features/cartSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
@@ -32,6 +32,7 @@ import {
   convertStringToQueriesObject,
   convertValidStringQueries,
 } from "./LeftSidebar";
+import toast from "react-hot-toast";
 const showNumber = [
   {
     label: "5",
@@ -68,8 +69,10 @@ const products = [
     img: "/category/cate1.png",
     discount: "10% off",
     price: "45.00",
-    disc_price: "45.00",
+    disc_price: "30.00",
     rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
     tag: "shirt",
     categories: ["women cloth"],
     prd_category: "Dress",
@@ -85,8 +88,10 @@ const products = [
     name: "Loose Fit Hoodie",
     price: "41.00",
     discount: "10% off",
-    disc_price: "45.00",
+    disc_price: "40.00",
     rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
     tag: "shirt",
     img: "/category/cate2.png",
     categories: ["women cloth"],
@@ -101,10 +106,12 @@ const products = [
   {
     id: 3,
     name: "Ribbed Tank Top",
-    price: "35.00",
+    price: "55.00",
     disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
     tag: "shirt",
     img: "/category/cate3.png",
     categories: ["men cloth"],
@@ -123,6 +130,8 @@ const products = [
     disc_price: "45.00",
     discount: "10% off",
     rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
     tag: "shirt",
     img: "/category/cate4.png",
     categories: ["men cloth"],
@@ -141,6 +150,8 @@ const products = [
     disc_price: "75.00",
     discount: "10% off",
     rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
     tag: "shirt",
     img: "/category/cate4.png",
     categories: ["men cloth"],
@@ -150,13 +161,73 @@ const products = [
     brand: "Style Zone",
     size: ["l"],
     stock: "Out of Stock",
-    createdAt: "04/06/2023",
+    createdAt: "04/09/2023",
+  },
+  {
+    id: 6,
+    name: "D-neck cotton shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["pink"],
+    brand: "Style Zone",
+    size: ["xxl"],
+    stock: "Out of Stock",
+    createdAt: "04/01/2023",
+  },
+  {
+    id: 7,
+    name: "A-neck cotton T-shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["green"],
+    brand: "Style Zone",
+    size: ["xl"],
+    stock: "Out of Stock",
+    createdAt: "04/02/2023",
+  },
+  {
+    id: 8,
+    name: "G-neck cotton T-shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["green", "purple", "gray", "red", "pink"],
+    brand: "Style Zone",
+    size: ["s", "l", "m", "xl", "xxl"],
+    stock: "Out of Stock",
+    createdAt: "04/03/2023",
   },
 ];
 function RightSidebar() {
   const currencyData = useAppSelector(getCarrency);
   const { items: favItems } = useAppSelector((state) => state.favourites);
-  console.log("items for fav", favItems);
+  const cart = useAppSelector(getCart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [isNumber, setIsNumber] = useState(false);
@@ -220,16 +291,9 @@ function RightSidebar() {
       parseInt(product.disc_price) >= minPrice &&
       parseInt(product.disc_price) <= maxPrice;
 
-    console.log("Filtered Products012", maxPrice, hasPrice);
-
     return (hasSize || hasColors || hasCategories || hasBrand) && hasPrice;
   });
-  console.log(
-    "Filtered Products",
-    filteredProducts,
-    Object.keys(paramsObj).length,
-    paramsObj.price
-  );
+
   // Check if paramsObj has only the sort parameter or is empty
   if (
     Object.keys(paramsObj).length === 0 ||
@@ -238,7 +302,6 @@ function RightSidebar() {
     // if only sorting is applied or no filters are selected
     filteredProducts = products.sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      console.log("sortKey", sortKey);
       switch (sortKey) {
         case "newest":
           return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
@@ -272,7 +335,6 @@ function RightSidebar() {
     // if additional filters are applied
     filteredProducts = filteredProducts.sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      console.log("sortKey", sortKey);
       switch (sortKey) {
         case "newest":
           return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
@@ -425,13 +487,11 @@ function RightSidebar() {
             tag,
             categories,
           } = item;
-          console.log("items favItems", favItems);
           const isFavorite = favItems.some(
             (fav) =>
               fav.id === id &&
               fav.categories.some((cat) => categories.includes(cat))
           );
-          console.log("items favItems0101", favItems, isFavorite);
           return (
             <div
               key={idx}
@@ -459,7 +519,16 @@ function RightSidebar() {
                   <div className="sm:hidden flex group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
                     <IconButton
                       onClick={() => {
-                        dispatch(addToFav(item));
+                        const matchingItem = favItems?.find(
+                          (fav) => fav.id === item?.id
+                        );
+                        if (matchingItem) {
+                          dispatch(addToFav(item));
+                          toast.success("Removed item from Favourite list.");
+                        } else {
+                          dispatch(addToFav(item));
+                          toast.success("Item added to the Favourite list.");
+                        }
                         // router.push(`/product/${id}`);
                       }}
                       color="white"
@@ -478,16 +547,26 @@ function RightSidebar() {
                     {/* <Badge content="5"> */}
                     <IconButton
                       onClick={() => {
-                        // dispatch(addToCart(item));
-                        router.push(`/product/${id}`);
+                        const matchingItem = cart?.find(
+                          (prd) => prd.id === item?.id
+                        );
+                        if (matchingItem) {
+                          toast.success("Already Added in Cart.");
+                        } else {
+                          dispatch(addToCart(item));
+                          toast.success("Successfully Added in Cart.");
+                        }
                       }}
                       color="white"
                       size="sm"
                     >
                       <FaCartShopping className="h-5 w-5" />
                     </IconButton>
-                    {/* </Badge> */}
-                    <IconButton color="white" size="sm">
+                    <IconButton
+                      onClick={() => router.push(`/orders`)}
+                      color="white"
+                      size="sm"
+                    >
                       <FaRegUser className="h-5 w-5" />
                     </IconButton>
                   </div>

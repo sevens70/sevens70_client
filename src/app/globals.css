@@ -185,6 +185,11 @@ input::placeholder {
     min-height: auto;
   }
 }
+@media only screen and (max-width: 450px) {
+  .hide__item {
+    display: none;
+  }
+}
 /* @media only screen and (max-width: 550px) {
   .cartGallery_main {
     display: none;

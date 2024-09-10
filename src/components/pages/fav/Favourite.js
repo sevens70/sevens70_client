@@ -44,11 +44,9 @@ const TABLE_HEAD = [
 
 export default function Favourite() {
   const pathname = usePathname();
-  console.log("pathname", pathname);
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
   const { items } = useAppSelector((state) => state.favourites);
-  console.log("items", items);
   const dispatch = useAppDispatch();
 
   if (items?.length === 0) {
@@ -69,7 +67,6 @@ export default function Favourite() {
       </div>
     );
   }
-
   return (
     <div>
       <section className="">
@@ -85,7 +82,7 @@ export default function Favourite() {
           </Breadcrumbs>
         </div>
         <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
-          <Card className="h-full w-full overflow-auto">
+          <Card className="h-full w-full overflow-auto pb-5">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -102,7 +99,7 @@ export default function Favourite() {
               </thead>
               <tbody>
                 {items.map(
-                  ({ id, name, img, category, amount, price }, index) => {
+                  ({ id, name, img, categories, amount, price }, index) => {
                     const isLast = index === items.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -132,7 +129,7 @@ export default function Favourite() {
                         </td>
                         <td className={classes}>
                           <p className="font-xsm text-grey-600 font-jost">
-                            {category}
+                            {categories[0]}
                           </p>
                         </td>
 

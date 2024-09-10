@@ -189,7 +189,6 @@ export function convertStringToQueriesObject(searchParams) {
   return selectedQueries;
 }
 function convertValidStringQueries(queries) {
-  console.log("e.target.value= queries", queries);
   let q = "";
   for (let [key, value] of Object.entries(queries)) {
     q = q + `${q === "" ? "" : "&"}${key}=${value}`;
@@ -202,18 +201,15 @@ function LeftSidebar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
-  console.log("'pathname'", pathname);
   useEffect(() => {
     const paramsObj = convertStringToQueriesObject(searchParams);
     setSelectedFilterQueries(paramsObj);
   }, [searchParams]);
 
   function handleSelectFilterOptions(e) {
-    console.log("e.target.value=", e.target.value, e);
     const name = e.target.name;
     const value = e.target.value;
     const type = e.target.type;
-    console.log("select0101", name, value, type);
     let selectedQueries = selectedFilterQueries;
 
     if (selectedQueries[name]) {
@@ -232,7 +228,6 @@ function LeftSidebar() {
     } else if (selectedQueries) {
       selectedQueries[name] = [value];
     }
-    console.log("e.target.value=1", selectedQueries);
     // router.push(`/?${convertValidStringQueries(selectedQueries)}`, {
     //   scroll: false,
     // });

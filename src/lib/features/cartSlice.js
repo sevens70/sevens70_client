@@ -60,12 +60,9 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.id === newItem.id);
 
       if (existingItem) {
-        // console.log("Existing item amount before:", existingItem.amount);
         existingItem.amount += newItem.amount || 1;
-        // console.log("Existing item amount after:", existingItem.amount);
       } else {
         state.items.push({ ...newItem, amount: newItem.amount || 1 });
-        // console.log("New item added:", newItem.name);
       }
     },
   },

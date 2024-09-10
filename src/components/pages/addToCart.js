@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import { Card, IconButton } from "@material-tailwind/react";
-
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { getCarrency } from "../../lib/features/currencySlice";
 import {
@@ -18,6 +18,7 @@ import {
   clearCart,
 } from "../../lib/features/cartSlice";
 import { remove } from "../../lib/features/cartSlice";
+import toast from "react-hot-toast";
 
 const TABLE_HEAD = [
   {
@@ -45,7 +46,6 @@ const TABLE_HEAD = [
 
 export default function AddToCart() {
   const pathname = usePathname();
-  console.log("pathname", pathname);
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
   const { totalAmount, items } = useAppSelector((state) => state.cart);
@@ -87,8 +87,8 @@ export default function AddToCart() {
             </a>
           </Breadcrumbs>
         </div>
-        <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
-          <Card className="h-full w-full overflow-auto">
+        <div className="my-20 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
+          <Card className="h-full w-full overflow-auto pb-5">
             <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
@@ -149,19 +149,41 @@ export default function AddToCart() {
                                 size="sm"
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-3 pr-0 rounded-r-none bg-white"
                                 disabled={amount < 2}
-                                onClick={() => dispatch(decrease(id))}
+                                onClick={() => {
+                                  dispatch(decrease(id));
+                                  toast.error(
+                                    "Quantity is decreased form Cart item."
+                                  );
+                                }}
                               >
                                 {" "}
                                 <FaMinus />
                               </Button>{" "}
-                              <div className="px-2 w-[70px] text-center">
+                              <div className="px-2 w-[50px] text-center">
                                 {" "}
                                 {amount}
                               </div>
                               <Button
                                 size="sm"
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-0 pr-3 rounded-l-none  bg-white"
-                                onClick={() => dispatch(increase(id))}
+                                onClick={
+                                  () => {
+                                    const matchingItem = items?.find(
+                                      (item) => item.id === id
+                                    );
+                                    if (matchingItem?.amount >= 4) {
+                                      toast.error(
+                                        "Quantity of products must be 4 or less"
+                                      );
+                                    } else {
+                                      dispatch(increase(id));
+                                      toast.success(
+                                        "Quantity is increased of cart item."
+                                      );
+                                    }
+                                  }
+                                  //  dispatch(increase(id))
+                                }
                               >
                                 <FaPlus />
                               </Button>
@@ -188,7 +210,10 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <IconButton
-                            onClick={() => dispatch(remove(id))}
+                            onClick={() => {
+                              dispatch(remove(id));
+                              toast.success("Item is deleted from Cart.");
+                            }}
                             className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
                           >
                             <MdDelete className="fill-white" />
@@ -232,9 +257,9 @@ export default function AddToCart() {
                 <Button
                   color="dark"
                   onClick={() => router.push("/placeOrder")}
-                  className="mt-10 bg-primaryRed"
+                  className="mt-10 bg-dark-500 flex items-center gap-2"
                 >
-                  Checkout
+                  Checkout <FaLongArrowAltRight className="fill-white" />
                 </Button>
               </div>
             </div>

@@ -16,7 +16,7 @@ import {
   ListItem,
 } from "@material-tailwind/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPhone } from "react-icons/fa";
 import { FaJediOrder } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
@@ -31,6 +31,7 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 // import CartList from "../checkout/cartList";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
+import { getCart, getCartTotal } from "../../lib/features/cartSlice";
 
 const menu = [
   {
@@ -87,20 +88,25 @@ const currency = [
 
 const Header = () => {
   const currencyData = useAppSelector(getCarrency);
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const { totalCount } = useAppSelector((state) => state.cart);
+  const { totalCount, items } = useAppSelector((state) => state.cart);
+  // const cart = useAppSelector(getCart);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isCardOpen, setIsCardOpen] = React.useState(false);
+  // const [isCardOpen, setIsCardOpen] = React.useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(
     currencyData ?? currency[0]
   );
 
-  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [items]);
+
   const handleMenuItemClick = (currency) => {
     dispatch(addToCurrency(currency));
     setSelectedCurrency(currency);
@@ -397,13 +403,13 @@ const Header = () => {
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>
-            <nav className="gap-1 items-center hidden 2xl:flex lg:hidden md:flex flex">
+            <nav className="gap-1 items-center 2xl:flex lg:hidden md:flex flex">
               <div className="flex items-end gap-4">
                 <IconButton
                   onClick={() => router.push("/favourite")}
                   color="white"
                   size="sm"
-                  className="shadow-none"
+                  className="shadow-none hide__item"
                 >
                   <GiSelfLove className="h-5 w-5" />
                 </IconButton>
@@ -449,12 +455,13 @@ const Header = () => {
                   // open={isMenuOpen}
                   // handler={setIsMenuOpen}
                   placement="bottom"
+                  className="hide__item"
                 >
                   {" "}
                   <MenuHandler>
                     <ListItem
                       // selected={isMenuOpen}
-                      className="px-0 py-0 w-[30px]"
+                      className="px-0 py-0 w-[30px] hide__item"
                     >
                       <IconButton
                         color="white"

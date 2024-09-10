@@ -41,7 +41,6 @@ export default function LeftSide({ setformValue, setSubmitForm }) {
   useEffect(() => {
     setSubmitForm(formik.handleSubmit);
   }, [setSubmitForm, formik.handleSubmit]);
-  console.log("formik errors", formik.errors);
   return (
     <form
       className="mt-8 mb-2 w-full max-w-screen-lg"

@@ -51,20 +51,7 @@ function CartGallery({ singleProduct }) {
       </svg>
     );
   }
-  // const images = [
-  //   {
-  //     original: "https://picsum.photos/id/1018/1000/600/",
-  //     thumbnail: "https://picsum.photos/id/1018/250/150/",
-  //   },
-  //   {
-  //     original: "https://picsum.photos/id/1015/1000/600/",
-  //     thumbnail: "https://picsum.photos/id/1015/250/150/",
-  //   },
-  //   {
-  //     original: "https://picsum.photos/id/1019/1000/600/",
-  //     thumbnail: "https://picsum.photos/id/1019/250/150/",
-  //   },
-  // ];
+
   const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
   const handleIncrease = () => {
     if (count < 4) {
@@ -77,11 +64,11 @@ function CartGallery({ singleProduct }) {
   const handleDecrease = () => {
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
   };
-  console.log("matchingItem", matchingItem);
+
   const handleAddToCart = () => {
     if (selectedColor && selectedSize) {
-      if (matchingItem?.amount >= 4) {
-        toast.success("Quantity of products must be 4 or less");
+      if ((matchingItem?.amount ?? 0) + count >= 4) {
+        toast.error("Quantity of products must be 4 or less");
       } else {
         dispatch(
           addToCart({
@@ -97,6 +84,7 @@ function CartGallery({ singleProduct }) {
       toast.error("Check color & size.");
     }
   };
+
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-5 w-full">
@@ -107,15 +95,17 @@ function CartGallery({ singleProduct }) {
         </div>
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6">
           <div>
-            <p className="text-grey-200 text-sm mb-2">
-              {singleProduct?.category}
+            <p className="text-grey-200 text-sm mb-1">
+              {singleProduct?.categories}
             </p>
             <h4>{singleProduct?.name}</h4>
 
             <div className="flex flex-wrap items-center gap-1 my-2">
-              {Array?.from({ length: 5 }).map((_, index) => (
-                <StarIcon key={index} />
-              ))}
+              {Array?.from({ length: singleProduct?.rating }).map(
+                (_, index) => (
+                  <StarIcon key={index} />
+                )
+              )}
               <p className="text-xsm text-grey-200 ml-3">(8 Reviews)</p>
               <p className="text-xsm text-successGreen ml-5 flex justify-center items-center gap-2">
                 <FaCheck className="fill-successGreen" />
@@ -147,7 +137,7 @@ function CartGallery({ singleProduct }) {
               ))}
             </div>
             <p className="text-dark-900 text-sm">Size:</p>
-            <div className="flex w-max gap-5">
+            <div className="flex flex-wrap gap-3 md:gap-5">
               {singleProduct?.size?.map((item, idx) => (
                 <Radio
                   key={idx}
@@ -209,10 +199,8 @@ function CartGallery({ singleProduct }) {
                 className="font-jost text-sm bg-transparent  font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
               >
                 <CiGrid2H />
-                {/* <FaLongArrowAltRight className="fill-white" /> */}
               </Button>
             </div>
-            {/* =================== */}
             <div className="mt-7">
               {" "}
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
@@ -223,7 +211,7 @@ function CartGallery({ singleProduct }) {
                 <p className="text-dark-900">{singleProduct?.prd_category}</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                Tags : <p className="text-dark-900">Bag, Lades bag, Fashion</p>
+                Tags : <p className="text-dark-900">{singleProduct?.tags}</p>
               </p>
             </div>
           </div>

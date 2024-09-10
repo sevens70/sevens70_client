@@ -142,7 +142,6 @@ function CheckboxAndRadioGroup({ children }) {
   return <div className="">{children}</div>;
 }
 function CheckboxAndRadioItem({ id, label, type, ...props }) {
-  console.log("object id22", id, label, type);
   return (
     <>
       {type === "checkbox" && <Checkbox ripple={false} {...props} />}

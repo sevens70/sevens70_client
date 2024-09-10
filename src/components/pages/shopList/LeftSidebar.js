@@ -221,7 +221,6 @@ export function convertStringToQueriesObject(searchParams) {
   return selectedQueries;
 }
 export function convertValidStringQueries(queries) {
-  console.log("e.target.value= queries", queries);
   let q = "";
   for (let [key, value] of Object.entries(queries)) {
     q = q + `${q === "" ? "" : "&"}${key}=${value}`;

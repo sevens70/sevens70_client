@@ -18,7 +18,6 @@ export default function PlaceOrder() {
     if (submitFormRef) {
       await submitFormRef();
       // const isValid = await submitFormRef();
-      // console.log("Form submitted: isValid", isValid);
       // if (isValid) {
       //   router.push("/orders");
       // }

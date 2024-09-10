@@ -6,7 +6,6 @@ import Link from "next/link";
 
 function OrdersList() {
   const { items } = useAppSelector((state) => state.orders);
-  console.log("items==", items);
   return (
     <div className="my-20 w-11/12 md:w-10/12 mx-auto flex flex-col justify-start items-start">
       <div className="flex items-center gap-2">
