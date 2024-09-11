@@ -28,7 +28,7 @@ function OrdersList() {
         </Link>
       </div>
       <div className="w-full divide-y divide-gray-200">
-        {items.map(({ name, price, prd_category, image }, index) => (
+        {items.map(({ name, disc_price, prd_category, image }, index) => (
           <div
             key={index}
             className="w-full flex items-center justify-between pb-3 pt-3 last:pb-0"
@@ -52,7 +52,7 @@ function OrdersList() {
                 </h6>
               </div>
             </div>
-            <h6 className="text-sm text-grey-200"> ${price}</h6>
+            <h6 className="text-sm text-grey-200"> ${disc_price}</h6>
             <div>
               {" "}
               <Button

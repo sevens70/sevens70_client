@@ -68,8 +68,8 @@ const products = [
     name: "Ribbed modal T-shirt",
     img: "/category/cate1.png",
     discount: "10% off",
-    price: "45.00",
-    disc_price: "30.00",
+    price: "55.00",
+    disc_price: "45.00",
     rating: "5.0",
     rating: "5.0",
     tags: "Bags, Lades bag, Fashion",
@@ -86,9 +86,9 @@ const products = [
   {
     id: 2,
     name: "Loose Fit Hoodie",
-    price: "41.00",
     discount: "10% off",
-    disc_price: "40.00",
+    price: "50.00",
+    disc_price: "45.00",
     rating: "5.0",
     rating: "5.0",
     tags: "Bags, Lades bag, Fashion",
@@ -106,9 +106,9 @@ const products = [
   {
     id: 3,
     name: "Ribbed Tank Top",
-    price: "55.00",
     disc_price: "45.00",
-    discount: "10% off",
+    price: "65.00",
+    disc_price: "45.00",
     rating: "5.0",
     rating: "5.0",
     tags: "Bags, Lades bag, Fashion",
@@ -217,10 +217,10 @@ const products = [
     categories: ["men cloth"],
     prd_category: "Smart Watch",
     // color: ["gray", "jean blue", "dark blue", "red"],
-    colors: ["green", "purple", "gray", "red", "pink"],
+    colors: ["pink"],
     brand: "Style Zone",
     size: ["s", "l", "m", "xl", "xxl"],
-    stock: "Out of Stock",
+    stock: "In Stock",
     createdAt: "04/03/2023",
   },
 ];
@@ -487,7 +487,7 @@ function RightSidebar() {
             tag,
             categories,
           } = item;
-          const isFavorite = favItems.some(
+          const isFavorite = favItems?.some(
             (fav) =>
               fav.id === id &&
               fav.categories.some((cat) => categories.includes(cat))

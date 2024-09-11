@@ -105,7 +105,7 @@ export default function AddToCart() {
               </thead>
               <tbody>
                 {items.map(
-                  ({ id, name, img, prd_category, amount, price }, index) => {
+                  ({ id, name, img, prd_category, amount, disc_price }, index) => {
                     const isLast = index === items.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -196,7 +196,7 @@ export default function AddToCart() {
                             className="font-normal text-gray-600"
                           >
                             {currencyData?.symbol}
-                            {price}
+                            {disc_price}
                           </p>
                         </td>
                         <td className={classes}>

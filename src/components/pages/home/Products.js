@@ -16,6 +16,12 @@ import Slider from "../../Slider";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Link from "next/link";
+import { addToCart, getCart } from "../../../lib/features/cartSlice";
+import toast from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { getCarrency } from "../../../lib/features/currencySlice";
+import { addToFav } from "../../../lib/features/favouriteSlice";
+import { useRouter } from "next/navigation";
 function Products() {
   const breakpoints = {
     0: {
@@ -42,82 +48,105 @@ function Products() {
   };
   const products = [
     {
+      id: 101,
       name: "Ribbed modal T-shirt",
       img: "/category/cate1.png",
       discount: "10% off",
-      price: "$45.00",
-      disc_price: "$45.00",
+      price: "45.00",
+      disc_price: "35.00",
+      rating: "5.0",
+      tags: "Bags, Lades bag, Fashion",
+      reviews: 8,
       rating: "5.0",
       tag: "shirt",
+      categories: ["women cloth"],
       category: "Man",
       prd_category: "Dress",
-      color: ["light brown", "blue"],
+      colors: ["light brown"],
       brand: "Abs Fashion",
-      size: ["S", "M", "L", "XL", "XXL"],
+      size: ["XXL"],
       stock: "In Stock",
+      createdAt: "10/12/2023",
     },
     {
+      id: 102,
       name: "Loose Fit Hoodie",
-      price: "$45.00",
+      price: "45.00",
       discount: "10% off",
-      disc_price: "$45.00",
+      disc_price: "25.00",
       rating: "5.0",
       tag: "shirt",
+      categories: ["women cloth"],
       img: "/category/cate2.png",
       category: "Woman",
       prd_category: "Sneaker",
-      color: ["blue", "light purple"],
+      colors: ["light purple"],
       brand: "Squire Style",
-      size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+      size: ["S"],
       stock: "In Stock",
+      createdAt: "15/08/2023",
     },
     {
+      id: 103,
       name: "Ribbed Tank Top",
-      price: "$45.00",
-      disc_price: "$45.00",
+      price: "45.00",
+      disc_price: "15.00",
       discount: "10% off",
       rating: "5.0",
       tag: "shirt",
       img: "/category/cate3.png",
+      categories: ["women cloth"],
       category: "New Arrival",
       prd_category: "Handbag",
-      color: ["light purple", "pele"],
+      colors: ["light purple", "pele"],
       brand: "Nice Fashion",
-      size: ["S", "M", "L", "XL"],
-      stock: "Out of Stock",
+      size: ["L"],
+      stock: "In Stock",
+      createdAt: "10/11/2023",
     },
     {
+      id: 104,
       name: "V-neck linen T-shirt",
-      price: "$45.00",
-      disc_price: "$45.00",
+      price: "45.00",
+      disc_price: "40.00",
       discount: "10% off",
       rating: "5.0",
       tag: "shirt",
+      categories: ["men cloth"],
       img: "/category/cate4.png",
       category: "Kids",
       prd_category: "Cosmetics",
-      color: ["pele", "gray"],
+      colors: ["pele", "gray"],
       brand: "Xozo Fashion",
-      size: ["S", "M", "L", "XL", "XXL", "XXXL"],
+      size: ["M"],
       stock: "In Stock",
+      createdAt: "10/12/2024",
     },
     {
+      id: 105,
       name: "V-neck linen T-shirt",
-      price: "$45.00",
-      disc_price: "$45.00",
+      price: "45.00",
+      disc_price: "42.00",
       discount: "10% off",
       rating: "5.0",
       tag: "shirt",
+      categories: ["men cloth"],
       img: "/category/cate4.png",
       category: "Winter Collection",
       prd_category: "Smart Watch",
-      color: ["gray", "jean blue", "dark blue", "red"],
+      colors: ["gray"],
       brand: "Style Zone",
-      size: ["S", "M", "L", "XL", "XXL"],
-      stock: "Out of Stock",
+      size: ["L"],
+      stock: "In stock",
+      createdAt: "04/06/2023",
     },
   ];
-
+  const currencyData = useAppSelector(getCarrency);
+  const { items: favItems } = useAppSelector((state) => state.favourites);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  console.log("favItems", favItems);
+  const cart = useAppSelector(getCart);
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto pb-10 relative">
       <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
@@ -172,8 +201,16 @@ function Products() {
         }}
       >
         {" "}
-        {products?.map(
-          ({ name, disc_price, price, img, discount, rating, tag }, idx) => (
+        {products?.map((item, idx) => {
+          const { id, name, disc_price, price, img, discount, rating, tag } =
+            item;
+          // const isFavorite = favItems?.some(
+          //   (fav) =>
+          //     fav.id === id &&
+          //     fav.categories.some((cat) => categories.includes(cat))
+          // );
+          const isFavorite = favItems?.some((fav) => fav.id === id);
+          return (
             <SwiperSlide key={idx} className="h-full">
               {" "}
               <div key={idx} className="group">
@@ -188,6 +225,9 @@ function Products() {
                         <Button
                           size="sm"
                           className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                          onClick={() => {
+                            router.push(`/product/${id}`);
+                          }}
                         >
                           <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
                           Add To Carts
@@ -208,35 +248,69 @@ function Products() {
                       {discount}
                     </Button>
                     <div className="hidden group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
-                      <IconButton color="white" size="sm">
-                        <GiSelfLove
-                          stroke="1"
-                          className="h-5 w-5 font-normal"
-                        />
+                      <IconButton
+                        onClick={() => {
+                          const matchingItem = favItems?.find(
+                            (fav) => fav.id === id
+                          );
+                          if (matchingItem) {
+                            dispatch(addToFav(item));
+                            toast.success("Removed item from Favourite list.");
+                          } else {
+                            dispatch(addToFav(item));
+                            toast.success("Item added to the Favourite list.");
+                          }
+                          // router.push(`/product/${id}`);
+                        }}
+                        color="white"
+                        size="sm"
+                      >
+                        {isFavorite ? (
+                          <GiSelfLove
+                            className="h-5 w-5 font-normal !fill-primaryRed"
+                            // style={{ fill: "red" }}
+                          />
+                        ) : (
+                          <GiSelfLove className="h-5 w-5 font-normal" />
+                        )}
                       </IconButton>
 
                       {/* <Badge content="5"> */}
-                      <IconButton color="white" size="sm">
+                      <IconButton
+                        onClick={() => {
+                          const matchingItem = cart?.find(
+                            (prd) => prd.id === item?.id
+                          );
+                          if (matchingItem) {
+                            toast.success("Already Added in Cart.");
+                          } else {
+                            dispatch(addToCart(item));
+                            toast.success("Successfully Added in Cart.");
+                          }
+                        }}
+                        color="white"
+                        size="sm"
+                      >
                         <FaCartShopping className="h-5 w-5" />
                       </IconButton>
                       {/* </Badge> */}
-                      <IconButton color="white" size="sm">
+                      <IconButton   onClick={() => router.push(`/orders`)} color="white" size="sm">
                         <FaRegUser className="h-5 w-5" />
                       </IconButton>
                     </div>
 
                     {/* <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
-                      <Link href="cart">
-                        {" "}
-                        <Button
-                          size="sm"
-                          className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
-                        >
-                          <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
-                          Add To Carts
-                        </Button>
-                      </Link>
-                    </div> */}
+                        <Link href="cart">
+                          {" "}
+                          <Button
+                            size="sm"
+                            className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                          >
+                            <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                            Add To Carts
+                          </Button>
+                        </Link>
+                      </div> */}
                   </CardHeader>
 
                   <CardBody className="text-center px-2 mb-1 mt-1">
@@ -249,8 +323,10 @@ function Products() {
                     </div>
                     <h6 className="text-left text-dark-700">{name}</h6>
                     <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
+                      {currencyData?.symbol}
                       {disc_price}
                       <span className="font-normal line-through text-grey-600">
+                        {currencyData?.symbol}
                         {price}
                       </span>
                     </h6>
@@ -258,8 +334,8 @@ function Products() {
                 </Card>
               </div>
             </SwiperSlide>
-          )
-        )}
+          );
+        })}
       </Slider>
       <div className="absolute bottom-0 left-0 w-full">
         <div className="swiper-custom-pagination"></div>
