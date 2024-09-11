@@ -230,7 +230,7 @@ function Products() {
                           }}
                         >
                           <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
-                          Add To Carts
+                          Add To Cart
                         </Button>
                       </Link>
                     </div>
@@ -260,7 +260,6 @@ function Products() {
                             dispatch(addToFav(item));
                             toast.success("Item added to the Favourite list.");
                           }
-                          // router.push(`/product/${id}`);
                         }}
                         color="white"
                         size="sm"
@@ -294,7 +293,11 @@ function Products() {
                         <FaCartShopping className="h-5 w-5" />
                       </IconButton>
                       {/* </Badge> */}
-                      <IconButton   onClick={() => router.push(`/orders`)} color="white" size="sm">
+                      <IconButton
+                        onClick={() => router.push(`/orders`)}
+                        color="white"
+                        size="sm"
+                      >
                         <FaRegUser className="h-5 w-5" />
                       </IconButton>
                     </div>
