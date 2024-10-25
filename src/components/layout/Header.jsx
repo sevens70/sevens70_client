@@ -32,6 +32,7 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
 import { getCart, getCartTotal } from "../../lib/features/cartSlice";
+import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
 
 const menu = [
   {
@@ -91,6 +92,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { totalCount, items } = useAppSelector((state) => state.cart);
+  const user = useAppSelector(selectLoggedInUser);
   // const cart = useAppSelector(getCart);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -106,7 +108,18 @@ const Header = () => {
   useEffect(() => {
     dispatch(getCartTotal());
   }, [items]);
+  const handleLogout = () => {
+    dispatch(signOutAsync());
 
+  };
+  useEffect(() => {
+    if (!user) {
+      router.push("/auth/signin");
+    }
+  }, [user, router]);
+  // const user = useSelector(selectLoggedInUser);
+
+  console.log("user1234 01", user);
   const handleMenuItemClick = (currency) => {
     dispatch(addToCurrency(currency));
     setSelectedCurrency(currency);
@@ -546,7 +559,10 @@ const Header = () => {
                           fill="#90A4AE"
                         />
                       </svg>
-                      <h6 className="text-xsm font-jost font-normal text-gray-600">
+                      <h6
+                        onClick={handleLogout}
+                        className="text-xsm font-jost font-normal text-gray-600"
+                      >
                         Sign Out
                       </h6>
                     </MenuItem>
