@@ -18,12 +18,25 @@ import {
   getCartTotal,
   increase,
 } from "../../../lib/features/cartSlice";
+import { addToCartAsync, selectItems } from "../../features/cart/cartSlice";
+import {
+  fetchProductByIdAsync,
+  selectProductById,
+} from "../../features/product/productSlice";
+import { useParams } from "next/navigation";
 function CartGallery({ singleProduct }) {
   const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
-  const cart = useAppSelector(getCart);
+  // const { id } = useParams();
+  // const cart = useAppSelector(getCart);
+  // const cart = useAppSelector(selectItems);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  // ==============
+  const items = useAppSelector(selectItems);
+  // const product = useAppSelector(selectProductById);
+  // ==============
+
   const [count, setCount] = useState(1);
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -31,9 +44,9 @@ function CartGallery({ singleProduct }) {
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
-  useEffect(() => {
-    dispatch(getCartTotal());
-  }, [cart]);
+  // useEffect(() => {
+  //   dispatch(getCartTotal());
+  // }, [cart]);
   function StarIcon() {
     return (
       <svg
@@ -50,8 +63,8 @@ function CartGallery({ singleProduct }) {
       </svg>
     );
   }
-
-  const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
+  // console.log("latest cart", cart);
+  // const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
   const handleIncrease = () => {
     if (count < 4) {
       setCount((prevCount) => prevCount + 1);
@@ -64,25 +77,52 @@ function CartGallery({ singleProduct }) {
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
   };
 
+  console.log(
+    "items & product",
+    items,
+    items.findIndex((item) => item.product.id === singleProduct.id)
+  );
+
   const handleAddToCart = () => {
-    if (selectedColor && selectedSize) {
-      if ((matchingItem?.amount ?? 0) + count >= 4) {
-        toast.error("Quantity of products must be 4 or less");
-      } else {
-        dispatch(
-          addToCart({
-            ...singleProduct,
-            colors: [selectedColor],
-            size: [selectedSize],
-            amount: count,
-          })
-        );
-        toast.success("Successfully Added in Cart.");
+    // ================
+    if (items.findIndex((item) => item.product.id === singleProduct.id) < 0) {
+      console.log({ items });
+      const newItem = {
+        product: singleProduct.id,
+        // quantity: 1,
+        quantity: count,
+      };
+      if (selectedColor) {
+        newItem.color = selectedColor;
       }
+      if (selectedSize) {
+        newItem.size = selectedSize;
+      }
+      console.log("items & product newItem", newItem);
+      dispatch(addToCartAsync({ item: newItem, toast }));
     } else {
-      toast.error("Check color & size.");
+      toast.error("Item Already added");
     }
+    // ================
+    // if (selectedColor && selectedSize) {
+    //   if ((matchingItem?.amount ?? 0) + count >= 4) {
+    //     toast.error("Quantity of products must be 4 or less");
+    //   } else {
+    //     dispatch(
+    //       addToCart({
+    //         ...singleProduct,
+    //         colors: [selectedColor],
+    //         size: [selectedSize],
+    //         amount: count,
+    //       })
+    //     );
+    //     toast.success("Successfully Added in Cart.");
+    //   }
+    // } else {
+    //   toast.error("Check color & size.");
+    // }
   };
+
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-5 w-full">

@@ -39,6 +39,7 @@ import {
   fetchCategoriesAsync,
   selectAllCategories,
 } from "../features/product/productSlice";
+import { selectItems } from "../features/cart/cartSlice";
 
 const menu = [
   {
@@ -98,6 +99,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { totalCount, items } = useAppSelector((state) => state.cart);
+  const cartItems = useAppSelector(selectItems);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
   const [categories, setCategories] = useState({});
@@ -127,10 +129,12 @@ const Header = () => {
     if (!user) {
       router.push("/auth/signin");
     }
+    // else {
+    //    dispatch(fetchItemsByUserIdAsync());
+    // }
   }, [user, router]);
-  // const user = useSelector(selectLoggedInUser);
 
-  console.log("allCatgories", allCatgories);
+  console.log("items & product user in header", user, cartItems);
   const handleMenuItemClick = (currency) => {
     dispatch(addToCurrency(currency));
     setSelectedCurrency(currency);
@@ -437,7 +441,8 @@ const Header = () => {
                 >
                   <GiSelfLove className="h-5 w-5" />
                 </IconButton>
-                <Badge content={totalCount ? totalCount : 0}>
+                {/* <Badge content={totalCount ? totalCount : 0}> */}
+                <Badge content={cartItems?.length > 0 ? cartItems?.length : 0}>
                   <IconButton
                     onClick={() => router.push("/cart")}
                     color="white"

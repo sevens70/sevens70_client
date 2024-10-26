@@ -11,19 +11,23 @@ import {
 
 export default function Page() {
   const { id } = useParams();
-  const singleProduct = useAppSelector(selectProductById);
+  // const singleProduct = useAppSelector(selectProductById);
   // const { singleProduct, getSingleProduct } = useApi();
   const dispatch = useAppDispatch();
   useEffect(() => {
+    console.log("response data hit", id);
     dispatch(fetchProductByIdAsync(id));
   }, [dispatch, id]);
+
+  // console.log("id & selectProductById", id, singleProduct.id);
 
   return (
     <div
       className="mx-auto"
       style={{ height: "auto", backgroundColor: "#fff" }}
     >
-      {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />}
+      {/* {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />} */}
+      <Cart />
     </div>
   );
 }

@@ -19,6 +19,11 @@ import {
 } from "../../lib/features/cartSlice";
 import { remove } from "../../lib/features/cartSlice";
 import toast from "react-hot-toast";
+import {
+  deleteItemFromCartAsync,
+  resetCartAsync,
+  selectItems,
+} from "../features/cart/cartSlice";
 
 const TABLE_HEAD = [
   {
@@ -48,13 +53,14 @@ export default function AddToCart() {
   const pathname = usePathname();
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
-  const { totalAmount, items } = useAppSelector((state) => state.cart);
+  const { totalAmount, items } = useAppSelector((state) => state.cart); // note total Item will be add on new action
   const dispatch = useAppDispatch();
+  const cartItems = useAppSelector(selectItems);
   useEffect(() => {
     dispatch(getCartTotal());
   }, [items]);
 
-  if (items.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="min-h-[300px] py-3 text-center content-center">
         <h6
@@ -72,7 +78,11 @@ export default function AddToCart() {
       </div>
     );
   }
+  const handleRemove = (id) => {
+    dispatch(deleteItemFromCartAsync(id));
+  };
 
+  console.log("cart Items", items);
   return (
     <div>
       <section className="">
@@ -104,8 +114,8 @@ export default function AddToCart() {
                 </tr>
               </thead>
               <tbody>
-                {items.map(
-                  ({ id, name, img, prd_category, amount, disc_price }, index) => {
+                {cartItems.map(
+                  ({ id, quantity, product, size, color }, index) => {
                     const isLast = index === items.length - 1;
                     const classes = isLast
                       ? "p-4"
@@ -116,7 +126,7 @@ export default function AddToCart() {
                         <td className={classes}>
                           <div className="flex items-center gap-1">
                             <img
-                              src={img}
+                              src={product.thumbnail}
                               className="img-fluid"
                               alt=""
                               style={{
@@ -130,12 +140,12 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <p className="font-normal text-grey-600 font-jost">
-                            {name}
+                            {product.title}
                           </p>
                         </td>
                         <td className={classes}>
                           <p className="font-xsm text-grey-600 font-jost">
-                            {prd_category}
+                            {product.category}
                           </p>
                         </td>
                         <td className={classes}>
@@ -148,9 +158,9 @@ export default function AddToCart() {
                               <Button
                                 size="sm"
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-3 pr-0 rounded-r-none bg-white"
-                                disabled={amount < 2}
+                                disabled={quantity < 2}
                                 onClick={() => {
-                                  dispatch(decrease(id));
+                                  dispatch(decrease(product.id));
                                   toast.error(
                                     "Quantity is decreased form Cart item."
                                   );
@@ -161,7 +171,7 @@ export default function AddToCart() {
                               </Button>{" "}
                               <div className="px-2 w-[50px] text-center">
                                 {" "}
-                                {amount}
+                                {quantity}
                               </div>
                               <Button
                                 size="sm"
@@ -196,7 +206,7 @@ export default function AddToCart() {
                             className="font-normal text-gray-600"
                           >
                             {currencyData?.symbol}
-                            {disc_price}
+                            {`${product.discountPrice}.00`}
                           </p>
                         </td>
                         <td className={classes}>
@@ -210,10 +220,11 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <IconButton
-                            onClick={() => {
-                              dispatch(remove(id));
-                              toast.success("Item is deleted from Cart.");
-                            }}
+                            // onClick={() => {
+                            //   dispatch(remove(id));
+                            //   toast.success("Item is deleted from Cart.");
+                            // }}
+                            onClick={() => handleRemove(id)}
                             className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
                           >
                             <MdDelete className="fill-white" />
@@ -249,7 +260,8 @@ export default function AddToCart() {
                 {" "}
                 <Button
                   color="dark"
-                  onClick={() => dispatch(clearCart())}
+                  // onClick={() => dispatch(clearCart())}
+                  onClick={() => dispatch(resetCartAsync())}
                   className="mt-10 bg-primaryRed"
                 >
                   Clear Cart

@@ -1,9 +1,11 @@
-import CartReducer from "./features/cartSlice";
+// import CartReducer from "./features/cartSlice";
 import CurrencyReducer from "./features/currencySlice";
 import FavouriteReducer from "./features/favouriteSlice";
 import OrdersReducer from "./features/ordersSlice";
 import AuthReducer from "../components/features/auth/authSlice";
+import cartReducer from "../components/features/cart/cartSlice";
 import productReducer from "../components/features/product/productSlice";
+import userReducer from "../components/features/user/userSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -18,12 +20,15 @@ import {
 import storage from "redux-persist/lib/storage";
 // Combine your reducers
 const rootReducer = combineReducers({
-  cart: CartReducer,
+  // cart: CartReducer,
   currency: CurrencyReducer,
   favourites: FavouriteReducer,
   orders: OrdersReducer,
   auth: AuthReducer,
   product: productReducer,
+  cart: cartReducer,
+  // order: orderReducer,
+  user: userReducer,
 });
 
 const persistConfig = {

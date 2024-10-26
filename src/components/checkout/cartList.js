@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { clearCart, getCartTotal } from "../../lib/features/cartSlice";
+import { resetCartAsync } from "../../components/features/cart/cartSlice";
 import { Button } from "@material-tailwind/react";
 import CartItem from "./cartItem";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
@@ -58,7 +59,8 @@ const CartList = () => {
 
         <Button
           color="dark"
-          onClick={() => dispatch(clearCart())}
+          // onClick={() => dispatch(clearCart())}
+          onClick={() => dispatch(resetCartAsync())}
           className="mt-10 bg-primaryRed"
         >
           Clear Cart
