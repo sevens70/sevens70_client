@@ -33,7 +33,6 @@ import {
   convertValidStringQueries,
 } from "./LeftSidebar";
 import toast from "react-hot-toast";
-import { selectAllProducts } from "../../features/product/productSlice";
 const showNumber = [
   {
     label: "5",
@@ -48,11 +47,253 @@ const showNumber = [
     value: "all",
   },
 ];
-
+// const sortingOrder = ["Newest", "Price Low - High", "Price High - Low"];
+// const sortOption = [
+//   {
+//     label: "Newest",
+//     value: "Newest",
+//   },
+//   {
+//     label: "Price Low - High",
+//     value: "Price Low - High",
+//   },
+//   {
+//     label: "Price High - Low",
+//     value: "Price High - Low",
+//   },
+// ];
+{
+    "title": "Ribbed modal T-shirt",
+    "description": "Ribbed modal T-shirt Ribbed modal T-shirt Ribbed modal T-shirt Ribbed modal T-shirt\n\n \n\n",
+    "price": 55,
+    "discountPercentage": 5,
+    "rating": 0,
+    "stock": 30,
+    "brand": "Abc Fashion",
+    "category": "Men",
+    "subcategory": "new arrival",
+    "thumbnail": "https://iili.io/2qBO8pn.png",
+    "model": "Mdj33-33",
+    "images": [
+        "https://iili.io/2qBOtpe.png",
+        "https://iili.io/2qBOUIs.png",
+        "https://iili.io/2qBOtpe.png",
+        "https://iili.io/2qBO8pn.png"
+    ],
+    "colors": [
+        {
+            "name": "White",
+            // "class": "bg-white", only color code pathabo 
+            // sathe  border diye
+            "selectedClass": "ring-gray-400",
+            "id": "white"
+        },
+        {
+            "name": "Gray",
+            "class": "bg-gray-200",
+            "selectedClass": "ring-gray-400",
+            "id": "gray"
+        }
+    ],
+    "sizes": [
+        {
+            "name": "S",
+            "inStock": true,
+            "id": "s"
+        },
+        {
+            "name": "M",
+            "inStock": true,
+            "id": "m"
+        },
+        {
+            "name": "L",
+            "inStock": true,
+            "id": "l"
+        },
+        {
+            "name": "XL",
+            "inStock": true,
+            "id": "xl"
+        }
+    ],
+    "tags": [
+        {
+            "name": "fashion",
+            "inStock": true,
+            "id": "fashion"
+        }
+    ],
+    "highlights": [],
+    "deleted": false,
+    "discountPrice": 52,
+    "id": "671ca7cea4a9a7f8b76e091d"
+}
+const products = [
+  {
+    id: 1,
+    name: "Ribbed modal T-shirt",
+    img: "/category/cate1.png",
+    discount: "10% off",
+    price: "55.00",
+    disc_price: "45.00",
+    rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    tag: "shirt",
+    categories: ["women cloth"],
+    prd_category: "Dress",
+    // color: ["light brown", "blue"],
+    colors: ["green"],
+    brand: "Abc Fashion",
+    size: ["m"],
+    stock: "In Stock",
+    createdAt: "10/12/2023",
+  },
+  {
+    id: 2,
+    name: "Loose Fit Hoodie",
+    discount: "10% off",
+    price: "50.00",
+    disc_price: "45.00",
+    rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    tag: "shirt",
+    img: "/category/cate2.png",
+    categories: ["women cloth"],
+    prd_category: "Sneaker",
+    // color: ["blue", "light purple"],
+    colors: ["red"],
+    brand: "Squire Style",
+    size: ["xl"],
+    stock: "In Stock",
+    createdAt: "15/08/2023",
+  },
+  {
+    id: 3,
+    name: "Ribbed Tank Top",
+    disc_price: "45.00",
+    price: "65.00",
+    disc_price: "45.00",
+    rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    tag: "shirt",
+    img: "/category/cate3.png",
+    categories: ["men cloth"],
+    prd_category: "Handbag",
+    // color: ["light purple", "pele"],
+    colors: ["white"],
+    brand: "Nice Fashion",
+    size: ["xxl"],
+    stock: "Out of Stock",
+    createdAt: "10/11/2023",
+  },
+  {
+    id: 4,
+    name: "V-neck linen T-shirt",
+    price: "55.00",
+    disc_price: "45.00",
+    discount: "10% off",
+    rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Cosmetics",
+    // color: ["pele", "gray"],
+    colors: ["blue"],
+    brand: "Xozo Fashion",
+    size: ["s"],
+    stock: "In Stock",
+    createdAt: "10/12/2024",
+  },
+  {
+    id: 5,
+    name: "V-neck linen T-shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["black"],
+    brand: "Style Zone",
+    size: ["l"],
+    stock: "Out of Stock",
+    createdAt: "04/09/2023",
+  },
+  {
+    id: 6,
+    name: "D-neck cotton shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["pink"],
+    brand: "Style Zone",
+    size: ["xxl"],
+    stock: "Out of Stock",
+    createdAt: "04/01/2023",
+  },
+  {
+    id: 7,
+    name: "A-neck cotton T-shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["green"],
+    brand: "Style Zone",
+    size: ["xl"],
+    stock: "Out of Stock",
+    createdAt: "04/02/2023",
+  },
+  {
+    id: 8,
+    name: "G-neck cotton T-shirt",
+    price: "90.00",
+    disc_price: "75.00",
+    discount: "10% off",
+    rating: "5.0",
+    tags: "Bags, Lades bag, Fashion",
+    reviews: 20,
+    tag: "shirt",
+    img: "/category/cate4.png",
+    categories: ["men cloth"],
+    prd_category: "Smart Watch",
+    // color: ["gray", "jean blue", "dark blue", "red"],
+    colors: ["pink"],
+    brand: "Style Zone",
+    size: ["s", "l", "m", "xl", "xxl"],
+    stock: "In Stock",
+    createdAt: "04/03/2023",
+  },
+];
 function RightSidebar() {
   const currencyData = useAppSelector(getCarrency);
   const { items: favItems } = useAppSelector((state) => state.favourites);
-  const allProducts = useAppSelector(selectAllProducts);
   const cart = useAppSelector(getCart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
@@ -96,7 +337,7 @@ function RightSidebar() {
   const currentView = selectedFilterQueries.view?.[0] || "wf";
   const paramsObj = selectedQueries;
 
-  let filteredProducts = allProducts?.filter((product) => {
+  let filteredProducts = products.filter((product) => {
     const hasCategories = isAvailable(
       product.categories,
       paramsObj?.categories
@@ -114,8 +355,8 @@ function RightSidebar() {
     const maxPrice = parseFloat(priceRange?.[1]) || Infinity;
 
     const hasPrice =
-      parseInt(product.discountPrice) >= minPrice &&
-      parseInt(product.discountPrice) <= maxPrice;
+      parseInt(product.disc_price) >= minPrice &&
+      parseInt(product.disc_price) <= maxPrice;
 
     return (hasSize || hasColors || hasCategories || hasBrand) && hasPrice;
   });
@@ -125,7 +366,8 @@ function RightSidebar() {
     Object.keys(paramsObj).length === 0 ||
     (Object.keys(paramsObj).length === 1 && paramsObj.sort)
   ) {
-    filteredProducts = [...allProducts].sort((p1, p2) => {
+    // if only sorting is applied or no filters are selected
+    filteredProducts = products.sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
       switch (sortKey) {
         case "newest":
@@ -145,14 +387,14 @@ function RightSidebar() {
     paramsObj.price
   ) {
     // if only price filter is applied
-    filteredProducts = allProducts?.filter((product) => {
+    filteredProducts = products.filter((product) => {
       const priceRange = paramsObj?.price?.[0]?.split("-");
       const minPrice = parseFloat(priceRange?.[0]) || 0;
       const maxPrice = parseFloat(priceRange?.[1]) || Infinity;
 
       const hasPrice =
-        parseInt(product.discountPrice) >= minPrice &&
-        parseInt(product.discountPrice) <= maxPrice;
+        parseInt(product.disc_price) >= minPrice &&
+        parseInt(product.disc_price) <= maxPrice;
 
       return hasPrice;
     });
@@ -303,13 +545,13 @@ function RightSidebar() {
         {filteredProducts?.map((item, idx) => {
           const {
             id,
-            title,
-            discountPrice,
+            name,
+            disc_price,
             price,
-            thumbnail,
-            discountPercentage,
+            img,
+            discount,
             rating,
-            subcategory,
+            tag,
             categories,
           } = item;
           const isFavorite = favItems?.some(
@@ -325,19 +567,13 @@ function RightSidebar() {
                 currentView === "grid" ? "xl:col-span-3" : "xl:col-span-4"
               }`}
             >
-              <Card
-                onClick={() => {
-                  // dispatch(addToCart(item));
-                  router.push(`/product/${id}`);
-                }}
-                className="h-[400px] shadow-sm cursor-pointer"
-              >
+              <Card className="h-[400px] shadow-sm">
                 <CardHeader
                   floated={false}
                   className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
                 >
                   <img
-                    src={thumbnail}
+                    src={img}
                     alt="profile-picture"
                     className="object-cover object-center w-full h-full "
                   />
@@ -345,7 +581,7 @@ function RightSidebar() {
                     size="sm"
                     className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
                   >
-                    {`${discountPercentage}`} % off
+                    {discount}
                   </button>
                   <div className="sm:hidden flex group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
                     <IconButton
@@ -411,15 +647,8 @@ function RightSidebar() {
                   >
                     <div
                       onClick={() => {
-                        const matchingItem = cart?.find(
-                          (prd) => prd.id === item?.id
-                        );
-                        if (matchingItem) {
-                          toast.success("Already Added in Cart.");
-                        } else {
-                          dispatch(addToCart(item));
-                          toast.success("Successfully Added in Cart.");
-                        }
+                        // dispatch(addToCart(item));
+                        router.push(`/product/${id}`);
                       }}
                     >
                       {" "}
@@ -435,7 +664,7 @@ function RightSidebar() {
                 </CardHeader>
                 <CardBody className="text-center px-2 mb-1 mt-1">
                   <div className="flex justify-between items-center">
-                    <p className="text-sm text-grey-600">{subcategory}</p>
+                    <p className="text-sm text-grey-600">{tag}</p>
                     <h6 className="flex justify-center items-center text-dark-700">
                       <GoDotFill className="fill-primaryRed" />
                       {rating}
@@ -446,14 +675,14 @@ function RightSidebar() {
                       currentView === "grid" && "text-[1.3rem]"
                     }`}
                   >
-                    {title}
+                    {name}
                   </h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
                     {currencyData?.symbol}
-                    {`${discountPrice}.00`}
+                    {disc_price}
                     <span className="font-normal line-through text-grey-600">
                       {currencyData?.symbol}
-                      {`${price}.00`}
+                      {price}
                     </span>
                   </h6>
                 </CardBody>

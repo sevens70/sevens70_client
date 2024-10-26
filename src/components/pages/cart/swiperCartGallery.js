@@ -10,15 +10,15 @@ import "./styles.css";
 import { useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-const slides = [
-  "https://picsum.photos/1920/1080",
-  "https://picsum.photos/1920/1081",
-  "https://picsum.photos/1920/1082",
-  "https://picsum.photos/1920/1083",
-  "https://picsum.photos/1920/1084",
-];
+// const slides = [
+//   "https://picsum.photos/1920/1080",
+//   "https://picsum.photos/1920/1081",
+//   "https://picsum.photos/1920/1082",
+//   "https://picsum.photos/1920/1083",
+//   "https://picsum.photos/1920/1084",
+// ];
 
-export default function SwiperCartGallery() {
+export default function SwiperCartGallery({ singleProduct }) {
   const [imagesNavSlider, setImagesNavSlider] = useState(null);
   return (
     <div className="cart_swiper-area" style={{ width: "100%", height: "100%" }}>
@@ -47,7 +47,7 @@ export default function SwiperCartGallery() {
                 }}
                 modules={[Navigation, Thumbs]}
               >
-                {slides.map((slide, index) => {
+                {singleProduct.images?.map((slide, index) => {
                   return (
                     <SwiperSlide key={index}>
                       <div className="slider__image">
@@ -90,7 +90,7 @@ export default function SwiperCartGallery() {
               className="swiper-container2"
               modules={[Navigation, Thumbs, Mousewheel]}
             >
-              {slides.map((slide, index) => {
+              {singleProduct?.images?.map((slide, index) => {
                 return (
                   <SwiperSlide key={index}>
                     <div className="slider__image">

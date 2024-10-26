@@ -1,16 +1,22 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // restrictedMode: true,
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "iili.io",
+      },
+      {
+        protocol: "https",
+        hostname: "imgbb.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**", // Allows images from any other host
       },
     ],
   },
 };
-export default nextConfig;
 
-//file name convention should be js ,,just looking for any problem
+export default nextConfig;

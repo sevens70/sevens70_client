@@ -25,7 +25,6 @@ function CartGallery({ singleProduct }) {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [count, setCount] = useState(1);
-
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
@@ -84,13 +83,12 @@ function CartGallery({ singleProduct }) {
       toast.error("Check color & size.");
     }
   };
-
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto flex flex-col justify-center items-center">
       <div className="grid grid-cols-12 gap-5 w-full">
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6 cartGallery_main">
           <div className="">
-            <SwiperCartGallery />
+            <SwiperCartGallery singleProduct={singleProduct} />
           </div>
         </div>
         <div className="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-6">
@@ -98,7 +96,7 @@ function CartGallery({ singleProduct }) {
             <p className="text-grey-200 text-sm mb-1">
               {singleProduct?.categories}
             </p>
-            <h4>{singleProduct?.name}</h4>
+            <h4>{singleProduct?.title}</h4>
 
             <div className="flex flex-wrap items-center gap-1 my-2">
               {Array?.from({ length: singleProduct?.rating }).map(
@@ -106,7 +104,9 @@ function CartGallery({ singleProduct }) {
                   <StarIcon key={index} />
                 )
               )}
-              <p className="text-xsm text-grey-200 ml-3">(8 Reviews)</p>
+              <p className="text-xsm text-grey-200 ml-3">
+                ({singleProduct?.rating})
+              </p>
               <p className="text-xsm text-successGreen ml-5 flex justify-center items-center gap-2">
                 <FaCheck className="fill-successGreen" />
                 In Stock
@@ -114,10 +114,10 @@ function CartGallery({ singleProduct }) {
             </div>
             <h6 className="text-dark-900 flex justify-start items-center gap-3">
               {currencyData?.symbol}
-              {singleProduct?.disc_price}
+              {`${singleProduct?.discountPrice}.00`}
               <h6 className="font-medium text-priceColor line-through">
                 {currencyData?.symbol}
-                {singleProduct?.price}
+                {`${singleProduct?.price}.00`}
               </h6>
             </h6>
             <p className="text-dark-700 text-sm mt-2 capitalize">
@@ -129,24 +129,29 @@ function CartGallery({ singleProduct }) {
                   key={idx}
                   // name="color"
                   // color="gray"
-                  checked={selectedColor === item}
-                  onChange={() => handleColorChange(item)}
-                  className="h-8 w-8 text-primaryRed border-none"
-                  style={{ backgroundColor: item }}
+                  checked={selectedColor === item.id}
+                  onChange={() => handleColorChange(item.id)}
+                  className={`h-8 w-8 text-primaryRed border-none ${!item.class} ${!item.selectedClass}`}
+                  // style={{
+                  //   backgroundColor: item.class,
+                  //   border: "1px solid yellow",
+                  // }}
                 />
               ))}
             </div>
             <p className="text-dark-900 text-sm">Size:</p>
             <div className="flex flex-wrap gap-3 md:gap-5">
-              {singleProduct?.size?.map((item, idx) => (
+              {singleProduct?.sizes?.map((item, idx) => (
                 <Radio
-                  key={idx}
+                  key={item.id}
                   name="size"
                   // color="purple"
-                  checked={selectedSize === item}
-                  onChange={() => handleSizeChange(item)}
+                  checked={selectedSize === item.id}
+                  onChange={() => handleSizeChange(item.id)}
                   label={
-                    <p className="text-xsm text-dark-900 uppercase">{item}</p>
+                    <p className="text-xsm text-dark-900 uppercase">
+                      {item.id}
+                    </p>
                   }
                 />
               ))}
@@ -204,14 +209,17 @@ function CartGallery({ singleProduct }) {
             <div className="mt-7">
               {" "}
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                MKS : <p className="text-dark-900">J-8521</p>
+                MKS : <p className="text-dark-900">{singleProduct?.model}</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Category :{" "}
-                <p className="text-dark-900">{singleProduct?.prd_category}</p>
+                <p className="text-dark-900">{singleProduct?.category}</p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                Tags : <p className="text-dark-900">{singleProduct?.tags}</p>
+                Tags :{" "}
+                <p className="text-dark-900">
+                  {singleProduct?.tags.map((tag) => tag.name).join(", ")}
+                </p>
               </p>
             </div>
           </div>

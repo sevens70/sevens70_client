@@ -19,7 +19,7 @@ function Cart({ singleProduct }) {
             Home
           </Link>
           {/* <a href="#">{searchParams.get("category")}</a> */}
-          <a href="#">{singleProduct?.name}</a>
+          <a href="#">{singleProduct?.title}</a>
         </Breadcrumbs>
       </div>
       <CartGallery singleProduct={singleProduct} />

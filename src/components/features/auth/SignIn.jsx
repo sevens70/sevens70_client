@@ -2,24 +2,18 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 import { selectError, selectLoggedInUser, loginUserAsync } from "./authSlice";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-// export const metadata = {
-//   title: "Next.js SignIn Page | Xartso - Next.js Dashboard Template",
-//   description: "This is Next.js Signin Page Xartso Dashboard Template",
-// };
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 
 const SignIn = () => {
-  const dispatch = useDispatch();
-  const error = useSelector(selectError);
-  const user = useSelector(selectLoggedInUser);
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectError);
+  const user = useAppSelector(selectLoggedInUser);
   const router = useRouter();
   // const user = useSelector(selectLoggedInUser);
-
-  console.log("user1234", user);
-  // let user = false;
 
   console.log("user1234", user, error);
   const {

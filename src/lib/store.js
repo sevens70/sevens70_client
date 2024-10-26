@@ -3,6 +3,7 @@ import CurrencyReducer from "./features/currencySlice";
 import FavouriteReducer from "./features/favouriteSlice";
 import OrdersReducer from "./features/ordersSlice";
 import AuthReducer from "../components/features/auth/authSlice";
+import productReducer from "../components/features/product/productSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   favourites: FavouriteReducer,
   orders: OrdersReducer,
   auth: AuthReducer,
+  product: productReducer,
 });
 
 const persistConfig = {

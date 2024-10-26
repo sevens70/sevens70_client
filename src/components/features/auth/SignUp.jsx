@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Image from "next/image";
 import { createUserAsync, selectLoggedInUser } from "./authSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 
 function SignUp() {
   const router = useRouter();
@@ -14,9 +14,8 @@ function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const dispatch = useDispatch();
-  const user = useSelector(selectLoggedInUser);
-  console.log("1237 user created user", user);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectLoggedInUser);
   useEffect(() => {
     if (user) {
       router.push("/");

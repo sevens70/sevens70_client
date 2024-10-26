@@ -3,19 +3,20 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useCallback } from "react";
 import Cart from "../../../components/pages/cart";
 import Loader from "../../../components/common/Loader";
-import {useApi} from "../../../lib/utils/useApi";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import {
+  fetchProductByIdAsync,
+  selectProductById,
+} from "../../../components/features/product/productSlice";
 
 export default function Page() {
   const { id } = useParams();
-  const { singleProduct, getSingleProduct } = useApi();
-
-  const fetchProduct = useCallback(async () => {
-    await getSingleProduct(Number(id));
-  }, [id, getSingleProduct]);
-
+  const singleProduct = useAppSelector(selectProductById);
+  // const { singleProduct, getSingleProduct } = useApi();
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    fetchProduct();
-  }, [fetchProduct]);
+    dispatch(fetchProductByIdAsync(id));
+  }, [dispatch, id]);
 
   return (
     <div

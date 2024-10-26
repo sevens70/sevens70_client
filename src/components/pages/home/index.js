@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Banner from "./Banner";
 import Category from "./Category";
 import Shop from "./shop";

@@ -24,6 +24,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegUser } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { CgMenuHotdog } from "react-icons/cg";
 import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
@@ -31,8 +32,13 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 // import CartList from "../checkout/cartList";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
-import { getCart, getCartTotal } from "../../lib/features/cartSlice";
+import { getCartTotal } from "../../lib/features/cartSlice";
 import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
+import {
+  fetchAllProductByAsinc,
+  fetchCategoriesAsync,
+  selectAllCategories,
+} from "../features/product/productSlice";
 
 const menu = [
   {
@@ -93,7 +99,8 @@ const Header = () => {
   const router = useRouter();
   const { totalCount, items } = useAppSelector((state) => state.cart);
   const user = useAppSelector(selectLoggedInUser);
-  // const cart = useAppSelector(getCart);
+  const allCatgories = useAppSelector(selectAllCategories);
+  const [categories, setCategories] = useState({});
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const openDrawer = () => setOpen(true);
@@ -105,12 +112,16 @@ const Header = () => {
     currencyData ?? currency[0]
   );
 
+  // useEffect(() => {
+  //   dispatch(fetchCategoriesAsync());
+  // }, [dispatch]);
   useEffect(() => {
     dispatch(getCartTotal());
-  }, [items]);
+    dispatch(fetchCategoriesAsync());
+    dispatch(fetchAllProductByAsinc());
+  }, [items, dispatch]);
   const handleLogout = () => {
     dispatch(signOutAsync());
-
   };
   useEffect(() => {
     if (!user) {
@@ -119,7 +130,7 @@ const Header = () => {
   }, [user, router]);
   // const user = useSelector(selectLoggedInUser);
 
-  console.log("user1234 01", user);
+  console.log("allCatgories", allCatgories);
   const handleMenuItemClick = (currency) => {
     dispatch(addToCurrency(currency));
     setSelectedCurrency(currency);
@@ -132,13 +143,20 @@ const Header = () => {
       () => window.innerWidth >= 960 && setOpen(false)
     );
   }, []);
-
+  const transformedData = allCatgories?.reduce((acc, category) => {
+    acc[category.name] = category.subcategories.map((subcategory) => ({
+      id: subcategory._id,
+      name: subcategory.name,
+    }));
+    return acc;
+  }, {});
+  console.log("allCatgories", allCatgories, value);
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {menu.map(({ name, url, isMenu }, idx) => (
-        <>
+        <React.Fragment key={idx}>
           {isMenu ? (
-            <Menu key={idx}>
+            <Menu>
               <MenuHandler>
                 <Typography
                   // as="a"
@@ -155,31 +173,32 @@ const Header = () => {
                       }`}
                     />
                   </MenuItem>
-                  <MenuList className="font-jost text-xsm">
-                    <MenuItem>Menu Item 1</MenuItem>
-                    <MenuItem>Menu Item 2</MenuItem>
-                    <MenuItem>Menu Item 3</MenuItem>
-                  </MenuList>
                 </Typography>
               </MenuHandler>
+
+              {/* Render the subcategories dynamically if available in transformedData */}
+              {transformedData[name.toLowerCase()] && (
+                <MenuList className="font-jost text-xsm">
+                  {transformedData[name.toLowerCase()].map((subcategory) => (
+                    <MenuItem className="capitalize" key={subcategory.id}>
+                      {subcategory.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              )}
             </Menu>
           ) : (
             <Typography
-              key={idx}
-              // as="li"
+              // as="a"
+              // href={url}
               variant="small"
               color="blue-gray"
               className="p-1 font-normal hover:no-underline"
             >
-              <a
-                href="/"
-                className="flex font-jost items-center hover:no-underline"
-              >
-                Blog
-              </a>
+              {name}
             </Typography>
           )}
-        </>
+        </React.Fragment>
       ))}
     </ul>
   );
@@ -370,7 +389,7 @@ const Header = () => {
                 defaultValue="all-categories"
                 value={value}
                 onChange={(val) => setValue(val)}
-                className="border-none bg-light-100 font-jost"
+                className="border-none bg-light-100 font-jost capitalize"
                 labelProps={{
                   className: "hidden",
                 }}
@@ -383,36 +402,28 @@ const Header = () => {
                     })
                   ) : (
                     <div className="flex items-center gap-2">
-                      <GiHamburgerMenu className="h-5 w-5" />
+                      <CgMenuHotdog className="h-5 w-5" />
                       All Categories
                     </div>
                   )
                 }
               >
-                <Option
+                {/* <Option
                   key="all-categories"
                   value=""
                   className="flex items-center gap-2 font-jost text-xsm"
                 >
-                  <GiHamburgerMenu className="h-5 w-5" /> All Categories
-                </Option>
-                <Option className="font-jost text-xsm" value="html">
-                  {" "}
-                  Tailwind{" "}
-                </Option>
-                <Option className="font-jost text-xsm" value="react">
-                  {" "}
-                  React
-                </Option>
-                <Option className="font-jost text-xsm" value="vue">
-                  Vue
-                </Option>
-                <Option className="font-jost text-xsm" value="angular">
-                  Angular
-                </Option>
-                <Option className="font-jost text-xsm" value="svelte">
-                  Svelte
-                </Option>
+                  <GiHamburgerMenu className="h-5 w-5" /> All category
+                </Option> */}
+                {allCatgories?.map((item, idx) => (
+                  <Option
+                    className="font-jost text-xsm capitalize"
+                    key={idx}
+                    value={`${item.name}`}
+                  >
+                    {item.name}
+                  </Option>
+                ))}
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>
