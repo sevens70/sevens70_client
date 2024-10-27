@@ -100,6 +100,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log("check loggedInuserToken 01", action.payload)
         state.loggedInUserToken = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
@@ -111,6 +112,7 @@ export const authSlice = createSlice({
       })
       .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log("check loggedInuserToken 02", action.payload)
         state.loggedInUserToken = null;
       })
       .addCase(checkAuthAsync.pending, (state) => {
@@ -118,6 +120,7 @@ export const authSlice = createSlice({
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log("check loggedInuserToken 03", action.payload)
         state.loggedInUserToken = action.payload;
         state.userChecked = true;
       })

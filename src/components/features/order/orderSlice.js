@@ -12,8 +12,8 @@ const initialState = {
 export const createOrderAsync = createAsyncThunk(
   "order/createOrder",
   async (order) => {
+    console.log("user details data 01 order", order)
     const response = await createOrder(order);
-    // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
@@ -49,9 +49,13 @@ export const orderSlice = createSlice({
         state.status = "loading";
       })
       .addCase(createOrderAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
+        console.log("action payload", action.payload)
         state.orders.push(action.payload);
         state.currentOrder = action.payload;
+      })
+      .addCase(createOrderAsync.rejected, (state, action) => {
+        state.status = "failed";
       })
       .addCase(fetchAllOrdersAsync.pending, (state) => {
         state.status = "loading";

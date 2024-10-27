@@ -80,12 +80,13 @@ function CartGallery({ singleProduct }) {
   console.log(
     "items & product",
     items,
-    items.findIndex((item) => item.product.id === singleProduct.id)
+    singleProduct
+    // items?.findIndex((item) => item.product?.id === singleProduct.id)
   );
 
   const handleAddToCart = () => {
     // ================
-    if (items.findIndex((item) => item.product.id === singleProduct.id) < 0) {
+    if (items?.findIndex((item) => item.product.id === singleProduct.id) < 0) {
       console.log({ items });
       const newItem = {
         product: singleProduct.id,
@@ -164,7 +165,7 @@ function CartGallery({ singleProduct }) {
               color: {selectedColor}
             </p>
             <div className="flex w-max flex-wrap gap-0">
-              {singleProduct.colors?.map((item, idx) => (
+              {singleProduct?.colors?.map((item, idx) => (
                 <Radio
                   key={idx}
                   // name="color"

@@ -47,7 +47,7 @@ export default function SwiperCartGallery({ singleProduct }) {
                 }}
                 modules={[Navigation, Thumbs]}
               >
-                {singleProduct.images?.map((slide, index) => {
+                {singleProduct?.images?.map((slide, index) => {
                   return (
                     <SwiperSlide key={index}>
                       <div className="slider__image">

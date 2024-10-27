@@ -1,7 +1,8 @@
 // import CartReducer from "./features/cartSlice";
 import CurrencyReducer from "./features/currencySlice";
 import FavouriteReducer from "./features/favouriteSlice";
-import OrdersReducer from "./features/ordersSlice";
+// import OrdersReducer from "./features/ordersSlice";
+import OrdersReducer from "../components/features/order/orderSlice";
 import AuthReducer from "../components/features/auth/authSlice";
 import cartReducer from "../components/features/cart/cartSlice";
 import productReducer from "../components/features/product/productSlice";

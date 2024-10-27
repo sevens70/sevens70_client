@@ -16,14 +16,17 @@ export default function MainPage() {
   const userChecked = useAppSelector(selectUserChecked);
 
   // useEffect(() => {
-  //   dispatch(checkAuthAsync());
+  //   dispatch(checkAuthAsync()); // for loginUser user checked
   // }, [dispatch]);
 
   useEffect(() => {
+   
     if (user) {
-      dispatch(fetchItemsByUserIdAsync());
-      // we can get req.user by token on backend so no need to give in front-end
       dispatch(fetchLoggedInUserAsync());
+      dispatch(fetchItemsByUserIdAsync());
+      // dispatch(checkAuthAsync());
+      // we can get req.user by token on backend so no need to give in front-end
+ 
     }
   }, [dispatch, user]);
   console.log("items & product user 12333", user, userChecked);
@@ -32,7 +35,7 @@ export default function MainPage() {
       className="mx-auto"
       style={{ height: "auto", backgroundColor: "#fff" }}
     >
-      {userChecked && <Home />}
+      {userChecked | user && <Home />}
       {/* <Home /> */}
     </div>
   );

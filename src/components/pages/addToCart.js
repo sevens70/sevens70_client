@@ -114,7 +114,7 @@ export default function AddToCart() {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.map(
+                {cartItems?.map(
                   ({ id, quantity, product, size, color }, index) => {
                     const isLast = index === items.length - 1;
                     const classes = isLast
@@ -126,7 +126,7 @@ export default function AddToCart() {
                         <td className={classes}>
                           <div className="flex items-center gap-1">
                             <img
-                              src={product.thumbnail}
+                              src={product?.thumbnail}
                               className="img-fluid"
                               alt=""
                               style={{
@@ -140,12 +140,12 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <p className="font-normal text-grey-600 font-jost">
-                            {product.title}
+                            {product?.title}
                           </p>
                         </td>
                         <td className={classes}>
                           <p className="font-xsm text-grey-600 font-jost">
-                            {product.category}
+                            {product?.category}
                           </p>
                         </td>
                         <td className={classes}>
@@ -160,7 +160,7 @@ export default function AddToCart() {
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-3 pr-0 rounded-r-none bg-white"
                                 disabled={quantity < 2}
                                 onClick={() => {
-                                  dispatch(decrease(product.id));
+                                  dispatch(decrease(product?.id));
                                   toast.error(
                                     "Quantity is decreased form Cart item."
                                   );
@@ -206,7 +206,7 @@ export default function AddToCart() {
                             className="font-normal text-gray-600"
                           >
                             {currencyData?.symbol}
-                            {`${product.discountPrice}.00`}
+                            {`${product?.discountPrice}.00`}
                           </p>
                         </td>
                         <td className={classes}>

@@ -123,6 +123,7 @@ const Header = () => {
     dispatch(fetchAllProductByAsinc());
   }, [items, dispatch]);
   const handleLogout = () => {
+    console.log("items & product user 12333 automatic called");
     dispatch(signOutAsync());
   };
   useEffect(() => {
@@ -576,7 +577,7 @@ const Header = () => {
                         />
                       </svg>
                       <h6
-                        onClick={handleLogout}
+                        onClick={() => handleLogout()}
                         className="text-xsm font-jost font-normal text-gray-600"
                       >
                         Sign Out
