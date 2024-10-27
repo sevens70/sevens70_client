@@ -5,6 +5,7 @@ export function createUser(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/auth/signup`, {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
     });
@@ -38,7 +39,9 @@ export function loginUser(loginInfo) {
 export function checkAuth() {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(`${BASE_URL}/auth/check`);
+      const response = await fetch(`${BASE_URL}/auth/check`, {
+        credentials: "include",
+      });
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
@@ -55,7 +58,9 @@ export function checkAuth() {
 export function signOut() {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await fetch(`${BASE_URL}/auth/logout`);
+      const response = await fetch(`${BASE_URL}/auth/logout`, {
+        credentials: "include",
+      });
       if (response.ok) {
         resolve({ data: "success" });
       } else {
@@ -74,6 +79,7 @@ export function resetPasswordRequest(email) {
     try {
       const response = await fetch(`${BASE_URL}/auth/reset-password-request`, {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify({ email }),
         headers: { "content-type": "application/json" },
       });
@@ -95,6 +101,7 @@ export function resetPassword(data) {
     try {
       const response = await fetch(`${BASE_URL}/auth/reset-password`, {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify(data),
         headers: { "content-type": "application/json" },
       });

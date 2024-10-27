@@ -4,30 +4,26 @@ import React, { useEffect, useCallback } from "react";
 import Cart from "../../../components/pages/cart";
 import Loader from "../../../components/common/Loader";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
-import {
-  fetchProductByIdAsync,
-  selectProductById,
-} from "../../../components/features/product/productSlice";
-
+import { fetchProductByIdAsync } from "../../../components/features/product/productSlice";
+import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 export default function Page() {
   const { id } = useParams();
-  // const singleProduct = useAppSelector(selectProductById);
   // const { singleProduct, getSingleProduct } = useApi();
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("response data hit", id);
     dispatch(fetchProductByIdAsync(id));
   }, [dispatch, id]);
 
-  // console.log("id & selectProductById", id, singleProduct.id);
-
   return (
-    <div
-      className="mx-auto"
-      style={{ height: "auto", backgroundColor: "#fff" }}
-    >
-      {/* {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />} */}
-      <Cart />
-    </div>
+    <DefaultLayout>
+      {" "}
+      <div
+        className="mx-auto"
+        style={{ height: "auto", backgroundColor: "#fff" }}
+      >
+        {/* {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />} */}
+        <Cart />
+      </div>
+    </DefaultLayout>
   );
 }

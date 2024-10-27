@@ -130,9 +130,6 @@ const Header = () => {
     if (!user) {
       router.push("/auth/signin");
     }
-    // else {
-    //    dispatch(fetchItemsByUserIdAsync());
-    // }
   }, [user, router]);
 
   console.log("items & product user in header", user, cartItems);
