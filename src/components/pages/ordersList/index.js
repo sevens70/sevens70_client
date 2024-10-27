@@ -3,9 +3,9 @@ import React from "react";
 import { useAppSelector } from "../../../lib/hooks";
 import { Avatar, Button, h6 } from "@material-tailwind/react";
 import Link from "next/link";
-
+import OrdersPage from "../../../components/features/order/OrdersPage";
 function OrdersList() {
-  const { items } = useAppSelector((state) => state.orders);
+  // const { items } = useAppSelector((state) => state.orders);
   return (
     <div className="my-20 w-11/12 md:w-10/12 mx-auto flex flex-col justify-start items-start">
       <div className="flex items-center gap-2">
@@ -27,7 +27,7 @@ function OrdersList() {
           View all
         </Link>
       </div>
-      <div className="w-full divide-y divide-gray-200">
+      {/* <div className="w-full divide-y divide-gray-200">
         {items.map(({ name, disc_price, prd_category, image }, index) => (
           <div
             key={index}
@@ -65,7 +65,8 @@ function OrdersList() {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+      <OrdersPage />
     </div>
   );
 }

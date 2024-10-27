@@ -12,7 +12,6 @@ const initialState = {
 export const createOrderAsync = createAsyncThunk(
   "order/createOrder",
   async (order) => {
-    console.log("user details data 01 order", order)
     const response = await createOrder(order);
     return response.data;
   }
@@ -50,7 +49,6 @@ export const orderSlice = createSlice({
       })
       .addCase(createOrderAsync.fulfilled, (state, action) => {
         state.status = "success";
-        console.log("action payload", action.payload)
         state.orders.push(action.payload);
         state.currentOrder = action.payload;
       })
@@ -82,7 +80,7 @@ export const { resetOrder } = orderSlice.actions;
 
 export const selectCurrentOrder = (state) => state.order?.currentOrder;
 export const selectOrders = (state) => state.order?.orders;
-export const selectTotalOrders = (state) => state.order.totalOrders;
+export const selectTotalOrders = (state) => state.order?.totalOrders;
 export const selectStatus = (state) => state.order?.status;
 
 export default orderSlice.reducer;
