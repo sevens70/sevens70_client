@@ -18,11 +18,12 @@ import {
   selectStatus,
 } from "../../../components/features/order/orderSlice";
 import { selectUserInfo } from "../../../components/features/user/userSlice";
-// import { Grid } from "react-loader-spinner";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useAppSelector } from "../../../lib/hooks";
 import { useRouter } from "next/navigation";
+import Loader from "../../common/Loader";
+import { getCarrency } from "../../../lib/features/currencySlice";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -38,12 +39,14 @@ function Checkout() {
   const items = useSelector(selectItems);
   const status = useSelector(selectStatus);
   const currentOrder = useSelector(selectCurrentOrder);
-  // const selectedStatus = useSelector(state) => state.order?.status;
-
-  const totalAmount = items.reduce(
-    (amount, item) => item.product.discountPrice * item.quantity + amount,
-    0
-  );
+  const currencyData = useAppSelector(getCarrency);
+  let deliveryCharge = 60;
+  const totalAmount =
+    items?.reduce(
+      (accumulator, item) =>
+        item.product.discountPrice * item.quantity + accumulator,
+      0
+    ) + deliveryCharge;
   const totalItems = items.reduce((total, item) => item.quantity + total, 0);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -78,14 +81,10 @@ function Checkout() {
         selectedAddress,
         status: "pending", // other status can be delivered, received.
       };
-      dispatch(createOrderAsync(order)); //====================================================
-      // need to redirect from here to a new page of order success.
-      console.log("status for order", status)
-      if(status === "success") {
-        toast.success("Order created successfully")
-        // dispatch(clearCart([]));
-        // dispatch(getCartTotal());
-        dispatch(resetCartAsync())
+      dispatch(createOrderAsync(order));
+      if (status === "success") {
+        toast.success("Order created successfully");
+        dispatch(resetCartAsync());
         router.push("/orders");
       }
     } else {
@@ -313,7 +312,7 @@ function Checkout() {
 
                   <div className="mt-6 flex items-center justify-end gap-x-6">
                     <button
-                      onClick={e=>reset()}
+                      onClick={(e) => reset()}
                       type="button"
                       className="text-sm font-semibold leading-6 text-gray-900"
                     >
@@ -329,7 +328,7 @@ function Checkout() {
                 </div>
               </form>
               <div className="border-b border-gray-900/10 pb-12">
-                <h2 className="text-base font-semibold leading-7 text-gray-900">
+                <h2 className="text-sm font-semibold leading-7 text-gray-900">
                   Addresses
                 </h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -340,7 +339,7 @@ function Checkout() {
                     {user.addresses.map((address, index) => (
                       <li
                         key={index}
-                        className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200 mb-3"
+                        className="flex text-sm justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200 mb-3"
                       >
                         <div className="flex gap-x-4">
                           <input
@@ -351,22 +350,22 @@ function Checkout() {
                             className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                           />
                           <div className="min-w-0 flex-auto">
-                            <p className="text-sm font-semibold leading-6 text-gray-900">
+                            <p className="text-xsm font-semibold leading-6 text-gray-900">
                               {address.name}
                             </p>
-                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                            <p className="mt-1 truncate text-xsm leading-5 text-gray-500">
                               {address.street}
                             </p>
-                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                            <p className="mt-1 truncate text-xsm leading-5 text-gray-500">
                               {address.pinCode}
                             </p>
                           </div>
                         </div>
                         <div className="hidden sm:flex sm:flex-col sm:items-end">
-                          <p className="text-sm leading-6 text-gray-900">
+                          <p className="text-xsm leading-6 text-gray-900">
                             Phone: {address.phone}
                           </p>
-                          <p className="text-sm leading-6 text-gray-500">
+                          <p className="text-xsm leading-6 text-gray-500">
                             {address.city}
                           </p>
                         </div>
@@ -374,7 +373,7 @@ function Checkout() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-1 text-sm leading-6 text-gray-600">
+                  <p className="mt-1 text-xsm leading-6 text-gray-600">
                     No address found.
                   </p>
                 )}
@@ -447,7 +446,7 @@ function Checkout() {
 
                           <div className="ml-4 flex flex-1 flex-col">
                             <div>
-                              <div className="flex justify-between text-base font-medium text-gray-900">
+                              <div className="flex justify-between text-sm font-medium text-gray-900">
                                 <h3>
                                   <a href={item.product.id}>
                                     {item.product.title}
@@ -499,28 +498,38 @@ function Checkout() {
                 </div>
 
                 <div className="border-t border-gray-200 px-2 py-6 sm:px-2">
-                  <div className="flex justify-between my-2 text-base font-medium text-gray-900">
+                  <div className="flex justify-between my-2 text-sm font-medium text-gray-900">
                     <p>Subtotal</p>
                     <p>$ {totalAmount}</p>
                   </div>
-                  <div className="flex justify-between my-2 text-base font-medium text-gray-900">
+                  <div className="flex justify-between my-2 text-sm font-medium text-gray-900">
                     <p>Total Items in Cart</p>
                     <p>{totalItems} items</p>
                   </div>
-                  <p className="mt-0.5 text-sm text-gray-500">
-                    Shipping and taxes calculated at checkout.
-                  </p>
+                  <div className="flex justify-between my-2 text-sm font-medium text-gray-900">
+                    <p>Delivery charge</p>
+                    <p> {`60${currencyData?.symbol} for inside Dhaka`}</p>
+                  </div>
+                  <div className="flex justify-between my-2 text-sm font-medium text-gray-900">
+                    <p>Total:</p>
+                    <p className="!text-light-500">
+                      {" "}
+                      {currencyData?.symbol}
+                      {totalAmount}
+                    </p>
+                  </div>
+
                   <div className="mt-6">
                     <div
                       onClick={handleOrder}
-                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                     >
                       Order Now
                     </div>
                   </div>
                   <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                     <p>
-                      or
+                      or {" "}
                       <Link href="/">
                         <button
                           type="button"

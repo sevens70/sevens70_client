@@ -152,7 +152,7 @@ const Header = () => {
     }));
     return acc;
   }, {});
-  console.log("allCatgories", allCatgories, value);
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {menu.map(({ name, url, isMenu }, idx) => (

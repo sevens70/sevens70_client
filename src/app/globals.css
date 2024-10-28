@@ -68,6 +68,9 @@ a {
   input::placeholder {
     font-family: jost !important;
   }
+  table {
+    font-family: jost !important;
+  }
 }
 @layer utilities {
   .rounded-tl-48 {

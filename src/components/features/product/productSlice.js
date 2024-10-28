@@ -82,8 +82,11 @@ export const productSlice = createSlice({
       .addCase(fetchProductsByFiltersAsync.pending, (state) => {
         state.status = "loading";
       })
+      // .addCase(fetchProductsByFiltersAsync.rejected, (state, action) => {
+      //   state.status = "failed";
+      // })
       .addCase(fetchProductsByFiltersAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.products = action.payload.products;
         state.totalItems = action.payload.totalItems;
       })
@@ -125,7 +128,7 @@ export const productSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAllProductByAsinc.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.products = action.payload.products;
       })
       .addCase(fetchAllProductByAsinc.rejected, (state, action) => {

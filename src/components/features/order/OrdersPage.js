@@ -3,17 +3,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   PencilIcon,
-  EyeIcon,
   ArrowUpIcon,
   ArrowDownIcon,
 } from "@heroicons/react/24/outline";
+// import { MdDelete } from "react-icons/md";
 import Pagination from "../../../components/common/Pagination";
 import { ITEMS_PER_PAGE } from "../../../components/common/constants";
 import {
   fetchAllOrdersAsync,
   selectOrders,
   selectTotalOrders,
-  updateOrderAsync,
 } from "./orderSlice";
 
 function OrdersPage() {
@@ -26,21 +25,6 @@ function OrdersPage() {
 
   const handleEdit = (order) => {
     setEditableOrderId(order.id);
-  };
-  const handleShow = () => {
-    console.log("handleShow");
-  };
-
-  const handleOrderStatus = (e, order) => {
-    const updatedOrder = { ...order, status: e.target.value };
-    dispatch(updateOrderAsync(updatedOrder));
-    setEditableOrderId(-1);
-  };
-
-  const handleOrderPaymentStatus = (e, order) => {
-    const updatedOrder = { ...order, paymentStatus: e.target.value };
-    dispatch(updateOrderAsync(updatedOrder));
-    setEditableOrderId(-1);
   };
 
   const handlePage = (page) => {
@@ -56,9 +40,9 @@ function OrdersPage() {
   const chooseColor = (status) => {
     switch (status) {
       case "pending":
-        return "bg-purple-200 text-purple-600";
+        return "bg-purple-200 text-dark";
       case "dispatched":
-        return "bg-yellow-200 text-yellow-600";
+        return "bg-yellow-200 text-dark-400";
       case "delivered":
         return "bg-green-200 text-green-600";
       case "received":
@@ -78,224 +62,161 @@ function OrdersPage() {
   console.log("orders", orders);
 
   return (
-    <div className="overflow-x-auto">
-      <div className="bg-gray-100 font-sans flex items-center justify-center overflow-hidden">
-        <div className="w-full">
-          <div className="my-6 rounded bg-white shadow-md">
-            <table className="w-full table-auto">
-              <thead>
-                <tr className="bg-gray-200 text-gray-600 text-sm uppercase leading-normal">
-                  <th
-                    className="maxHeight-35 cursor-pointer px-0 py-3 text-left"
-                    onClick={(e) =>
-                      handleSort({
-                        sort: "id",
-                        order: sort?._order === "asc" ? "desc" : "asc",
-                      })
-                    }
-                  >
-                    Order#{" "}
-                    {sort._sort === "id" &&
-                      (sort._order === "asc" ? (
-                        <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
-                      ))}
-                  </th>
-                  <th className="px-0 py-3 text-left">Items</th>
-                  <th
-                    className="cursor-pointer px-0 py-3 text-left"
-                    onClick={(e) =>
-                      handleSort({
-                        sort: "totalAmount",
-                        order: sort?._order === "asc" ? "desc" : "asc",
-                      })
-                    }
-                  >
-                    Total Amount{" "}
-                    {sort._sort === "totalAmount" &&
-                      (sort._order === "asc" ? (
-                        <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
-                      ))}
-                  </th>
-                  <th className="px-0 py-3 text-center">Shipping Address</th>
-                  <th className="px-0 py-3 text-center">Order Status</th>
-                  <th className="px-0 py-3 text-center">Payment Method</th>
-                  <th className="px-0 py-3 text-center">Payment Status</th>
-                  <th
-                    className="cursor-pointer px-0 py-3 text-left"
-                    onClick={(e) =>
-                      handleSort({
-                        sort: "createdAt",
-                        order: sort?._order === "asc" ? "desc" : "asc",
-                      })
-                    }
-                  >
-                    Order Time{" "}
-                    {sort._sort === "createdAt" &&
-                      (sort._order === "asc" ? (
-                        <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
-                      ))}
-                  </th>
-                  <th
-                    className="cursor-pointer px-0 py-3 text-left"
-                    onClick={(e) =>
-                      handleSort({
-                        sort: "updatedAt",
-                        order: sort?._order === "asc" ? "desc" : "asc",
-                      })
-                    }
-                  >
-                    Last Updated{" "}
-                    {sort._sort === "updatedAt" &&
-                      (sort._order === "asc" ? (
-                        <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
-                      ) : (
-                        <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
-                      ))}
-                  </th>
-                  <th className="px-0 py-3 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
-                {orders?.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-gray-200 hover:bg-gray-100 border-b"
-                  >
-                    <td className="whitespace-nowrap px-0 py-3 text-left">
-                      <div className="flex items-center">
-                        <div className="mr-2"></div>
-                        <span className="font-medium">{order.id}</span>
-                      </div>
-                    </td>
-                    <td className="px-0 py-3 text-left">
-                      {order.items.map((item, index) => (
-                        <div key={index} className="flex items-center">
-                          <div className="mr-2">
-                            <img
-                              className="h-6 w-6 rounded-full"
-                              src={item.product.thumbnail}
-                              alt={item.product.title}
-                            />
+    <div className="w-full">
+      {" "}
+      <div className="relative overflow-x-auto">
+        <div className="bg-gray-100 font-sans flex items-center justify-center overflow-hidden">
+          <div className="w-full">
+            <div className="my-0 rounded bg-white shadow-md">
+              <table className="w-full table-auto">
+                <thead className="font-jost font-medium">
+                  <tr className="bg-gray-200 text-gray-600 text-sm uppercase leading-normal">
+                    <th className="px-3 py-3 text-left font-medium">Items</th>
+                    <th className="pr-6 py-3 text-left font-medium">quantity</th>
+                    <th
+                      className="cursor-pointer px-6 py-3 text-left font-medium"
+                      onClick={(e) =>
+                        handleSort({
+                          sort: "totalAmount",
+                          order: sort?._order === "asc" ? "desc" : "asc",
+                        })
+                      }
+                    >
+                      Total Amount{" "}
+                      {sort._sort === "totalAmount" &&
+                        (sort._order === "asc" ? (
+                          <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
+                        ) : (
+                          <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
+                        ))}
+                    </th>
+                    <th className="px-6 py-3 text-center font-medium">Order Status</th>
+                    <th className="px-6 py-3 text-center font-medium">Payment Method</th>
+                    <th className="px-6 py-3 text-center font-medium">Payment Status</th>
+                    <th
+                      className="cursor-pointer px-8 py-3 text-left font-medium"
+                      onClick={(e) =>
+                        handleSort({
+                          sort: "createdAt",
+                          order: sort?._order === "asc" ? "desc" : "asc",
+                        })
+                      }
+                    >
+                      Order Time{" "}
+                      {sort._sort === "createdAt" &&
+                        (sort._order === "asc" ? (
+                          <ArrowUpIcon className="inline h-4 w-4"></ArrowUpIcon>
+                        ) : (
+                          <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
+                        ))}
+                    </th>
+                    {/* <th className="pr-4 py-3 text-center font-medium">Actions</th> */}
+                  </tr>
+                </thead>
+                <tbody className="text-gray-600 text-sm font-jost">
+                  {orders?.map((order) => (
+                    <tr
+                      key={order.id}
+                      className="border-gray-200 hover:bg-gray-100 border-b"
+                    >
+                      <td className="px-0 py-3 text-left">
+                        {order.items.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex gap-3 my-3 items-center"
+                          >
+                            <div className="mr-2">
+                              <img
+                                className="h-[70px] w-[70] rounded-full"
+                                src={item.product.thumbnail}
+                                alt={item.product.title}
+                              />
+                            </div>
+
+                            <div>
+                              <p>{item.product.title}</p>
+                              <p>
+                                price: {item.product.discountPrice} - Qty:{" "}
+                                {item.quantity}
+                              </p>
+                            </div>
                           </div>
-                          <span>
-                            {item.product.title} - #{item.quantity} - $
-                            {item.product.discountPrice}
-                          </span>
+                        ))}
+                      </td>
+                      <td className="px-0 py-3 text-center">
+                        <div className="flex items-center justify-center">
+                          {order.totalItems}
                         </div>
-                      ))}
-                    </td>
-                    <td className="px-0 py-3 text-center">
-                      <div className="flex items-center justify-center">
-                        ${order.totalAmount}
-                      </div>
-                    </td>
-                    <td className="px-0 py-3 text-center">
-                      <div className="">
-                        <div>
-                          <strong>{order.selectedAddress.name}</strong>,
+                      </td>
+                      <td className="px-0 py-3 text-center">
+                        <div className="flex items-center justify-center">
+                          ${order.totalAmount}
                         </div>
-                        <div>{order.selectedAddress.street},</div>
-                        <div>{order.selectedAddress.city}, </div>
-                        <div>{order.selectedAddress.state}, </div>
-                        <div>{order.selectedAddress.pinCode}, </div>
-                        <div>{order.selectedAddress.phone}, </div>
-                      </div>
-                    </td>
-                    <td className="px-0 py-3 text-center">
-                      {order.id === editableOrderId ? (
-                        <select onChange={(e) => handleOrderStatus(e, order)}>
-                          <option value="pending">Pending</option>
-                          <option value="dispatched">Dispatched</option>
-                          <option value="delivered">Delivered</option>
-                          <option value="cancelled">Cancelled</option>
-                        </select>
-                      ) : (
+                      </td>
+                      <td className="px-0 py-3 text-center">
                         <span
                           className={`${chooseColor(
                             order.status
-                          )} rounded-full px-3 py-1 text-xs`}
+                          )} rounded-full !px-3 !py-2 text-xsm capitalize`}
                         >
                           {order.status}
                         </span>
-                      )}
-                    </td>
+                      </td>
 
-                    <td className="px-0 py-3 text-center">
-                      <div className="flex items-center justify-center">
-                        {order.paymentMethod}
-                      </div>
-                    </td>
+                      <td className="px-0 py-3 text-center">
+                        <div className="flex items-center justify-center">
+                          {order.paymentMethod}
+                        </div>
+                      </td>
 
-                    <td className="px-0 py-3 text-center">
-                      {order.id === editableOrderId ? (
-                        <select
-                          onChange={(e) => handleOrderPaymentStatus(e, order)}
-                        >
-                          <option value="pending">Pending</option>
-                          <option value="received">Received</option>
-                        </select>
-                      ) : (
+                      <td className="px-0 py-3 text-center">
                         <span
                           className={`${chooseColor(
                             order.paymentStatus
-                          )} rounded-full px-3 py-1 text-xs`}
+                          )} rounded-full !px-3 !py-2  text-xsm capitalize`}
                         >
                           {order.paymentStatus}
                         </span>
-                      )}
-                    </td>
+                      </td>
 
-                    <td className="px-0 py-3 text-center">
-                      <div className="flex items-center justify-center">
-                        {order.createdAt
-                          ? new Date(order.createdAt).toLocaleString()
-                          : null}
-                      </div>
-                    </td>
-
-                    <td className="px-0 py-3 text-center">
-                      <div className="flex items-center justify-center">
-                        {order.updatedAt
-                          ? new Date(order.updatedAt).toLocaleString()
-                          : null}
-                      </div>
-                    </td>
-
-                    <td className="px-0 py-3 text-center">
-                      <div className="item-center flex justify-center">
-                        <div className="hover:scale-120 mr-4 w-6 transform hover:text-purple-500">
-                          <EyeIcon
-                            className="h-8 w-8"
-                            onClick={(e) => handleShow(order)}
-                          ></EyeIcon>
+                      <td className="px-0 py-3 text-center">
+                        <div className="flex items-center justify-center">
+                          {order.createdAt
+                            ? new Date(order.createdAt).toLocaleString()
+                            : null}
                         </div>
-                        <div className="hover:scale-120 mr-2 w-6 transform hover:text-purple-500">
-                          <PencilIcon
-                            className="h-8 w-8"
-                            onClick={(e) => handleEdit(order)}
-                          ></PencilIcon>
+                      </td>
+
+                      {/* <td className="px-0 py-3 text-center">
+                        <div className="item-center flex justify-center">
+                          <div className="hover:scale-120 mr-2 w-6 transform hover:text-purple-500">
+                            <IconButton
+                              // onClick={() => {
+                              //   dispatch(remove(id));
+                              //   toast.success("Item is deleted from Cart.");
+                              // }}
+                              // onClick={() => handleRemove(id)}
+                              className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                            >
+                              <MdDelete className="fill-white" />
+                            </IconButton>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td> */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <Pagination
+          page={page}
+          setPage={setPage}
+          handlePage={handlePage}
+          totalItems={totalOrders}
+        ></Pagination>
       </div>
-      <Pagination
-        page={page}
-        setPage={setPage}
-        handlePage={handlePage}
-        totalItems={totalOrders}
-      ></Pagination>
     </div>
   );
 }

@@ -23,6 +23,7 @@ import {
   deleteItemFromCartAsync,
   resetCartAsync,
   selectItems,
+  updateCartAsync,
 } from "../features/cart/cartSlice";
 
 const TABLE_HEAD = [
@@ -53,12 +54,8 @@ export default function AddToCart() {
   const pathname = usePathname();
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
-  const { totalAmount, items } = useAppSelector((state) => state.cart); // note total Item will be add on new action
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectItems);
-  useEffect(() => {
-    dispatch(getCartTotal());
-  }, [items]);
 
   if (cartItems.length === 0) {
     return (
@@ -82,7 +79,24 @@ export default function AddToCart() {
     dispatch(deleteItemFromCartAsync(id));
   };
 
-  console.log("cart Items", items);
+  const handleDecreaseQuantity = (id, quantity) => {
+    let modifyQuantity = +quantity - 1;
+    dispatch(updateCartAsync({ id: id, quantity: modifyQuantity }));
+    toast.success("Item quantity is decreased");
+  };
+  const handleIncreaseQuantity = (id, quantity) => {
+    let modifyQuantity = +quantity + 1;
+    dispatch(updateCartAsync({ id: id, quantity: modifyQuantity }));
+    toast.success("Item quantity is increased");
+  };
+  let deliveryCharge = 60;
+  const totalAmount = cartItems?.reduce(
+    (accumulator, item) =>
+      item.product.discountPrice * item.quantity + accumulator,
+    0
+  ) + deliveryCharge;
+
+  
   return (
     <div>
       <section className="">
@@ -116,7 +130,8 @@ export default function AddToCart() {
               <tbody>
                 {cartItems?.map(
                   ({ id, quantity, product, size, color }, index) => {
-                    const isLast = index === items.length - 1;
+                    const isLast = index === cartItems.length - 1;
+
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-gray-300";
@@ -160,10 +175,7 @@ export default function AddToCart() {
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-3 pr-0 rounded-r-none bg-white"
                                 disabled={quantity < 2}
                                 onClick={() => {
-                                  dispatch(decrease(product?.id));
-                                  toast.error(
-                                    "Quantity is decreased form Cart item."
-                                  );
+                                  handleDecreaseQuantity(id, quantity);
                                 }}
                               >
                                 {" "}
@@ -178,18 +190,15 @@ export default function AddToCart() {
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-0 pr-3 rounded-l-none  bg-white"
                                 onClick={
                                   () => {
-                                    const matchingItem = items?.find(
+                                    const matchingItem = cartItems?.find(
                                       (item) => item.id === id
                                     );
-                                    if (matchingItem?.amount >= 4) {
+                                    if (matchingItem?.quantity >= 4) {
                                       toast.error(
                                         "Quantity of products must be 4 or less"
                                       );
                                     } else {
-                                      dispatch(increase(id));
-                                      toast.success(
-                                        "Quantity is increased of cart item."
-                                      );
+                                      handleIncreaseQuantity(id, quantity);
                                     }
                                   }
                                   //  dispatch(increase(id))
@@ -215,7 +224,7 @@ export default function AddToCart() {
                             className="font-normal text-gray-600"
                           >
                             {currencyData?.symbol}
-                            {totalAmount}
+                            {product?.discountPrice * quantity}
                           </p>
                         </td>
                         <td className={classes}>
@@ -251,7 +260,7 @@ export default function AddToCart() {
                 <h6 className="font-jost flex justify-end my-2 mr-7">
                   Delivery Charge:{" "}
                   <span className="ml-7 !text-light-500">
-                    (Will be Added soon)
+                    {`60${currencyData?.symbol} for inside Dhaka`}
                   </span>
                 </h6>
               </div>
