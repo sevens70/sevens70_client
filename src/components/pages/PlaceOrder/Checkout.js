@@ -92,8 +92,6 @@ function Checkout() {
     }
   };
 
-  console.log("user details data 01 02", user, currentOrder);
-
   return (
     <>
       {/* {!items.length && <Navigate to="/" replace={true}></Navigate>} */}
@@ -529,7 +527,7 @@ function Checkout() {
                   </div>
                   <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                     <p>
-                      or {" "}
+                      or{" "}
                       <Link href="/">
                         <button
                           type="button"

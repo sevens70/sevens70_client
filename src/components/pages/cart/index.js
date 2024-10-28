@@ -13,7 +13,6 @@ import { selectProductById } from "../../features/product/productSlice";
 function Cart() {
   // const searchParams = useSearchParams();
   const singleProduct = useAppSelector(selectProductById);
-  // console.log("id & selectProductById", singleProduct);
   return (
     <section className="">
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">

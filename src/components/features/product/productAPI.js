@@ -32,7 +32,6 @@ export function fetchAllCategories() {
 
 export function createProduct(product) {
   return new Promise(async (resolve) => {
-    console.log("12345", product);
     const response = await fetch(`${BASE_URL}/products`, {
       method: "POST",
       body: JSON.stringify(product),
@@ -104,7 +103,6 @@ export function createSubCategories(payload) {
       headers: { "content-type": "application/json" },
       credentials: "include",
     });
-    console.log("response message 0122", response);
     const data = await response.json();
     resolve({ data });
   });

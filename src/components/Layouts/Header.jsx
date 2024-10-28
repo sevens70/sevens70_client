@@ -123,7 +123,6 @@ const Header = () => {
     dispatch(fetchAllProductByAsinc());
   }, [items, dispatch]);
   const handleLogout = () => {
-    console.log("items & product user 12333 automatic called");
     dispatch(signOutAsync());
   };
   useEffect(() => {
@@ -132,7 +131,6 @@ const Header = () => {
     }
   }, [user, router]);
 
-  console.log("items & product user in header", user, cartItems);
   const handleMenuItemClick = (currency) => {
     dispatch(addToCurrency(currency));
     setSelectedCurrency(currency);

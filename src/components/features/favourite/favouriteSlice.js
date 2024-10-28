@@ -18,7 +18,7 @@ export const addToFavouriteAsync = createAsyncThunk(
   }
 );
 
-export const fetchItemsByUserIdAsync = createAsyncThunk(
+export const fetchFavouriteItemsByUserIdAsync = createAsyncThunk(
   "favourite/fetchItemsByUserId",
   async () => {
     const response = await fetchItemsByUserId();
@@ -64,15 +64,15 @@ export const favouriteSlice = createSlice({
         state.status = "idle";
         state.items.push(action.payload);
       })
-      .addCase(fetchItemsByUserIdAsync.pending, (state) => {
+      .addCase(fetchFavouriteItemsByUserIdAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchItemsByUserIdAsync.fulfilled, (state, action) => {
+      .addCase(fetchFavouriteItemsByUserIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items = action.payload;
         state.cartLoaded = true;
       })
-      .addCase(fetchItemsByUserIdAsync.rejected, (state, action) => {
+      .addCase(fetchFavouriteItemsByUserIdAsync.rejected, (state, action) => {
         state.status = "idle";
         state.cartLoaded = true;
       })

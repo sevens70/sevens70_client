@@ -21,7 +21,6 @@ export const fetchProductByIdAsync = createAsyncThunk(
   async (id) => {
     const response = await fetchProductById(id);
     // The value we return becomes the `fulfilled` action payload
-    console.log("response data 123", response.data);
     return response.data;
   }
 );
@@ -29,7 +28,6 @@ export const fetchAllProductByAsinc = createAsyncThunk(
   "product/allProducts",
   async () => {
     const response = await fetchAllProducts();
-    console.log("response ----", response);
     return response.data;
   }
 );
@@ -38,7 +36,6 @@ export const fetchCategoriesAsync = createAsyncThunk(
   async () => {
     try {
       const response = await fetchCategories();
-      console.log("allCatgories 01", response.data);
       return response.data;
     } catch (error) {
       console.error("API error:", error);
@@ -107,7 +104,6 @@ export const productSlice = createSlice({
       })
       .addCase(fetchCategoriesAsync.rejected, (state, action) => {
         state.status = "failed";
-        // console.error("Error fetching categories:", action.error.message);
       })
 
       // .addCase(createSubCategoriesAsync.pending, (state) => {

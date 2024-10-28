@@ -386,7 +386,6 @@ function RightSidebar() {
                             (item) => item.product.id === id
                           ) < 0
                         ) {
-                          console.log({ items });
                           const newItem = {
                             product: id,
                             // quantity: count,
@@ -398,7 +397,6 @@ function RightSidebar() {
                           // if (selectedSize) {
                           //   newItem.size = selectedSize;
                           // }
-                          console.log("items & product newItem 003", newItem);
                           dispatch(addToCartAsync({ item: newItem, toast }));
                         } else {
                           toast.error("Item Already added");
@@ -450,7 +448,6 @@ function RightSidebar() {
                           // if (selectedSize) {
                           //   newItem.size = selectedSize;
                           // }
-                          console.log("items & product newItem 003", newItem);
                           dispatch(addToCartAsync({ item: newItem, toast }));
                         } else {
                           toast.error("Item Already added");

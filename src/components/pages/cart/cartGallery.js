@@ -73,7 +73,6 @@ function CartGallery({ singleProduct }) {
       if (selectedSize) {
         newItem.size = selectedSize;
       }
-      console.log("items & product newItem", newItem);
       dispatch(addToCartAsync({ item: newItem, toast }));
     } else {
       toast.error("Item Already added");

@@ -12,6 +12,8 @@ import Home from "../components/pages/home";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { useRouter } from "next/navigation";
 import SignIn from "../components/features/auth/SignIn";
+import { fetchFavouriteItemsByUserIdAsync } from "../components/features/favourite/favouriteSlice";
+import { fetchAllOrdersAsync } from "../components/features/order/orderSlice";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -31,6 +33,8 @@ export default function MainPage() {
   useEffect(() => {
     if (user) {
       dispatch(fetchItemsByUserIdAsync());
+      dispatch(fetchFavouriteItemsByUserIdAsync());
+      dispatch(fetchAllOrdersAsync());
       // we can get req.user by token on backend so no need to give in front-end
       dispatch(fetchLoggedInUserAsync());
     }
