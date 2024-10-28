@@ -5,6 +5,7 @@ import FavouriteReducer from "./features/favouriteSlice";
 import OrdersReducer from "../components/features/order/orderSlice";
 import AuthReducer from "../components/features/auth/authSlice";
 import cartReducer from "../components/features/cart/cartSlice";
+import favouriteReducer from "../components/features/favourite/favouriteSlice";
 import productReducer from "../components/features/product/productSlice";
 import userReducer from "../components/features/user/userSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   auth: AuthReducer,
   product: productReducer,
   cart: cartReducer,
+  favourite: favouriteReducer,
   // order: orderReducer,
   user: userReducer,
 });

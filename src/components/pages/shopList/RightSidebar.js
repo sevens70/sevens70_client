@@ -34,6 +34,15 @@ import {
 } from "./LeftSidebar";
 import toast from "react-hot-toast";
 import { selectAllProducts } from "../../features/product/productSlice";
+import {
+  addToFavouriteAsync,
+  deleteItemFromFavouriteAsync,
+  selectItems,
+} from "../../features/favourite/favouriteSlice";
+import {
+  addToCartAsync,
+  deleteItemFromCartAsync,
+} from "../../features/cart/cartSlice";
 const showNumber = [
   {
     label: "5",
@@ -51,8 +60,9 @@ const showNumber = [
 
 function RightSidebar() {
   const currencyData = useAppSelector(getCarrency);
-  const { items: favItems } = useAppSelector((state) => state.favourites);
   const allProducts = useAppSelector(selectAllProducts);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const items = useAppSelector(selectItems);
   const cart = useAppSelector(getCart);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
@@ -310,17 +320,11 @@ function RightSidebar() {
             discountPercentage,
             rating,
             subcategory,
-            categories,
+            category,
           } = item;
-          const isFavorite = favItems?.some(
-            (fav) =>
-              fav.id === id &&
-              fav.categories.some((cat) => categories.includes(cat))
-          );
           return (
             <div
               key={idx}
-              // className="group col-span-12 sm:col-span-6 md:col-span-12 lg:col-span-6 xl:col-span-4"
               className={`group col-span-12 sm:col-span-6 md:col-span-12 lg:col-span-6 ${
                 currentView === "grid" ? "xl:col-span-3" : "xl:col-span-4"
               }`}
@@ -339,7 +343,7 @@ function RightSidebar() {
                   <img
                     src={thumbnail}
                     alt="profile-picture"
-                    className="object-cover object-center w-full h-full "
+                    className="object-cover object-center w-full h-full"
                   />
                   <button
                     size="sm"
@@ -349,60 +353,77 @@ function RightSidebar() {
                   </button>
                   <div className="sm:hidden flex group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
                     <IconButton
-                      onClick={() => {
-                        const matchingItem = favItems?.find(
-                          (fav) => fav.id === item?.id
-                        );
-                        if (matchingItem) {
-                          dispatch(addToFav(item));
-                          toast.success("Removed item from Favourite list.");
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (
+                          items?.findIndex((item) => item.product.id === id) < 0
+                        ) {
+                          const newItem = { product: id, category: category };
+                          dispatch(
+                            addToFavouriteAsync({ item: newItem, toast })
+                          );
                         } else {
-                          dispatch(addToFav(item));
-                          toast.success("Item added to the Favourite list.");
+                          dispatch(deleteItemFromFavouriteAsync(id));
+                          toast.success("Removed item from Favourite list");
                         }
-                        // router.push(`/product/${id}`);
                       }}
                       color="white"
                       size="sm"
                     >
-                      {isFavorite ? (
-                        <GiSelfLove
-                          className="h-5 w-5 font-normal !fill-primaryRed"
-                          // style={{ fill: "red" }}
-                        />
-                      ) : (
+                      {items?.findIndex((item) => item.product.id === id) <
+                      0 ? (
                         <GiSelfLove className="h-5 w-5 font-normal" />
+                      ) : (
+                        <GiSelfLove className="h-5 w-5 font-normal !fill-primaryRed" />
                       )}
                     </IconButton>
 
-                    {/* <Badge content="5"> */}
                     <IconButton
-                      onClick={() => {
-                        const matchingItem = cart?.find(
-                          (prd) => prd.id === item?.id
-                        );
-                        if (matchingItem) {
-                          toast.success("Already Added in Cart.");
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (
+                          cartItems?.findIndex(
+                            (item) => item.product.id === id
+                          ) < 0
+                        ) {
+                          console.log({ items });
+                          const newItem = {
+                            product: id,
+                            // quantity: count,
+                            quantity: 1,
+                          };
+                          // if (selectedColor) {
+                          //   newItem.color = selectedColor;
+                          // }
+                          // if (selectedSize) {
+                          //   newItem.size = selectedSize;
+                          // }
+                          console.log("items & product newItem 003", newItem);
+                          dispatch(addToCartAsync({ item: newItem, toast }));
                         } else {
-                          dispatch(addToCart(item));
-                          toast.success("Successfully Added in Cart.");
+                          toast.error("Item Already added");
                         }
                       }}
                       color="white"
                       size="sm"
                     >
+                      {}
                       <FaCartShopping className="h-5 w-5" />
                     </IconButton>
+
                     <IconButton
-                      onClick={() => router.push(`/orders`)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(`/orders`);
+                      }}
                       color="white"
                       size="sm"
                     >
                       <FaRegUser className="h-5 w-5" />
                     </IconButton>
                   </div>
+
                   <div
-                    // className="md:hidden group-hover:block  absolute bottom-3 md:left-[22%] left-[25%]"
                     className={`md:hidden group-hover:block absolute bottom-3 ${
                       currentView === "grid"
                         ? "md:left-[10%] left-[30%]"
@@ -410,19 +431,32 @@ function RightSidebar() {
                     }`}
                   >
                     <div
-                      onClick={() => {
-                        const matchingItem = cart?.find(
-                          (prd) => prd.id === item?.id
-                        );
-                        if (matchingItem) {
-                          toast.success("Already Added in Cart.");
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (
+                          cartItems?.findIndex(
+                            (item) => item.product.id === id
+                          ) < 0
+                        ) {
+                          console.log({ items });
+                          const newItem = {
+                            product: id,
+                            // quantity: count,
+                            quantity: 1,
+                          };
+                          // if (selectedColor) {
+                          //   newItem.color = selectedColor;
+                          // }
+                          // if (selectedSize) {
+                          //   newItem.size = selectedSize;
+                          // }
+                          console.log("items & product newItem 003", newItem);
+                          dispatch(addToCartAsync({ item: newItem, toast }));
                         } else {
-                          dispatch(addToCart(item));
-                          toast.success("Successfully Added in Cart.");
+                          toast.error("Item Already added");
                         }
                       }}
                     >
-                      {" "}
                       <Button
                         size="sm"
                         className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"

@@ -11,32 +11,13 @@ import { Button, Radio } from "@material-tailwind/react";
 import SwiperCartGallery from "./swiperCartGallery";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
-import {
-  addToCart,
-  decrease,
-  getCart,
-  getCartTotal,
-  increase,
-} from "../../../lib/features/cartSlice";
 import { addToCartAsync, selectItems } from "../../features/cart/cartSlice";
-import {
-  fetchProductByIdAsync,
-  selectProductById,
-} from "../../features/product/productSlice";
-import { useParams } from "next/navigation";
 function CartGallery({ singleProduct }) {
   const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
-  // const { id } = useParams();
-  // const cart = useAppSelector(getCart);
-  // const cart = useAppSelector(selectItems);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
-  // ==============
   const items = useAppSelector(selectItems);
-  // const product = useAppSelector(selectProductById);
-  // ==============
-
   const [count, setCount] = useState(1);
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -44,9 +25,6 @@ function CartGallery({ singleProduct }) {
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
-  // useEffect(() => {
-  //   dispatch(getCartTotal());
-  // }, [cart]);
   function StarIcon() {
     return (
       <svg
@@ -63,8 +41,6 @@ function CartGallery({ singleProduct }) {
       </svg>
     );
   }
-  // console.log("latest cart", cart);
-  // const matchingItem = cart?.find((item) => item.id === singleProduct?.id);
   const handleIncrease = () => {
     if (count < 4) {
       setCount((prevCount) => prevCount + 1);
@@ -85,12 +61,10 @@ function CartGallery({ singleProduct }) {
   );
 
   const handleAddToCart = () => {
-    // ================
     if (items?.findIndex((item) => item.product.id === singleProduct.id) < 0) {
       console.log({ items });
       const newItem = {
         product: singleProduct.id,
-        // quantity: 1,
         quantity: count,
       };
       if (selectedColor) {
@@ -104,24 +78,6 @@ function CartGallery({ singleProduct }) {
     } else {
       toast.error("Item Already added");
     }
-    // ================
-    // if (selectedColor && selectedSize) {
-    //   if ((matchingItem?.amount ?? 0) + count >= 4) {
-    //     toast.error("Quantity of products must be 4 or less");
-    //   } else {
-    //     dispatch(
-    //       addToCart({
-    //         ...singleProduct,
-    //         colors: [selectedColor],
-    //         size: [selectedSize],
-    //         amount: count,
-    //       })
-    //     );
-    //     toast.success("Successfully Added in Cart.");
-    //   }
-    // } else {
-    //   toast.error("Check color & size.");
-    // }
   };
 
   return (
@@ -213,12 +169,9 @@ function CartGallery({ singleProduct }) {
                   {" "}
                   <FaMinus />
                 </Button>{" "}
-                {/* {matchingItem ? matchingItem.amount : 1} */}{" "}
-                {/* {matchingItem ? matchingItem?.amount : count} */}
                 {count}
                 <Button
                   size="md"
-                  // disabled={!matchingItem}
                   className="border-none !shadow-none bg-transparent text-grey-200 text-xsm"
                   onClick={handleIncrease}
                 >
@@ -228,10 +181,6 @@ function CartGallery({ singleProduct }) {
               <Button
                 size="md"
                 className="font-jost text-sm bg-dark-900 font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
-                // onClick={() => handleCart(singleProduct)}
-                // disabled={
-                //   matchingItem && matchingItem?.amount > 4 ? true : false
-                // }
                 onClick={handleAddToCart}
               >
                 Add to cart
