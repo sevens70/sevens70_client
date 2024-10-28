@@ -23,7 +23,10 @@ function SignUp() {
   }, [user, router]);
   return (
     <div>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div
+        className="signUp-area h-[100vh] rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+        style={{ alignContent: "center" }}
+      >
         <div className="flex flex-wrap items-center justify-center">
           {/* <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">

@@ -53,13 +53,6 @@ function CartGallery({ singleProduct }) {
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
   };
 
-  console.log(
-    "items & product",
-    items,
-    singleProduct
-    // items?.findIndex((item) => item.product?.id === singleProduct.id)
-  );
-
   const handleAddToCart = () => {
     if (items?.findIndex((item) => item.product.id === singleProduct.id) < 0) {
       console.log({ items });

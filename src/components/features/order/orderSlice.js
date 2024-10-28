@@ -48,6 +48,7 @@ export const orderSlice = createSlice({
         state.status = "loading";
       })
       .addCase(createOrderAsync.fulfilled, (state, action) => {
+        console.log("status 001 inside 001", state.status);
         state.status = "success";
         state.orders.push(action.payload);
         state.currentOrder = action.payload;

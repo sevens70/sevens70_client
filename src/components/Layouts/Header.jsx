@@ -58,7 +58,7 @@ const menu = [
     isMenu: true,
   },
   {
-    name: "Woman",
+    name: "Women",
     url: "/woman",
     isMenu: true,
   },
@@ -150,6 +150,7 @@ const Header = () => {
     }));
     return acc;
   }, {});
+  console.log("transformed data", transformedData);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
