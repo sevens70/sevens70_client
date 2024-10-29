@@ -54,10 +54,10 @@ function CartGallery({ singleProduct }) {
   };
 
   const handleAddToCart = () => {
-    if (items?.findIndex((item) => item.product.id === singleProduct.id) < 0) {
+    if (items?.findIndex((item) => item.product.id === singleProduct?.id) < 0) {
       console.log({ items });
       const newItem = {
-        product: singleProduct.id,
+        product: singleProduct?.id,
         quantity: count,
       };
       if (selectedColor) {
@@ -98,7 +98,7 @@ function CartGallery({ singleProduct }) {
               </p>
               <p className="text-xsm text-successGreen ml-5 flex justify-center items-center gap-2">
                 <FaCheck className="fill-successGreen" />
-                {singleProduct.stock < 0 ? "Out of Stock" : "In Stock"}
+                {singleProduct?.stock < 0 ? "Out of Stock" : "In Stock"}
                 In Stock
               </p>
             </div>
@@ -202,7 +202,7 @@ function CartGallery({ singleProduct }) {
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Tags :{" "}
                 <p className="text-dark-900">
-                  {singleProduct?.tags.map((tag) => tag.name).join(", ")}
+                  {singleProduct?.tags?.map((tag) => tag.name).join(", ")}
                 </p>
               </p>
             </div>

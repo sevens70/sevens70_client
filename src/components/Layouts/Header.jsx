@@ -29,14 +29,10 @@ import { GiSelfLove } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
-// import CartList from "../checkout/cartList";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
-import { getCartTotal } from "../../lib/features/cartSlice";
 import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
 import {
-  fetchAllProductByAsinc,
-  fetchCategoriesAsync,
   selectAllCategories,
 } from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
@@ -109,19 +105,9 @@ const Header = () => {
   const closeDrawer = () => setOpen(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  // const [isCardOpen, setIsCardOpen] = React.useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(
     currencyData ?? currency[0]
   );
-
-  // useEffect(() => {
-  //   dispatch(fetchCategoriesAsync());
-  // }, [dispatch]);
-  useEffect(() => {
-    dispatch(getCartTotal());
-    dispatch(fetchCategoriesAsync());
-    dispatch(fetchAllProductByAsinc());
-  }, [items, dispatch]);
   const handleLogout = () => {
     dispatch(signOutAsync());
   };
@@ -150,7 +136,6 @@ const Header = () => {
     }));
     return acc;
   }, {});
-  console.log("transformed data", transformedData);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">

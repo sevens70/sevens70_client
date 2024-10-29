@@ -8,6 +8,7 @@ import { fetchProductByIdAsync } from "../../../components/features/product/prod
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 export default function Page() {
   const { id } = useParams();
+  console.log("1234 id", id);
   // const { singleProduct, getSingleProduct } = useApi();
   const dispatch = useAppDispatch();
   useEffect(() => {

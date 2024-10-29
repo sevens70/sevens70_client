@@ -1,38 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  PencilIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowUpIcon, ArrowDownIcon } from "@heroicons/react/24/outline";
 // import { MdDelete } from "react-icons/md";
 import Pagination from "../../../components/common/Pagination";
 import { ITEMS_PER_PAGE } from "../../../components/common/constants";
 import {
   fetchAllOrderByUserIdAsync,
-  fetchAllOrderAsync,
   selectOrders,
   selectTotalOrders,
+  selectStatus,
 } from "./orderSlice";
-import {
-  checkAuthAsync,
-  selectLoggedInUser,
-  selectUserChecked,
-} from "../../../components/features/auth/authSlice";
+import { selectLoggedInUser } from "../../../components/features/auth/authSlice";
+import Loader from "../../common/Loader";
 
 function OrdersPage() {
   const user = useSelector(selectLoggedInUser);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
+  const status = useSelector(selectStatus);
   const totalOrders = useSelector(selectTotalOrders);
-  const [editableOrderId, setEditableOrderId] = useState(-1);
   const [sort, setSort] = useState({});
-
-  const handleEdit = (order) => {
-    setEditableOrderId(order.id);
-  };
 
   const handlePage = (page) => {
     setPage(page);
@@ -62,11 +51,18 @@ function OrdersPage() {
   };
 
   useEffect(() => {
+    // console.log("1234 user & status", user, status);
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-    // dispatch(fetchAllOrderAsync({ sort, pagination }));
-    dispatch(fetchAllOrderByUserIdAsync({ sort, pagination, user })); // user id will send
+    dispatch(fetchAllOrderByUserIdAsync({ sort, pagination, user }));
   }, [dispatch, page, sort]);
 
+  if (status === "loading") {
+    return (
+      <div className="w-full text-center">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -79,7 +75,9 @@ function OrdersPage() {
                 <thead className="font-jost font-medium">
                   <tr className="bg-gray-200 text-gray-600 text-sm uppercase leading-normal">
                     <th className="px-3 py-3 text-left font-medium">Items</th>
-                    <th className="pr-6 py-3 text-left font-medium">quantity</th>
+                    <th className="pr-6 py-3 text-left font-medium">
+                      quantity
+                    </th>
                     <th
                       className="cursor-pointer px-6 py-3 text-left font-medium"
                       onClick={(e) =>
@@ -97,9 +95,15 @@ function OrdersPage() {
                           <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
                         ))}
                     </th>
-                    <th className="px-6 py-3 text-center font-medium">Order Status</th>
-                    <th className="px-6 py-3 text-center font-medium">Payment Method</th>
-                    <th className="px-6 py-3 text-center font-medium">Payment Status</th>
+                    <th className="px-6 py-3 text-center font-medium">
+                      Order Status
+                    </th>
+                    <th className="px-6 py-3 text-center font-medium">
+                      Payment Method
+                    </th>
+                    <th className="px-6 py-3 text-center font-medium">
+                      Payment Status
+                    </th>
                     <th
                       className="cursor-pointer px-8 py-3 text-left font-medium"
                       onClick={(e) =>

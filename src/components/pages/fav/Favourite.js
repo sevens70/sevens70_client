@@ -3,20 +3,15 @@
 import { Breadcrumbs, Button } from "@material-tailwind/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import { MdDelete } from "react-icons/md";
-import { FaMinus } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa";
 import { Card, IconButton } from "@material-tailwind/react";
 
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
 
-import {
-  remove,
-  getFavourites,
-  clearFavList,
-} from "../../../lib/features/favouriteSlice";
+import { remove, clearFavList } from "../../../lib/features/favouriteSlice";
+import { selectItems } from "../../features/favourite/favouriteSlice";
 
 const TABLE_HEAD = [
   {
@@ -28,15 +23,13 @@ const TABLE_HEAD = [
   {
     head: "Category",
   },
-  // {
-  //   head: "Quantity",
-  // },
+  {
+    head: "Sub-category",
+  },
   {
     head: "price",
   },
-  {
-    head: "Total",
-  },
+
   {
     head: "",
   },
@@ -46,8 +39,11 @@ export default function Favourite() {
   const pathname = usePathname();
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
-  const { items } = useAppSelector((state) => state.favourites);
+  // const { items } = useAppSelector((state) => state.favourites);
+  const items = useAppSelector(selectItems);
   const dispatch = useAppDispatch();
+
+  console.log("items fav", items);
 
   if (items?.length === 0) {
     return (
@@ -98,70 +94,69 @@ export default function Favourite() {
                 </tr>
               </thead>
               <tbody>
-                {items.map(
-                  ({ id, name, img, categories, amount, price }, index) => {
-                    const isLast = index === items.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-gray-300";
+                {items.map(({ category, product }, index) => {
+                  const isLast = index === items.length - 1;
+                  const classes = isLast
+                    ? "p-4"
+                    : "p-4 border-b border-gray-300";
 
-                    return (
-                      <tr key={index}>
-                        <td className={classes}>
-                          <div className="flex items-center gap-1">
-                            <img
-                              src={img}
-                              className="img-fluid"
-                              alt=""
-                              style={{
-                                objectFit: "cover",
-                                width: "5rem",
-                                height: "5rem",
-                                borderRadius: "50%",
-                              }}
-                            />
-                          </div>
-                        </td>
-                        <td className={classes}>
+                  return (
+                    <tr key={index}>
+                      <td className={classes}>
+                        <div className="flex items-center gap-1">
+                          <img
+                            src={product?.thumbnail}
+                            className="img-fluid"
+                            alt="thumbnail"
+                            style={{
+                              objectFit: "cover",
+                              width: "5rem",
+                              height: "5rem",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <Link href={`/product/${product?.id}`}>
+                          {" "}
                           <p className="font-normal text-grey-600 font-jost">
-                            {name}
+                            {product?.title}
                           </p>
-                        </td>
-                        <td className={classes}>
-                          <p className="font-xsm text-grey-600 font-jost">
-                            {categories[0]}
-                          </p>
-                        </td>
+                        </Link>
+                      </td>
+                      <td className={classes}>
+                        <p className="font-xsm text-grey-600 font-jost">
+                          {product?.category}
+                        </p>
+                      </td>
+                      <td className={classes}>
+                        <p className="font-xsm text-grey-600 font-jost">
+                          {product?.subcategory}
+                        </p>
+                      </td>
 
-                        <td className={classes}>
-                          <p
-                            variant="small"
-                            className="font-normal text-gray-600"
-                          >
-                            {currencyData?.symbol}
-                            {price}
-                          </p>
-                        </td>
-                        <td className={classes}>
-                          <p
-                            variant="small"
-                            className="font-normal text-gray-600"
-                          >
-                            Total
-                          </p>
-                        </td>
-                        <td className={classes}>
-                          <IconButton
-                            onClick={() => dispatch(remove(id))}
-                            className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
-                          >
-                            <MdDelete className="fill-white" />
-                          </IconButton>
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
+                      <td className={classes}>
+                        <p
+                          variant="small"
+                          className="font-normal text-gray-600"
+                        >
+                          {currencyData?.symbol}
+                          {product?.discountPrice}
+                        </p>
+                      </td>
+
+                      <td className={classes}>
+                        <IconButton
+                          onClick={() => dispatch(remove(product?.id))}
+                          className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                        >
+                          <MdDelete className="fill-white" />
+                        </IconButton>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             {/* ==== */}

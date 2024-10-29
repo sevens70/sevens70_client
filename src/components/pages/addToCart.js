@@ -3,7 +3,7 @@
 import { Breadcrumbs, Button } from "@material-tailwind/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
@@ -11,13 +11,6 @@ import { Card, IconButton } from "@material-tailwind/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { getCarrency } from "../../lib/features/currencySlice";
-import {
-  decrease,
-  getCartTotal,
-  increase,
-  clearCart,
-} from "../../lib/features/cartSlice";
-import { remove } from "../../lib/features/cartSlice";
 import toast from "react-hot-toast";
 import {
   deleteItemFromCartAsync,
@@ -90,13 +83,13 @@ export default function AddToCart() {
     toast.success("Item quantity is increased");
   };
   let deliveryCharge = 60;
-  const totalAmount = cartItems?.reduce(
-    (accumulator, item) =>
-      item.product.discountPrice * item.quantity + accumulator,
-    0
-  ) + deliveryCharge;
+  const totalAmount =
+    cartItems?.reduce(
+      (accumulator, item) =>
+        item.product.discountPrice * item.quantity + accumulator,
+      0
+    ) + deliveryCharge;
 
-  
   return (
     <div>
       <section className="">
@@ -130,8 +123,8 @@ export default function AddToCart() {
               <tbody>
                 {cartItems?.map(
                   ({ id, quantity, product, size, color }, index) => {
+                    console.log("product 01100", product);
                     const isLast = index === cartItems.length - 1;
-
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-gray-300";
@@ -154,9 +147,12 @@ export default function AddToCart() {
                           </div>
                         </td>
                         <td className={classes}>
-                          <p className="font-normal text-grey-600 font-jost">
-                            {product?.title}
-                          </p>
+                          <Link href={`/product/${product.id}`}>
+                            {" "}
+                            <p className="font-normal text-grey-600 font-jost">
+                              {product?.title}
+                            </p>
+                          </Link>
                         </td>
                         <td className={classes}>
                           <p className="font-xsm text-grey-600 font-jost">
@@ -165,7 +161,6 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <p className="font-normal text-gray-600">
-                            {/* {amount} */}
                             <div
                               size="sm"
                               className="font-jost font-normal text-sm bg-transparent font-normal capitalize text-dark-900  border-[1px] border-grey-600 max-w-[120px] rounded flex items-center gap-3 bg-[#F1F1F1]"
@@ -188,21 +183,18 @@ export default function AddToCart() {
                               <Button
                                 size="sm"
                                 className="border-none !shadow-none bg-transparent text-grey-200 text-xsm py-2 pl-0 pr-3 rounded-l-none  bg-white"
-                                onClick={
-                                  () => {
-                                    const matchingItem = cartItems?.find(
-                                      (item) => item.id === id
+                                onClick={() => {
+                                  const matchingItem = cartItems?.find(
+                                    (item) => item.id === id
+                                  );
+                                  if (matchingItem?.quantity >= 4) {
+                                    toast.error(
+                                      "Quantity of products must be 4 or less"
                                     );
-                                    if (matchingItem?.quantity >= 4) {
-                                      toast.error(
-                                        "Quantity of products must be 4 or less"
-                                      );
-                                    } else {
-                                      handleIncreaseQuantity(id, quantity);
-                                    }
+                                  } else {
+                                    handleIncreaseQuantity(id, quantity);
                                   }
-                                  //  dispatch(increase(id))
-                                }
+                                }}
                               >
                                 <FaPlus />
                               </Button>
@@ -229,10 +221,6 @@ export default function AddToCart() {
                         </td>
                         <td className={classes}>
                           <IconButton
-                            // onClick={() => {
-                            //   dispatch(remove(id));
-                            //   toast.success("Item is deleted from Cart.");
-                            // }}
                             onClick={() => handleRemove(id)}
                             className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
                           >
@@ -269,7 +257,6 @@ export default function AddToCart() {
                 {" "}
                 <Button
                   color="dark"
-                  // onClick={() => dispatch(clearCart())}
                   onClick={() => dispatch(resetCartAsync())}
                   className="mt-10 bg-primaryRed"
                 >

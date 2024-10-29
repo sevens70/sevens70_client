@@ -146,7 +146,6 @@ function Products() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   console.log("favItems", favItems);
-  const cart = useAppSelector(getCart);
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto pb-10 relative">
       <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
