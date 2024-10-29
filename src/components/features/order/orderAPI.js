@@ -45,3 +45,23 @@ export function fetchAllOrders(sort, pagination) {
     resolve({ data: { orders: data, totalOrders: +totalOrders } });
   });
 }
+export function fetchAllOrderByUserId(sort, pagination, user) {
+  let queryString = '';
+
+  for (let key in sort) {
+    queryString += `${key}=${sort[key]}&`;
+  }
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
+  return new Promise(async (resolve) => {
+    // const response = await fetch(`${BASE_URL}/cart/${itemId}`, {
+    const response = await fetch(`${BASE_URL}/orders/${user.id}?${queryString}`, {
+      credentials: 'include',
+    });
+    const data = await response.json();
+    const totalOrders = await response.headers.get('X-Total-Count');
+    resolve({ data: { orders: data, totalOrders: +totalOrders } });
+  });
+}

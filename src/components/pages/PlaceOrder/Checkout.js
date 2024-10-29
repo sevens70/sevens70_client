@@ -11,7 +11,7 @@ import {
 import { useForm } from "react-hook-form";
 // import { updateUserAsync } from "../../components/features/user/userSlice";
 import { updateUserAsync } from "../../../components/features/user/userSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createOrderAsync,
   selectCurrentOrder,
@@ -38,7 +38,7 @@ function Checkout() {
   const user = useSelector(selectUserInfo);
   const items = useSelector(selectItems);
   const status = useSelector(selectStatus);
-  const currentOrder = useSelector(selectCurrentOrder);
+  // const orderState = useAppSelector((state)=> state.order)
   const currencyData = useAppSelector(getCarrency);
   let deliveryCharge = 60;
   const totalAmount =
@@ -70,6 +70,14 @@ function Checkout() {
     setPaymentMethod(e.target.value);
   };
 
+  useEffect(() => {
+    if (status === "success") {
+      toast.success("Order created successfully");
+      dispatch(resetCartAsync());
+      router.push("/orders");
+    }
+  }, [status]);
+
   const handleOrder = (e) => {
     if (selectedAddress && paymentMethod) {
       const order = {
@@ -82,11 +90,11 @@ function Checkout() {
         status: "pending", // other status can be delivered, received.
       };
       dispatch(createOrderAsync(order));
-      if (status === "success") {
-        toast.success("Order created successfully");
-        dispatch(resetCartAsync());
-        router.push("/orders");
-      }
+      // if (status === "success") {
+      //   toast.success("Order created successfully");
+      //   dispatch(resetCartAsync());
+      //   router.push("/orders");
+      // }
     } else {
       toast.error("Enter Address and Payment method");
     }

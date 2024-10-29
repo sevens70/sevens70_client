@@ -10,12 +10,19 @@ import {
 import Pagination from "../../../components/common/Pagination";
 import { ITEMS_PER_PAGE } from "../../../components/common/constants";
 import {
-  fetchAllOrdersAsync,
+  fetchAllOrderByUserIdAsync,
+  fetchAllOrderAsync,
   selectOrders,
   selectTotalOrders,
 } from "./orderSlice";
+import {
+  checkAuthAsync,
+  selectLoggedInUser,
+  selectUserChecked,
+} from "../../../components/features/auth/authSlice";
 
 function OrdersPage() {
+  const user = useSelector(selectLoggedInUser);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
@@ -56,10 +63,10 @@ function OrdersPage() {
 
   useEffect(() => {
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
-    dispatch(fetchAllOrdersAsync({ sort, pagination }));
+    // dispatch(fetchAllOrderAsync({ sort, pagination }));
+    dispatch(fetchAllOrderByUserIdAsync({ sort, pagination, user })); // user id will send
   }, [dispatch, page, sort]);
 
-  console.log("orders", orders);
 
   return (
     <div className="w-full">
