@@ -1,12 +1,15 @@
-const BASE_URL = "http://localhost:8080";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://xartso-server-xpr7.vercel.app"
+    : "http://localhost:8080";
 
 export function createOrder(order) {
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(order),
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
@@ -16,10 +19,10 @@ export function createOrder(order) {
 export function updateOrder(order) {
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders/${order.id}`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(order),
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
@@ -27,7 +30,7 @@ export function updateOrder(order) {
 }
 
 export function fetchAllOrders(sort, pagination) {
-  let queryString = '';
+  let queryString = "";
 
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
@@ -38,15 +41,15 @@ export function fetchAllOrders(sort, pagination) {
 
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders?${queryString}`, {
-      credentials: 'include',
+      credentials: "include",
     });
     const data = await response.json();
-    const totalOrders = await response.headers.get('X-Total-Count');
+    const totalOrders = await response.headers.get("X-Total-Count");
     resolve({ data: { orders: data, totalOrders: +totalOrders } });
   });
 }
 export function fetchAllOrderByUserId(sort, pagination, user) {
-  let queryString = '';
+  let queryString = "";
 
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
@@ -57,11 +60,14 @@ export function fetchAllOrderByUserId(sort, pagination, user) {
 
   return new Promise(async (resolve) => {
     // const response = await fetch(`${BASE_URL}/cart/${itemId}`, {
-    const response = await fetch(`${BASE_URL}/orders/${user.id}?${queryString}`, {
-      credentials: 'include',
-    });
+    const response = await fetch(
+      `${BASE_URL}/orders/${user.id}?${queryString}`,
+      {
+        credentials: "include",
+      }
+    );
     const data = await response.json();
-    const totalOrders = await response.headers.get('X-Total-Count');
+    const totalOrders = await response.headers.get("X-Total-Count");
     resolve({ data: { orders: data, totalOrders: +totalOrders } });
   });
 }
