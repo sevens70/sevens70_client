@@ -122,11 +122,10 @@ function CartGallery({ singleProduct }) {
                   checked={selectedColor === item.id}
                   onChange={() => handleColorChange(item.id)}
                   className={`h-8 w-8 text-primaryRed border-none ${item.class} ${item.selectedClass}`}
-
-                  // style={{
-                  //   backgroundColor: item.class,
-                  //   border: "1px solid yellow",
-                  // }}
+                  style={{
+                    backgroundColor: `${item.selectedClass}`,
+                    // border: "1px solid yellow",
+                  }}
                 />
               ))}
             </div>
