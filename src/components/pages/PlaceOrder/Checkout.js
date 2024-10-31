@@ -512,8 +512,8 @@ function Checkout() {
                   <p>Total:</p>
                   <p className="!text-light-500">
                     {" "}
-                    {currencyData?.symbol}
-                    {totalAmount}
+                    {/* {currencyData?.symbol} */}
+                    ৳ {totalAmount}
                   </p>
                 </div>
 

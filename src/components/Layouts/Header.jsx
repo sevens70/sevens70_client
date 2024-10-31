@@ -36,6 +36,7 @@ import {
   selectAllCategories,
 } from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
+import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
 
 const menu = [
   {
@@ -63,11 +64,11 @@ const menu = [
     url: "/accessories",
     isMenu: true,
   },
-  {
-    name: "Pages",
-    url: "/Pages",
-    isMenu: false,
-  },
+  // {
+  //   name: "Pages",
+  //   url: "/Pages",
+  //   isMenu: false,
+  // },
 ];
 const currency = [
   {
@@ -94,8 +95,9 @@ const Header = () => {
   const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { totalCount, items } = useAppSelector((state) => state.cart);
+  // const { totalCount, items } = useAppSelector((state) => state.cart);
   const cartItems = useAppSelector(selectItems);
+  const favouriteItems = useAppSelector(selectFavouriteItems);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
   const [categories, setCategories] = useState({});
@@ -192,7 +194,7 @@ const Header = () => {
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
         <div className="">
-          <div className="w-full bg-pageBg py-1">
+          {/* <div className="w-full bg-pageBg py-1">
             <div className="w-11/12 md:w-10/12 mx-auto py-1 flex justify-center md:justify-between items-center">
               <div className="md:flex md:flex sm:flex justify-end items-center">
                 <Link
@@ -234,7 +236,6 @@ const Header = () => {
                       <Avatar
                         size="sm"
                         className="h-[18px] w-[18px]"
-                        // src="./header/c1.png"
                         src={selectedCurrency.flag}
                         alt="avatar"
                       />
@@ -257,7 +258,6 @@ const Header = () => {
                         <Avatar
                           size="sm"
                           className="h-[18px] w-[18px]"
-                          // src="./header/c1.png"
                           src={item.flag}
                           alt="avatar"
                         />
@@ -265,12 +265,6 @@ const Header = () => {
                       </MenuItem>
                     ))}
 
-                    {/* <MenuItem onClick={() => handleMenuItemClick("USD")}>
-                      USD
-                    </MenuItem>
-                    <MenuItem onClick={() => handleMenuItemClick("EUR")}>
-                      EUR
-                    </MenuItem> */}
                   </MenuList>
                 </Menu>
                 <Menu>
@@ -280,7 +274,6 @@ const Header = () => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      // gap: 5,
                     }}
                   >
                     <MenuItem className="font-montserrat pt-0 p-0 pb-0 !text-xsm items-center gap-2 font-normal text-blue-gray-900 lg:flex lg:rounded-full">
@@ -301,7 +294,7 @@ const Header = () => {
                 </Menu>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="border-b border-b-grey-300 ">
             {" "}
             <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
@@ -415,14 +408,15 @@ const Header = () => {
             <nav className="hidden lg:block">{navList}</nav>
             <nav className="gap-1 items-center 2xl:flex lg:hidden md:flex flex">
               <div className="flex items-end gap-4">
-                <IconButton
+              <Badge content={favouriteItems?.length > 0 ? favouriteItems?.length : 0}>  <IconButton
                   onClick={() => router.push("/favourite")}
                   color="white"
                   size="sm"
                   className="shadow-none hide__item"
                 >
                   <GiSelfLove className="h-5 w-5" />
-                </IconButton>
+                </IconButton></Badge>
+              
                 {/* <Badge content={totalCount ? totalCount : 0}> */}
                 <Badge content={cartItems?.length > 0 ? cartItems?.length : 0}>
                   <IconButton

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addToFavourite, deleteItemFromFavourite, fetchItemsByUserId, resetFavourite, updateFavourite } from "./favouriteAPI";
+import toast from "react-hot-toast";
 
 const initialState = {
   status: "idle",
@@ -11,8 +12,6 @@ export const addToFavouriteAsync = createAsyncThunk(
   "favourite/addToFavourite",
   async ({ item, toast }) => {
     const response = await addToFavourite(item);
-    toast.success("Item Added to Favourite");
-
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -63,12 +62,14 @@ export const favouriteSlice = createSlice({
       .addCase(addToFavouriteAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items.push(action.payload);
+        toast.success("Successfully Added")
       })
       .addCase(fetchFavouriteItemsByUserIdAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchFavouriteItemsByUserIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        console.log("items fav action payload", action.payload)
         state.items = action.payload;
         state.cartLoaded = true;
       })
@@ -95,6 +96,7 @@ export const favouriteSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.items.splice(index, 1);
+        toast.success("Deleted successfully")
       })
       .addCase(resetFavouriteAsync.pending, (state) => {
         state.status = "loading";
@@ -102,13 +104,14 @@ export const favouriteSlice = createSlice({
       .addCase(resetFavouriteAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items = [];
+        toast.success("Successfully reset all item")
       });
   },
 });
 
 // export const { increment } = cartSlice.actions;
 
-export const selectItems = (state) => state.favourite.items;
+export const selectFavouriteItems = (state) => state.favourite.items;
 export const selectFavouriteStatus = (state) => state.favourite.status;
 export const selectFavouriteLoaded = (state) => state.favourite.favouriteLoaded;
 

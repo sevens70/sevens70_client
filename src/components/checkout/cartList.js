@@ -51,8 +51,8 @@ const CartList = () => {
           <h6 className="font-jost flex justify-evenly my-2">
             Total{" "}
             <span>
-              {currencyData?.symbol}
-              {totalAmount}
+              {/* {currencyData?.symbol} */}
+              ৳ {totalAmount}
             </span>
           </h6>
         </div>

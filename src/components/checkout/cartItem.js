@@ -23,8 +23,8 @@ const CartItem = ({ ...item }) => {
         }}
       />
       <h5 className="font-jost" style={{ color: "#617d98" }}>
-        {currencyData?.symbol}
-        {item?.price}
+        {/* {currencyData?.symbol} */}
+        ৳ {item?.price}
       </h5>
       <p className="font-jost">{item?.amount}</p>
       <IconButton

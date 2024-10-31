@@ -24,7 +24,7 @@ import storage from "redux-persist/lib/storage";
 const rootReducer = combineReducers({
   // cart: CartReducer,
   currency: CurrencyReducer,
-  favourites: FavouriteReducer,
+  favourites: FavouriteReducer, //remove it later after removing others component
   // orders: OrdersReducer,
   order: OrdersReducer,
   auth: AuthReducer,

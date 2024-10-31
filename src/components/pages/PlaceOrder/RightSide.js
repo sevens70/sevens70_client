@@ -28,8 +28,7 @@ export default function RightSide() {
       <div className="flex justify-between my-2 mr-7">
         <h6 className="text-sm">Sub Total: </h6>
         <h6 className="text-sm !text-light-500">
-          {currencyData?.symbol}
-          {totalAmount}
+          {/* {currencyData?.symbol} */}৳ {totalAmount}
         </h6>
       </div>
       <hr />

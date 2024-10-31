@@ -37,7 +37,7 @@ import { selectAllProducts } from "../../features/product/productSlice";
 import {
   addToFavouriteAsync,
   deleteItemFromFavouriteAsync,
-  selectItems,
+  selectFavouriteItems,
 } from "../../features/favourite/favouriteSlice";
 import {
   addToCartAsync,
@@ -59,12 +59,13 @@ const showNumber = [
 ];
 
 function RightSidebar() {
-  const currencyData = useAppSelector(getCarrency);
+  // const currencyData = useAppSelector(getCarrency);
   const allProducts = useAppSelector(selectAllProducts);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const items = useAppSelector(selectItems);
-  const cart = useAppSelector(getCart);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const items = useAppSelector(selectFavouriteItems);
+  const items = useAppSelector(selectFavouriteItems);
+  // const cart = useAppSelector(getCart);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [isNumber, setIsNumber] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(showNumber[0]);
@@ -364,7 +365,7 @@ function RightSidebar() {
                           );
                         } else {
                           dispatch(deleteItemFromFavouriteAsync(id));
-                          toast.success("Removed item from Favourite list");
+                
                         }
                       }}
                       color="white"
@@ -480,11 +481,9 @@ function RightSidebar() {
                     {title}
                   </h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                    {currencyData?.symbol}
-                    {`${discountPrice}.00`}
+                    {/* {currencyData?.symbol} */}৳ {`${discountPrice}.00`}
                     <span className="font-normal line-through text-grey-600">
-                      {currencyData?.symbol}
-                      {`${price}.00`}
+                      {/* {currencyData?.symbol} */}৳ {`${price}.00`}
                     </span>
                   </h6>
                 </CardBody>

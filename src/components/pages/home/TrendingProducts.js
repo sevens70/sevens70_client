@@ -248,11 +248,9 @@ function TrendingProducts() {
                     <p className="text-sm text-grey-600 ">{tag}</p>
                     <h6 className="text-left text-dark-700 mt-1">{name}</h6>
                     <h6 className="flex gap-3 justify-start items-center font-medium text-dark-700 mt-1">
-                      {currencyData?.symbol}
-                      {disc_price}
+                      {/* {currencyData?.symbol} */}৳ {disc_price}
                       <span className="font-[400] line-through text-grey-600">
-                        {currencyData?.symbol}
-                        {price}
+                        {/* {currencyData?.symbol} */}৳ {price}
                       </span>
                     </h6>
                     <h6 className="mt-2 flex justify-start items-center gap-1 text-dark-700">

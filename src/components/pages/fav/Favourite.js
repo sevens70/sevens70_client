@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
 
 import { remove, clearFavList } from "../../../lib/features/favouriteSlice";
-import { selectItems } from "../../features/favourite/favouriteSlice";
+import { deleteItemFromFavouriteAsync, resetFavouriteAsync, selectFavouriteItems } from "../../features/favourite/favouriteSlice";
 
 const TABLE_HEAD = [
   {
@@ -40,7 +40,7 @@ export default function Favourite() {
   const router = useRouter();
   const currencyData = useAppSelector(getCarrency);
   // const { items } = useAppSelector((state) => state.favourites);
-  const items = useAppSelector(selectItems);
+  const items = useAppSelector(selectFavouriteItems);
   const dispatch = useAppDispatch();
 
   console.log("items fav", items);
@@ -141,14 +141,14 @@ export default function Favourite() {
                           variant="small"
                           className="font-normal text-gray-600"
                         >
-                          {currencyData?.symbol}
-                          {product?.discountPrice}
+                          {/* {currencyData?.symbol} */}
+                          ৳ {product?.discountPrice}
                         </p>
                       </td>
 
                       <td className={classes}>
                         <IconButton
-                          onClick={() => dispatch(remove(product?.id))}
+                          onClick={() => dispatch(deleteItemFromFavouriteAsync(product?.id))}
                           className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
                         >
                           <MdDelete className="fill-white" />
@@ -183,7 +183,7 @@ export default function Favourite() {
                 {" "}
                 <Button
                   color="dark"
-                  onClick={() => dispatch(clearFavList())}
+                  onClick={() => dispatch(resetFavouriteAsync())}
                   className="mt-10 bg-primaryRed"
                 >
                   Clear Favourite List
