@@ -47,7 +47,7 @@ function Checkout() {
         item.product.discountPrice * item.quantity + accumulator,
       0
     ) + deliveryCharge;
-  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
+  const totalItems = items?.reduce((total, item) => item.quantity + total, 0);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -512,8 +512,7 @@ function Checkout() {
                   <p>Total:</p>
                   <p className="!text-light-500">
                     {" "}
-                    {/* {currencyData?.symbol} */}
-                    ৳ {totalAmount}
+                    {/* {currencyData?.symbol} */}৳ {totalAmount}
                   </p>
                 </div>
 
