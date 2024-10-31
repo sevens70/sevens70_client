@@ -32,11 +32,10 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
 import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
-import {
-  selectAllCategories,
-} from "../features/product/productSlice";
+import { selectAllCategories } from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
 import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
+import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
 
 const menu = [
   {
@@ -97,10 +96,11 @@ const Header = () => {
   const router = useRouter();
   // const { totalCount, items } = useAppSelector((state) => state.cart);
   const cartItems = useAppSelector(selectItems);
+  const websiteInfo = useAppSelector(selectWebsiteInfo);
   const favouriteItems = useAppSelector(selectFavouriteItems);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
-  const [categories, setCategories] = useState({});
+  // const [categories, setCategories] = useState({});
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const openDrawer = () => setOpen(true);
@@ -299,14 +299,26 @@ const Header = () => {
             {" "}
             <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
               <Link href="/">
-                <img
-                  priority="true"
-                  src="/Logo.png"
-                  alt="logo"
-                  className="max-w-[150px] w-full h-full"
-                  width={300}
-                  height={300}
-                />
+                {websiteInfo?.length > 0 ? (
+                  <img
+                    priority="true"
+                    // src="/Logo.png"
+                    src={websiteInfo[0]?.logoUrl}
+                    alt="logo"
+                    className="max-w-[150px] w-full h-full"
+                    width={300}
+                    height={300}
+                  />
+                ) : (
+                  <img
+                    priority="true"
+                    src="/Logo.png"
+                    alt="logo"
+                    className="max-w-[150px] w-full h-full"
+                    width={300}
+                    height={300}
+                  />
+                )}
               </Link>
 
               <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]">
@@ -341,7 +353,9 @@ const Header = () => {
                     <FaMailBulk className="inline-block fill-primaryRed " />
                   </span>
                   <span className="2xl:text-sm lg:text-xsm  font-normal text-dark">
-                    {contacts.email}
+                    {websiteInfo?.length > 0
+                      ? websiteInfo[0]?.email
+                      : "infoshop@gmail.com"}
                   </span>
                 </a>
                 <a
@@ -352,7 +366,9 @@ const Header = () => {
                     <FaPhone className="inline-block fill-primaryRed" />
                   </span>
                   <span className="2xl:text-sm lg:text-xsm md:text-xsm font-normal text-dark">
-                    {contacts.phone}
+                    {websiteInfo?.length > 0
+                      ? websiteInfo[0]?.phoneNumber
+                      : "880 1827969106"}
                   </span>
                 </a>
               </nav>
@@ -408,15 +424,22 @@ const Header = () => {
             <nav className="hidden lg:block">{navList}</nav>
             <nav className="gap-1 items-center 2xl:flex lg:hidden md:flex flex">
               <div className="flex items-end gap-4">
-              <Badge content={favouriteItems?.length > 0 ? favouriteItems?.length : 0}>  <IconButton
-                  onClick={() => router.push("/favourite")}
-                  color="white"
-                  size="sm"
-                  className="shadow-none hide__item"
+                <Badge
+                  content={
+                    favouriteItems?.length > 0 ? favouriteItems?.length : 0
+                  }
                 >
-                  <GiSelfLove className="h-5 w-5" />
-                </IconButton></Badge>
-              
+                  {" "}
+                  <IconButton
+                    onClick={() => router.push("/favourite")}
+                    color="white"
+                    size="sm"
+                    className="shadow-none hide__item"
+                  >
+                    <GiSelfLove className="h-5 w-5" />
+                  </IconButton>
+                </Badge>
+
                 {/* <Badge content={totalCount ? totalCount : 0}> */}
                 <Badge content={cartItems?.length > 0 ? cartItems?.length : 0}>
                   <IconButton

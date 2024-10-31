@@ -8,6 +8,7 @@ import cartReducer from "../components/features/cart/cartSlice";
 import favouriteReducer from "../components/features/favourite/favouriteSlice";
 import productReducer from "../components/features/product/productSlice";
 import userReducer from "../components/features/user/userSlice";
+import websiteInfoReducer from "../components/features/websiteInfo/websiteInfoSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   favourite: favouriteReducer,
   // order: orderReducer,
   user: userReducer,
+  websiteInfo: websiteInfoReducer,
 });
 
 const persistConfig = {
@@ -47,7 +49,7 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // thunk: true, 
+      // thunk: true,
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },

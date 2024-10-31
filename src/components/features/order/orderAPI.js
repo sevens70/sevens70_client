@@ -4,11 +4,15 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function createOrder(order) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders`, {
       method: "POST",
       body: JSON.stringify(order),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -17,11 +21,15 @@ export function createOrder(order) {
 }
 
 export function updateOrder(order) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders/${order.id}`, {
       method: "PATCH",
       body: JSON.stringify(order),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -30,6 +38,7 @@ export function updateOrder(order) {
 }
 
 export function fetchAllOrders(sort, pagination) {
+  const token = localStorage.getItem("authToken");
   let queryString = "";
 
   for (let key in sort) {
@@ -41,6 +50,10 @@ export function fetchAllOrders(sort, pagination) {
 
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders?${queryString}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -49,6 +62,7 @@ export function fetchAllOrders(sort, pagination) {
   });
 }
 export function fetchAllOrderByUserId(sort, pagination, user) {
+  const token = localStorage.getItem("authToken");
   let queryString = "";
 
   for (let key in sort) {
@@ -59,10 +73,13 @@ export function fetchAllOrderByUserId(sort, pagination, user) {
   }
 
   return new Promise(async (resolve) => {
-    // const response = await fetch(`${BASE_URL}/cart/${itemId}`, {
     const response = await fetch(
       `${BASE_URL}/orders/${user.id}?${queryString}`,
       {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         credentials: "include",
       }
     );

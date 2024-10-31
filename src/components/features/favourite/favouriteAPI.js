@@ -4,11 +4,15 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function addToFavourite(item) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite`, {
       method: "POST",
       body: JSON.stringify(item),
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -17,8 +21,13 @@ export function addToFavourite(item) {
 }
 
 export function fetchItemsByUserId() {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -27,11 +36,15 @@ export function fetchItemsByUserId() {
 }
 
 export function updateFavourite(update) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite/${update.id}`, {
       method: "PATCH",
       body: JSON.stringify(update),
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -40,10 +53,14 @@ export function updateFavourite(update) {
 }
 
 export function deleteItemFromFavourite(itemId) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite/${itemId}`, {
       method: "DELETE",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();

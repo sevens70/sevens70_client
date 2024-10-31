@@ -8,9 +8,9 @@ export function createUser(userData) {
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/auth/signup`, {
       method: "POST",
-      credentials: "include",
       body: JSON.stringify(userData),
       headers: { "content-type": "application/json" },
+      credentials: "include",
     });
     const data = await response.json();
     resolve({ data });
@@ -22,9 +22,9 @@ export function loginUser(loginInfo) {
     try {
       const response = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
-        credentials: "include",
         body: JSON.stringify(loginInfo),
         headers: { "content-type": "application/json" },
+        credentials: "include",
       });
       if (response.ok) {
         const data = await response.json();
@@ -42,7 +42,13 @@ export function loginUser(loginInfo) {
 export function checkAuth() {
   return new Promise(async (resolve, reject) => {
     try {
+      const token = localStorage.getItem("authToken");
       const response = await fetch(`${BASE_URL}/auth/check`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         credentials: "include",
       });
       if (response.ok) {
@@ -62,6 +68,7 @@ export function signOut() {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch(`${BASE_URL}/auth/logout`, {
+        method: "GET",
         credentials: "include",
       });
       if (response.ok) {
@@ -82,9 +89,9 @@ export function resetPasswordRequest(email) {
     try {
       const response = await fetch(`${BASE_URL}/auth/reset-password-request`, {
         method: "POST",
-        credentials: "include",
         body: JSON.stringify({ email }),
         headers: { "content-type": "application/json" },
+        credentials: "include",
       });
       if (response.ok) {
         const data = await response.json();
@@ -104,9 +111,9 @@ export function resetPassword(data) {
     try {
       const response = await fetch(`${BASE_URL}/auth/reset-password`, {
         method: "POST",
-        credentials: "include",
         body: JSON.stringify(data),
         headers: { "content-type": "application/json" },
+        credentials: "include",
       });
       if (response.ok) {
         const data = await response.json();

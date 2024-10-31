@@ -18,6 +18,7 @@ import {
   fetchAllProductByAsinc,
   fetchCategoriesAsync,
 } from "../components/features/product/productSlice";
+import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websiteInfoSlice";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ export default function MainPage() {
   useEffect(() => {
     if (user) {
       dispatch(fetchLoggedInUserAsync());
+      dispatch(fetchWebsiteInfoAsync());
       dispatch(fetchCategoriesAsync());
       dispatch(fetchAllProductByAsinc());
       dispatch(fetchItemsByUserIdAsync());

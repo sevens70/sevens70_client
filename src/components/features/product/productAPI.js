@@ -4,8 +4,13 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function fetchProductById(id) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/products/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -14,8 +19,13 @@ export function fetchProductById(id) {
 }
 
 export function fetchAllProducts() {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/products`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -24,8 +34,13 @@ export function fetchAllProducts() {
 }
 
 export function fetchAllCategories() {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/categories`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -34,11 +49,15 @@ export function fetchAllCategories() {
 }
 
 export function createProduct(product) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/products`, {
       method: "POST",
       body: JSON.stringify(product),
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -47,11 +66,15 @@ export function createProduct(product) {
 }
 
 export function updateProduct(update) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/products/${update.id}`, {
       method: "PATCH",
       body: JSON.stringify(update),
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -76,9 +99,13 @@ export function fetchProductsByFilters(filter, sort, pagination, admin) {
   if (admin) {
     queryString += `admin=true`;
   }
-
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/products?${queryString}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -88,8 +115,13 @@ export function fetchProductsByFilters(filter, sort, pagination, admin) {
 }
 
 export function fetchCategories() {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/categories`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -98,12 +130,16 @@ export function fetchCategories() {
 }
 
 export function createSubCategories(payload) {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     console.log("12345", payload);
     const response = await fetch(`${BASE_URL}/categories/add-subcategory`, {
       method: "POST",
       body: JSON.stringify(payload),
-      headers: { "content-type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
@@ -112,8 +148,13 @@ export function createSubCategories(payload) {
 }
 
 export function fetchBrands() {
+  const token = localStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/brands`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       credentials: "include",
     });
     const data = await response.json();
