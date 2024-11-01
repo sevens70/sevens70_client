@@ -4,7 +4,7 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function fetchWebsiteInfo() {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/settings`, {
       headers: {

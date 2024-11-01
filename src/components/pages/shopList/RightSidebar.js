@@ -192,6 +192,14 @@ function RightSidebar() {
   if (filteredProducts.length === 0) {
     return <p className="text-center text-slate-700">No products Available</p>;
   }
+  const handleDeleteFavList = (id) => {
+    const prdDocumentId = items?.find((item) => item.product.id === id);
+    // console.log("object id 33", prdDocumentId);
+    if (prdDocumentId) {
+      dispatch(deleteItemFromFavouriteAsync(prdDocumentId?.id));
+    }
+  };
+  // console.log("object")
 
   return (
     <div>
@@ -364,8 +372,7 @@ function RightSidebar() {
                             addToFavouriteAsync({ item: newItem, toast })
                           );
                         } else {
-                          dispatch(deleteItemFromFavouriteAsync(id));
-                
+                          handleDeleteFavList(id);
                         }
                       }}
                       color="white"

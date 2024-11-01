@@ -99,14 +99,13 @@ function CartGallery({ singleProduct }) {
               <p className="text-xsm text-successGreen ml-5 flex justify-center items-center gap-2">
                 <FaCheck className="fill-successGreen" />
                 {singleProduct?.stock < 0 ? "Out of Stock" : "In Stock"}
-                In Stock
               </p>
             </div>
             <h6 className="text-dark-900 flex justify-start items-center gap-3">
-              {/* {currencyData?.symbol} */}
-              ৳ {`${singleProduct?.discountPrice}.00`}
+              {/* {currencyData?.symbol} */}৳{" "}
+              {`${singleProduct?.discountPrice}.00`}
               <h6 className="font-medium text-priceColor line-through">
-              ৳ {currencyData?.symbol}
+                ৳{/* {currencyData?.symbol} */}
                 {`${singleProduct?.price}.00`}
               </h6>
             </h6>

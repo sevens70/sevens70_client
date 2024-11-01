@@ -7,6 +7,7 @@ import {
   resetPasswordRequest,
   resetPassword,
 } from "./authAPI";
+import toast from "react-hot-toast";
 // import { updateUser } from "../user/userAPI";
 
 const initialState = {
@@ -34,11 +35,11 @@ export const loginUserAsync = createAsyncThunk(
     try {
       const response = await loginUser(loginInfo);
       if (response.data?.token) {
-        localStorage.setItem("authToken", response.data.token);
+        sessionStorage.setItem("authToken", response.data.token);
       }
       return response.data;
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to login, check account & credentials.");
       return rejectWithValue(error);
     }
   }
@@ -48,7 +49,7 @@ export const checkAuthAsync = createAsyncThunk("user/checkAuth", async () => {
   try {
     const response = await checkAuth();
     if (response.data) {
-      localStorage.setItem("authData", JSON.stringify(response.data));
+      sessionStorage.setItem("authData", JSON.stringify(response.data));
     }
 
     return response.data;
@@ -85,8 +86,8 @@ export const resetPasswordAsync = createAsyncThunk(
 
 export const signOutAsync = createAsyncThunk("user/signOut", async () => {
   const response = await signOut();
-  localStorage.removeItem("authData");
-  localStorage.removeItem("authToken");
+  sessionStorage.removeItem("authData");
+  sessionStorage.removeItem("authToken");
   return response.data;
 });
 

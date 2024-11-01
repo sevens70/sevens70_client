@@ -4,7 +4,7 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function createOrder(order) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders`, {
       method: "POST",
@@ -21,7 +21,7 @@ export function createOrder(order) {
 }
 
 export function updateOrder(order) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/orders/${order.id}`, {
       method: "PATCH",
@@ -38,7 +38,7 @@ export function updateOrder(order) {
 }
 
 export function fetchAllOrders(sort, pagination) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   let queryString = "";
 
   for (let key in sort) {
@@ -62,7 +62,7 @@ export function fetchAllOrders(sort, pagination) {
   });
 }
 export function fetchAllOrderByUserId(sort, pagination, user) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   let queryString = "";
 
   for (let key in sort) {

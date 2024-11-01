@@ -27,11 +27,6 @@ export default function MainPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/auth/signin");
-    }
-  }, [user, router]);
-  useEffect(() => {
     dispatch(checkAuthAsync());
   }, [dispatch]);
 
@@ -43,6 +38,8 @@ export default function MainPage() {
       dispatch(fetchAllProductByAsinc());
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchFavouriteItemsByUserIdAsync());
+    } else {
+      router.push("/auth/signin");
     }
   }, [dispatch, user]);
 

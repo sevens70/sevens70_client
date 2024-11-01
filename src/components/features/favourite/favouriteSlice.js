@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addToFavourite, deleteItemFromFavourite, fetchItemsByUserId, resetFavourite, updateFavourite } from "./favouriteAPI";
+import {
+  addToFavourite,
+  deleteItemFromFavourite,
+  fetchItemsByUserId,
+  resetFavourite,
+  updateFavourite,
+} from "./favouriteAPI";
 import toast from "react-hot-toast";
 
 const initialState = {
@@ -12,6 +18,9 @@ export const addToFavouriteAsync = createAsyncThunk(
   "favourite/addToFavourite",
   async ({ item, toast }) => {
     const response = await addToFavourite(item);
+    if (response.status === 201) {
+      toast.success("Successfully Added");
+    }
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -39,16 +48,21 @@ export const deleteItemFromFavouriteAsync = createAsyncThunk(
   "favourite/deleteItemFromFavourite",
   async (itemId) => {
     const response = await deleteItemFromFavourite(itemId);
-    // The value we return becomes the `fulfilled` action payload
+    console.log("response for fav", response);
+    if (response.status === 200) {
+      toast.success("Deleted successfully");
+    }
     return response.data;
   }
 );
 
-export const resetFavouriteAsync = createAsyncThunk("favourite/resetFavourite", async () => {
-  const response = await resetFavourite();
-  // The value we return becomes the `fulfilled` action payload
-  return response.data;
-});
+export const resetFavouriteAsync = createAsyncThunk(
+  "favourite/resetFavourite",
+  async () => {
+    const response = await resetFavourite();
+    return response.data;
+  }
+);
 
 export const favouriteSlice = createSlice({
   name: "favourite",
@@ -62,14 +76,13 @@ export const favouriteSlice = createSlice({
       .addCase(addToFavouriteAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items.push(action.payload);
-        toast.success("Successfully Added")
       })
       .addCase(fetchFavouriteItemsByUserIdAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchFavouriteItemsByUserIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log("items fav action payload", action.payload)
+        console.log("items fav action payload", action.payload);
         state.items = action.payload;
         state.cartLoaded = true;
       })
@@ -96,7 +109,6 @@ export const favouriteSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.items.splice(index, 1);
-        toast.success("Deleted successfully")
       })
       .addCase(resetFavouriteAsync.pending, (state) => {
         state.status = "loading";
@@ -104,7 +116,7 @@ export const favouriteSlice = createSlice({
       .addCase(resetFavouriteAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.items = [];
-        toast.success("Successfully reset all item")
+        toast.success("Successfully reset all item");
       });
   },
 });

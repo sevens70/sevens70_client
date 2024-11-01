@@ -4,7 +4,7 @@ const BASE_URL =
     : "http://localhost:8080";
 
 export function addToFavourite(item) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite`, {
       method: "POST",
@@ -16,12 +16,12 @@ export function addToFavourite(item) {
       credentials: "include",
     });
     const data = await response.json();
-    resolve({ data });
+    resolve({ data, status: response.status });
   });
 }
 
 export function fetchItemsByUserId() {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite`, {
       headers: {
@@ -36,7 +36,7 @@ export function fetchItemsByUserId() {
 }
 
 export function updateFavourite(update) {
-  const token = localStorage.getItem("authToken");
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/favourite/${update.id}`, {
       method: "PATCH",
@@ -52,10 +52,10 @@ export function updateFavourite(update) {
   });
 }
 
-export function deleteItemFromFavourite(itemId) {
-  const token = localStorage.getItem("authToken");
+export function deleteItemFromFavourite(productId) {
+  const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
-    const response = await fetch(`${BASE_URL}/favourite/${itemId}`, {
+    const response = await fetch(`${BASE_URL}/favourite/${productId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -63,8 +63,10 @@ export function deleteItemFromFavourite(itemId) {
       },
       credentials: "include",
     });
+    console.log("response for fav in fetch", response?.status);
     const data = await response.json();
-    resolve({ data: { id: itemId } });
+    console.log("response for fav in fetch 011", data);
+    resolve({ data: { id: productId }, status: response.status });
   });
 }
 
