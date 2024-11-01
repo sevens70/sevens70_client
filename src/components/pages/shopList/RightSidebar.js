@@ -43,6 +43,7 @@ import {
   addToCartAsync,
   deleteItemFromCartAsync,
 } from "../../features/cart/cartSlice";
+import { selectLoggedInUser } from "../../features/auth/authSlice";
 const showNumber = [
   {
     label: "5",
@@ -62,6 +63,7 @@ function RightSidebar() {
   // const currencyData = useAppSelector(getCarrency);
   const allProducts = useAppSelector(selectAllProducts);
   const cartItems = useAppSelector((state) => state.cart.items);
+  const user = useAppSelector(selectLoggedInUser);
   // const items = useAppSelector(selectFavouriteItems);
   const items = useAppSelector(selectFavouriteItems);
   // const cart = useAppSelector(getCart);
@@ -92,6 +94,12 @@ function RightSidebar() {
     setSelectedFilterQueries(paramsObj);
   }, [searchParams]);
 
+  // for viewing products
+  const displayedProducts =
+    selectedNumber.value === "all"
+      ? allProducts
+      : allProducts.slice(0, parseInt(selectedNumber.value));
+
   function handleViewChange(viewType) {
     let queries = { ...selectedFilterQueries };
     // Add or update the view query
@@ -107,7 +115,7 @@ function RightSidebar() {
   const currentView = selectedFilterQueries.view?.[0] || "wf";
   const paramsObj = selectedQueries;
 
-  let filteredProducts = allProducts?.filter((product) => {
+  let filteredProducts = displayedProducts?.filter((product) => {
     const hasCategories = isAvailable(
       product.categories,
       paramsObj?.categories
@@ -136,7 +144,7 @@ function RightSidebar() {
     Object.keys(paramsObj).length === 0 ||
     (Object.keys(paramsObj).length === 1 && paramsObj.sort)
   ) {
-    filteredProducts = [...allProducts].sort((p1, p2) => {
+    filteredProducts = [...displayedProducts].sort((p1, p2) => {
       const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
       switch (sortKey) {
         case "newest":
@@ -156,7 +164,7 @@ function RightSidebar() {
     paramsObj.price
   ) {
     // if only price filter is applied
-    filteredProducts = allProducts?.filter((product) => {
+    filteredProducts = displayedProducts?.filter((product) => {
       const priceRange = paramsObj?.price?.[0]?.split("-");
       const minPrice = parseFloat(priceRange?.[0]) || 0;
       const maxPrice = parseFloat(priceRange?.[1]) || Infinity;
@@ -188,7 +196,7 @@ function RightSidebar() {
     setSelectedNumber(number);
     setIsNumber(false);
   };
-
+  console.log("allProducts & selectedNumber", selectedNumber, allProducts);
   if (filteredProducts.length === 0) {
     return <p className="text-center text-slate-700">No products Available</p>;
   }
@@ -361,72 +369,131 @@ function RightSidebar() {
                     {`${discountPercentage}`} % off
                   </button>
                   <div className="sm:hidden flex group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (
-                          items?.findIndex((item) => item.product.id === id) < 0
-                        ) {
-                          const newItem = { product: id, category: category };
-                          dispatch(
-                            addToFavouriteAsync({ item: newItem, toast })
-                          );
-                        } else {
-                          handleDeleteFavList(id);
-                        }
-                      }}
-                      color="white"
-                      size="sm"
-                    >
-                      {items?.findIndex((item) => item.product.id === id) <
-                      0 ? (
-                        <GiSelfLove className="h-5 w-5 font-normal" />
-                      ) : (
-                        <GiSelfLove className="h-5 w-5 font-normal !fill-primaryRed" />
-                      )}
-                    </IconButton>
-
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (
-                          cartItems?.findIndex(
-                            (item) => item.product.id === id
-                          ) < 0
-                        ) {
-                          const newItem = {
-                            product: id,
-                            // quantity: count,
-                            quantity: 1,
-                          };
-                          // if (selectedColor) {
-                          //   newItem.color = selectedColor;
-                          // }
-                          // if (selectedSize) {
-                          //   newItem.size = selectedSize;
-                          // }
-                          dispatch(addToCartAsync({ item: newItem, toast }));
-                        } else {
-                          toast.error("Item Already added");
-                        }
-                      }}
-                      color="white"
-                      size="sm"
-                    >
-                      {}
-                      <FaCartShopping className="h-5 w-5" />
-                    </IconButton>
-
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        router.push(`/orders`);
-                      }}
-                      color="white"
-                      size="sm"
-                    >
-                      <FaRegUser className="h-5 w-5" />
-                    </IconButton>
+                    {user ? (
+                      <>
+                        {" "}
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!user) {
+                              // Redirect to sign-in page if user is not authenticated
+                              router.push(`/auth/signin`);
+                              return;
+                            }
+                            if (
+                              items?.findIndex(
+                                (item) => item.product.id === id
+                              ) < 0
+                            ) {
+                              const newItem = {
+                                product: id,
+                                category: category,
+                              };
+                              dispatch(
+                                addToFavouriteAsync({ item: newItem, toast })
+                              );
+                            } else {
+                              handleDeleteFavList(id);
+                            }
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          {items?.findIndex((item) => item.product.id === id) <
+                          0 ? (
+                            <GiSelfLove className="h-5 w-5 font-normal" />
+                          ) : (
+                            <GiSelfLove className="h-5 w-5 font-normal !fill-primaryRed" />
+                          )}
+                        </IconButton>
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!user) {
+                              // Redirect to sign-in page if user is not authenticated
+                              router.push(`/auth/signin`);
+                              return;
+                            }
+                            if (
+                              cartItems?.findIndex(
+                                (item) => item.product.id === id
+                              ) < 0
+                            ) {
+                              const newItem = {
+                                product: id,
+                                // quantity: count,
+                                quantity: 1,
+                              };
+                              // if (selectedColor) {
+                              //   newItem.color = selectedColor;
+                              // }
+                              // if (selectedSize) {
+                              //   newItem.size = selectedSize;
+                              // }
+                              dispatch(
+                                addToCartAsync({ item: newItem, toast })
+                              );
+                            } else {
+                              toast.error("Item Already added");
+                            }
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          {}
+                          <FaCartShopping className="h-5 w-5" />
+                        </IconButton>
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!user) {
+                              // Redirect to sign-in page if user is not authenticated
+                              router.push(`/auth/signin`);
+                              return;
+                            }
+                            router.push(`/orders`);
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          <FaRegUser className="h-5 w-5" />
+                        </IconButton>
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/auth/signin`);
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          <GiSelfLove className="h-5 w-5 font-normal" />
+                        </IconButton>
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/auth/signin`);
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          <FaCartShopping className="h-5 w-5" />
+                        </IconButton>
+                        <IconButton
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            router.push(`/auth/signin`);
+                          }}
+                          color="white"
+                          size="sm"
+                        >
+                          <FaRegUser className="h-5 w-5" />
+                        </IconButton>
+                      </>
+                    )}
                   </div>
 
                   <div
@@ -439,23 +506,24 @@ function RightSidebar() {
                     <div
                       onClick={(e) => {
                         e.stopPropagation();
+
+                        // Check if user is authenticated
+                        if (!user) {
+                          // Redirect to sign-in page if user is not authenticated
+                          router.push(`/auth/signin`);
+                          return;
+                        }
+
                         if (
                           cartItems?.findIndex(
                             (item) => item.product.id === id
                           ) < 0
                         ) {
-                          console.log({ items });
                           const newItem = {
                             product: id,
-                            // quantity: count,
                             quantity: 1,
                           };
-                          // if (selectedColor) {
-                          //   newItem.color = selectedColor;
-                          // }
-                          // if (selectedSize) {
-                          //   newItem.size = selectedSize;
-                          // }
+
                           dispatch(addToCartAsync({ item: newItem, toast }));
                         } else {
                           toast.error("Item Already added");
@@ -474,23 +542,26 @@ function RightSidebar() {
                 </CardHeader>
                 <CardBody className="text-center px-2 mb-1 mt-1">
                   <div className="flex justify-between items-center">
-                    <p className="text-sm text-grey-600">{subcategory}</p>
+                    <p className="text-sm text-grey-600 capitalize">
+                      {subcategory}
+                    </p>
                     <h6 className="flex justify-center items-center text-dark-700">
                       <GoDotFill className="fill-primaryRed" />
                       {rating}
                     </h6>
                   </div>
                   <h6
-                    className={`text-left text-dark-700 ${
+                    className={`text-left text-dark-700 capitalize ${
                       currentView === "grid" && "text-[1.3rem]"
                     }`}
                   >
                     {title}
                   </h6>
                   <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                    {/* {currencyData?.symbol} */}৳ {`${discountPrice}.00`}
+                    {/* {currencyData?.symbol} */}৳{" "}
+                    {discountPrice ? discountPrice : 0}.00
                     <span className="font-normal line-through text-grey-600">
-                      {/* {currencyData?.symbol} */}৳ {`${price}.00`}
+                      {/* {currencyData?.symbol} */}৳ {price ? price : 0}.00
                     </span>
                   </h6>
                 </CardBody>

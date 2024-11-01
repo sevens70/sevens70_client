@@ -23,40 +23,43 @@ import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websit
 export default function MainPage() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectLoggedInUser);
-  const userChecked = useAppSelector(selectUserChecked);
-  const router = useRouter();
+  // const userChecked = useAppSelector(selectUserChecked);
+  // const router = useRouter();
 
   useEffect(() => {
     dispatch(checkAuthAsync());
+    dispatch(fetchWebsiteInfoAsync());
+    dispatch(fetchCategoriesAsync());
+    dispatch(fetchAllProductByAsinc());
   }, [dispatch]);
 
   useEffect(() => {
     if (user) {
       dispatch(fetchLoggedInUserAsync());
-      dispatch(fetchWebsiteInfoAsync());
-      dispatch(fetchCategoriesAsync());
-      dispatch(fetchAllProductByAsinc());
+
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchFavouriteItemsByUserIdAsync());
-    } else {
-      router.push("/auth/signin");
     }
+    // else
+    // {
+    //   router.push("/auth/signin");
+    // }
   }, [dispatch, user]);
 
   return (
     <div>
-      {userChecked ? (
-        <DefaultLayout>
-          <div
-            className="mx-auto"
-            style={{ height: "auto", backgroundColor: "#fff" }}
-          >
-            <Home />
-          </div>
-        </DefaultLayout>
-      ) : (
-        <SignIn />
-      )}
+      {/* {userChecked ? ( */}
+      <DefaultLayout>
+        <div
+          className="mx-auto"
+          style={{ height: "auto", backgroundColor: "#fff" }}
+        >
+          <Home />
+        </div>
+      </DefaultLayout>
+      {/* ) : ( */}
+      {/* <SignIn /> */}
+      {/* )} */}
     </div>
   );
 }
