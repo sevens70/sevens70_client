@@ -16,7 +16,7 @@ import {
   ListItem,
 } from "@material-tailwind/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPhone } from "react-icons/fa";
 import { FaJediOrder } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
@@ -32,10 +32,15 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { useRouter } from "next/navigation";
 import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
-import { selectAllCategories } from "../features/product/productSlice";
+import {
+  selectAllCategories,
+  selectAllProducts,
+} from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
 import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
 import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
+import { SearchBar } from "../../components/search/SearchBar";
+import { SearchResultsList } from "../../components/search/SearchResultsList";
 
 const menu = [
   {
@@ -100,6 +105,8 @@ const Header = () => {
   const favouriteItems = useAppSelector(selectFavouriteItems);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
+  const allProducts = useAppSelector(selectAllProducts);
+
   // const [categories, setCategories] = useState({});
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -110,6 +117,10 @@ const Header = () => {
   const [selectedCurrency, setSelectedCurrency] = useState(
     currencyData ?? currency[0]
   );
+  const [results, setResults] = useState([]);
+  const [input, setInput] = useState("");
+  const containerRef = useRef(null);
+
   const handleLogout = () => {
     dispatch(signOutAsync());
   };
@@ -138,6 +149,21 @@ const Header = () => {
     }));
     return acc;
   }, {});
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".search-bar-container")) {
+        setResults([]);
+        setInput("");
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [setResults]);
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -298,7 +324,10 @@ const Header = () => {
           </div> */}
           <div className="border-b border-b-grey-300 ">
             {" "}
-            <div className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0">
+            <div
+              className="w-11/12 md:w-10/12 mx-auto gap-2 py-2 flex  items-center justify-between bg-white sticky top-0 header_area"
+              style={{ zIndex: "100" }}
+            >
               <Link href="/">
                 {websiteInfo?.length > 0 ? (
                   <img
@@ -321,8 +350,24 @@ const Header = () => {
                   />
                 )}
               </Link>
-
-              <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]">
+              {/* ================================ */}
+              <div className="search-bar-container relative">
+                <SearchBar
+                  setResults={setResults}
+                  input={input}
+                  setInput={setInput}
+                  allProducts={allProducts}
+                />
+                {results && results.length > 0 && (
+                  <SearchResultsList
+                    results={results}
+                    setInput={setInput}
+                    setResults={setResults}
+                  />
+                )}
+              </div>
+              {/* ================================ */}
+              {/* <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]">
                 <Input
                   size="md"
                   type="email"
@@ -343,7 +388,7 @@ const Header = () => {
                 >
                   Search Now
                 </Button>
-              </div>
+              </div> */}
 
               <nav className="lg:flex lg:gap-2 items-center hidden ">
                 <a
