@@ -91,15 +91,15 @@ export const productSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchBrandsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.brands = action.payload;
       })
       .addCase(fetchCategoriesAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        console.log("allCatgories 01 02", action.payload);
+        state.status = "success";
+        // console.log("allCatgories 01 02", action.payload);
         state.categories = action.payload;
       })
       .addCase(fetchCategoriesAsync.rejected, (state, action) => {
@@ -117,7 +117,7 @@ export const productSlice = createSlice({
         state.status = "loading...";
       })
       .addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.selectedProduct = action.payload;
       })
       .addCase(fetchAllProductByAsinc.pending, (state) => {

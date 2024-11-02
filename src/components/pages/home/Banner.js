@@ -7,38 +7,9 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectAllBanner } from "../../features/banners/bannersSlice";
-const slidersInfo = [
-  {
-    img: "/bannerImg.png",
-    title: `Style Haven Unveiled Your Exclusive Dress Fashion`,
-    offer: "50% Off",
-    tag: "Summer Super Sale",
-    subtitle:
-      "Crafted to convey a sense of discovery and exclusivity, enticing readers to explore indulge in the latest trends and offerings. The term suggests a grand reveal , adding",
-    route: "/",
-  },
-  {
-    img: "/bannerImg.png",
-    title: "Industrial Contractor",
-    offer: "50% OFF",
-    tag: "Summer Super Sale",
-    subtitle:
-      "With a reputation for delivering innovative solutions and unmatched expertise, our industrial contractor seamlessly transforms visions into reality, setting new standards of excellence in every project.",
-    route: "/",
-  },
-  {
-    img: "/bannerImg.png",
-    title: "All Construction Services",
-    offer: "50% OFF",
-    tag: "Summer Super Sale",
-    subtitle:
-      "From construction groundbreaking to construction cleaning services, our construction services company brings your vision to life with precision and expertise.",
-    route: "/",
-  },
-];
+
 function Banner() {
   const banners = useAppSelector(selectAllBanner);
-  console.log("banners 123", banners);
   return (
     <div className="pb-0 relative">
       <Slider
