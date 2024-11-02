@@ -9,6 +9,7 @@ import favouriteReducer from "../components/features/favourite/favouriteSlice";
 import productReducer from "../components/features/product/productSlice";
 import userReducer from "../components/features/user/userSlice";
 import websiteInfoReducer from "../components/features/websiteInfo/websiteInfoSlice";
+import bannerReducer from "../components/features/banners/bannersSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -26,7 +27,7 @@ const rootReducer = combineReducers({
   // cart: CartReducer,
   currency: CurrencyReducer,
   favourites: FavouriteReducer, //remove it later after removing others component
-  // orders: OrdersReducer,
+  banner: bannerReducer,
   order: OrdersReducer,
   auth: AuthReducer,
   product: productReducer,

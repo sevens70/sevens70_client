@@ -335,7 +335,7 @@ const Header = () => {
                     // src="/Logo.png"
                     src={websiteInfo[0]?.logoUrl}
                     alt="logo"
-                    className="max-w-[150px] w-full h-full"
+                    className="max-w-[150px] max-h-[30px] w-full h-full"
                     width={300}
                     height={300}
                   />

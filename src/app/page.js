@@ -19,6 +19,7 @@ import {
   fetchCategoriesAsync,
 } from "../components/features/product/productSlice";
 import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websiteInfoSlice";
+import { fetchAllBannerAsync } from "../components/features/banners/bannersSlice";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(checkAuthAsync());
     dispatch(fetchWebsiteInfoAsync());
+    dispatch(fetchAllBannerAsync());
     dispatch(fetchCategoriesAsync());
     dispatch(fetchAllProductByAsinc());
   }, [dispatch]);
@@ -36,7 +38,6 @@ export default function MainPage() {
   useEffect(() => {
     if (user) {
       dispatch(fetchLoggedInUserAsync());
-
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchFavouriteItemsByUserIdAsync());
     }

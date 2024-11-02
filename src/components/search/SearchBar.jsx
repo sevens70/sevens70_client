@@ -1,6 +1,6 @@
 import "./SearchBar.css";
 import { Button, Input } from "@material-tailwind/react";
-
+import { FaSearch } from "react-icons/fa";
 export const SearchBar = ({ setResults, input, setInput, allProducts }) => {
   // const fetchData = (value) => {
   //   fetch("https://jsonplaceholder.typicode.com/users")
@@ -36,7 +36,8 @@ export const SearchBar = ({ setResults, input, setInput, allProducts }) => {
 
   return (
     <div className="input-wrapper">
-      <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]">
+      {/* <div className="relative flex gap-3 w-full 2xl:max-w-[22rem] lg:max-w-[18rem] max-w-[15rem]"> */}
+      <div className="flex gap-3 w-full ">
         <Input
           size="md"
           type="email"
@@ -53,9 +54,14 @@ export const SearchBar = ({ setResults, input, setInput, allProducts }) => {
           value={input}
           onChange={(e) => handleChange(e.target.value)}
         />
+        <div className="searchBar__icon">
+          {" "}
+          <FaSearch id="search-icon" />
+        </div>
+
         <Button
           size="sm"
-          className="font-jost text-base font-medium capitalize h-[40px] !rounded-none !rounded-tr-lg !rounded-br-lg !absolute bg-primaryRed  right-0 top-0 rounded"
+          className="font-jost text-base font-medium capitalize h-[40px] !rounded-none !rounded-tr-lg !rounded-br-lg !absolute bg-primaryRed  right-0 top-0 rounded headerSearch_btn"
         >
           Search Now
         </Button>

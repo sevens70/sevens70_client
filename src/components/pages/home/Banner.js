@@ -5,6 +5,8 @@ import { Button } from "@material-tailwind/react";
 import React from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { useAppSelector } from "../../../lib/hooks";
+import { selectAllBanner } from "../../features/banners/bannersSlice";
 const slidersInfo = [
   {
     img: "/bannerImg.png",
@@ -35,6 +37,8 @@ const slidersInfo = [
   },
 ];
 function Banner() {
+  const banners = useAppSelector(selectAllBanner);
+  console.log("banners 123", banners);
   return (
     <div className="pb-0 relative">
       <Slider
@@ -51,7 +55,7 @@ function Banner() {
           "--swiper-theme-color": "black-dark-900",
         }}
       >
-        {slidersInfo.map((item, key) => (
+        {banners?.map((item, key) => (
           <SwiperSlide key={key} className="h-full">
             <div className="">
               <section className="md:pt-10 w-full bg-pageBg relative ">
@@ -111,7 +115,7 @@ function Banner() {
                       {" "}
                       <img
                         priority="true"
-                        src={item.img}
+                        src={item.bannerImage}
                         alt="banner"
                         // className="object-cover object-center bg-dark-500 "
                         width={300}
