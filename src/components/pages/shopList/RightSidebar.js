@@ -114,14 +114,18 @@ function RightSidebar() {
 
   const currentView = selectedFilterQueries.view?.[0] || "wf";
   const paramsObj = selectedQueries;
-
   let filteredProducts = displayedProducts?.filter((product) => {
     const hasCategories = isAvailable(
-      product.categories,
+      [product?.category?.toLowerCase()],
       paramsObj?.categories
     );
-    const hasColors = isAvailable(product.colors, paramsObj?.colors);
-    const hasSize = isAvailable(product.size, paramsObj?.sizes);
+
+    const hasColors = isAvailable(product?.colors, paramsObj?.colors);
+    let productSizes = [];
+    if (product?.sizes) {
+      productSizes = product.sizes.map((size) => size.id);
+    }
+    const hasSize = isAvailable(productSizes, paramsObj?.sizes);
     const hasBrand = isAvailable(
       [product.brand.toLowerCase()],
       paramsObj?.brand
@@ -196,7 +200,6 @@ function RightSidebar() {
     setSelectedNumber(number);
     setIsNumber(false);
   };
-  console.log("allProducts & selectedNumber", selectedNumber, allProducts);
   if (filteredProducts.length === 0) {
     return <p className="text-center text-slate-700">No products Available</p>;
   }
@@ -207,7 +210,6 @@ function RightSidebar() {
       dispatch(deleteItemFromFavouriteAsync(prdDocumentId?.id));
     }
   };
-  // console.log("object")
 
   return (
     <div>

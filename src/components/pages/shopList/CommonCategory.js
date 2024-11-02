@@ -62,6 +62,7 @@ function CommonCategory({
                   <Slider
                     // defaultValue={50}
                     size="sm"
+                    max={1000}
                     className="text-[#F87643]"
                     barClassName="rounded-none bg-[#F87643]"
                     thumbClassName="[&::-moz-range-thumb]:rounded [&::-webkit-slider-thumb]:rounded [&::-moz-range-thumb]:-mt-[4px] [&::-webkit-slider-thumb]:-mt-[4px]"
