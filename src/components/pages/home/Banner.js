@@ -7,6 +7,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectAllBanner } from "../../features/banners/bannersSlice";
+import Loader from "../../common/Loader";
 
 function Banner() {
   const banners = useAppSelector(selectAllBanner);
@@ -17,7 +18,7 @@ function Banner() {
         id="home-banner-slider"
         slidesPerView={1}
         spaceBetween={30}
-        autoplay={true}
+        autoplay={false}
         pagination={false}
         navigation={true}
         modules={[Autoplay, Navigation, Pagination]}
@@ -26,6 +27,9 @@ function Banner() {
           "--swiper-theme-color": "black-dark-900",
         }}
       >
+        {
+          banners === "loading" && <Loader/>
+        }
         {banners?.map((item, key) => (
           <SwiperSlide key={key} className="h-full">
             <div className="">
@@ -88,6 +92,8 @@ function Banner() {
                         priority="true"
                         src={item.bannerImage}
                         alt="banner"
+                        className="img__banner"
+                        style={{minHeight: '485px'}}
                         // className="object-cover object-center bg-dark-500 "
                         width={300}
                         height={300}
