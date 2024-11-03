@@ -60,14 +60,10 @@ const showNumber = [
 ];
 
 function RightSidebar() {
-  // const currencyData = useAppSelector(getCarrency);
   const allProducts = useAppSelector(selectAllProducts);
   const cartItems = useAppSelector((state) => state.cart.items);
   const user = useAppSelector(selectLoggedInUser);
-  // const items = useAppSelector(selectFavouriteItems);
   const items = useAppSelector(selectFavouriteItems);
-  // const cart = useAppSelector(getCart);
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [isNumber, setIsNumber] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(showNumber[0]);
