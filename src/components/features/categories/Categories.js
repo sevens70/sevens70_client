@@ -15,6 +15,7 @@ import {
 import Slider from "../../Slider";
 import { useAppSelector } from "../../../lib/hooks";
 import Loader from "../../common/Loader";
+import { staticCategories } from "../../common/constants";
 // import Loader from "../../common/Loader";
 const breakpoints = {
   0: {
@@ -43,6 +44,19 @@ function Categories() {
   const allProducts = useAppSelector(selectAllProducts);
   const status = useAppSelector(selectProductListStatus);
   console.log("allProducts 11", allProducts, status);
+  const matchedCategories = allProducts?.reduce((acc, product) => {
+    const productCategory = product.category.toLowerCase();
+    if (
+      staticCategories
+        .map((cat) => cat.toLowerCase())
+        .includes(productCategory) &&
+      !acc.some((p) => p.category.toLowerCase() === productCategory)
+    ) {
+      acc.push(product);
+    }
+    return acc;
+  }, []);
+
   return (
     <div>
       {status === "loading" && <Loader />}
@@ -68,7 +82,7 @@ function Categories() {
             }}
           >
             {" "}
-            {allProducts?.map(({ id, category, stock, thumbnail }) => (
+            {matchedCategories?.map(({ id, category, stock, thumbnail }) => (
               <SwiperSlide key={id} className="h-full">
                 <div
                   key={id}

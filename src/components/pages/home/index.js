@@ -15,12 +15,12 @@ function Home() {
     <div>
       <Banner />
       <Category />
-      <Shop />
+      {/* <Shop /> */}
       <Products />
       <Collection />
       <TrendingProducts />
       <Client />
-      <BlogNews />
+      {/* <BlogNews /> */}
       <Brand />
     </div>
   );

@@ -1,1 +1,20 @@
 export const ITEMS_PER_PAGE = 10;
+export const staticCategories = [
+  "Home",
+  "Men",
+  "Women",
+  "Accessories",
+  "Shop",
+  "Boyes",
+  "Girls",
+  "Electronics",
+  "Appliance",
+  "Kids",
+  "Home & lifestyle",
+  "Health & beuty",
+  "Jewellery",
+  "Sunglass",
+  "Puja sale",
+  "Eid sale",
+  "Become a seller",
+];
