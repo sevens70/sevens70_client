@@ -127,11 +127,11 @@ function OrdersPage() {
                 <tbody className="text-gray-600 text-sm font-jost">
                   {orders?.map((order) => (
                     <tr
-                      key={order.id}
+                      key={order?.id}
                       className="border-gray-200 hover:bg-gray-100 border-b"
                     >
                       <td className="px-0 py-3 text-left">
-                        {order.items.map((item, index) => (
+                        {order?.items?.map((item, index) => (
                           <div
                             key={index}
                             className="flex gap-3 my-3 items-center"
@@ -156,44 +156,44 @@ function OrdersPage() {
                       </td>
                       <td className="px-0 py-3 text-center">
                         <div className="flex items-center justify-center">
-                          {order.totalItems}
+                          {order?.totalItems}
                         </div>
                       </td>
                       <td className="px-0 py-3 text-center">
                         <div className="flex items-center justify-center">
-                          ${order.totalAmount}
+                          ৳ {order?.totalAmount}
                         </div>
                       </td>
                       <td className="px-0 py-3 text-center">
                         <span
                           className={`${chooseColor(
-                            order.status
+                            order?.status
                           )} rounded-full !px-3 !py-2 text-xsm capitalize`}
                         >
-                          {order.status}
+                          {order?.status}
                         </span>
                       </td>
 
                       <td className="px-0 py-3 text-center">
                         <div className="flex items-center justify-center">
-                          {order.paymentMethod}
+                          {order?.paymentMethod}
                         </div>
                       </td>
 
                       <td className="px-0 py-3 text-center">
                         <span
                           className={`${chooseColor(
-                            order.paymentStatus
+                            order?.paymentStatus
                           )} rounded-full !px-3 !py-2  text-xsm capitalize`}
                         >
-                          {order.paymentStatus}
+                          {order?.paymentStatus}
                         </span>
                       </td>
 
                       <td className="px-0 py-3 text-center">
                         <div className="flex items-center justify-center">
-                          {order.createdAt
-                            ? new Date(order.createdAt).toLocaleString()
+                          {order?.createdAt
+                            ? new Date(order?.createdAt)?.toLocaleString()
                             : null}
                         </div>
                       </td>

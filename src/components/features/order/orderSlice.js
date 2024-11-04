@@ -5,6 +5,7 @@ import {
   fetchAllOrders,
   updateOrder,
 } from "./orderAPI";
+import toast from "react-hot-toast";
 
 const initialState = {
   orders: [],
@@ -16,11 +17,20 @@ const initialState = {
 
 export const createOrderAsync = createAsyncThunk(
   "order/createOrder",
-  async (order) => {
-    const response = await createOrder(order);
-    return response.data;
+  async (order, { rejectWithValue }) => {
+    try {
+      const response = await createOrder(order);
+      if (response.error) {
+        return rejectWithValue(response.error);
+      }
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message || "An unknown error occurred");
+    }
   }
 );
+
 export const updateOrderAsync = createAsyncThunk(
   "order/updateOrder",
   async (order) => {
@@ -67,6 +77,7 @@ export const orderSlice = createSlice({
       })
       .addCase(createOrderAsync.rejected, (state, action) => {
         state.status = "failed";
+        toast.error(`${action.payload}`);
       })
       .addCase(fetchAllOrdersAsync.pending, (state) => {
         state.status = "loading";

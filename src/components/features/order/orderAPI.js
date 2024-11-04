@@ -3,9 +3,10 @@ const BASE_URL =
     ? "https://xartso-server-xpr7.vercel.app"
     : "http://localhost:8080";
 
-export function createOrder(order) {
+export async function createOrder(order) {
   const token = sessionStorage.getItem("authToken");
-  return new Promise(async (resolve) => {
+
+  try {
     const response = await fetch(`${BASE_URL}/orders`, {
       method: "POST",
       body: JSON.stringify(order),
@@ -15,9 +16,20 @@ export function createOrder(order) {
       },
       credentials: "include",
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.error || "An error occurred while creating the order."
+      );
+    }
+
     const data = await response.json();
-    resolve({ data });
-  });
+    return { data }; 
+  } catch (error) {
+    console.error("Order creation error:", error.message);
+    return { error: error.message }; 
+  }
 }
 
 export function updateOrder(order) {

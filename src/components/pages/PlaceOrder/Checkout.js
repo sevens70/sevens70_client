@@ -90,11 +90,6 @@ function Checkout() {
         status: "pending", // other status can be delivered, received.
       };
       dispatch(createOrderAsync(order));
-      // if (status === "success") {
-      //   toast.success("Order created successfully");
-      //   dispatch(resetCartAsync());
-      //   router.push("/orders");
-      // }
     } else {
       toast.error("Enter Address and Payment method");
     }
