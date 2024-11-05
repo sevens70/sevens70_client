@@ -35,12 +35,14 @@ import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
 import {
   selectAllCategories,
   selectAllProducts,
+  selectProductListStatus,
 } from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
 import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
 import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
 import { SearchBar } from "../../components/search/SearchBar";
 import { SearchResultsList } from "../../components/search/SearchResultsList";
+import Loader from "../common/Loader";
 
 const menu = [
   {
@@ -106,6 +108,7 @@ const Header = () => {
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
   const allProducts = useAppSelector(selectAllProducts);
+  const allProductsStatus = useAppSelector(selectProductListStatus);
 
   // const [categories, setCategories] = useState({});
   const [open, setOpen] = useState(false);
@@ -142,13 +145,15 @@ const Header = () => {
       () => window.innerWidth >= 960 && setOpen(false)
     );
   }, []);
-  const transformedData = allCatgories?.reduce((acc, category) => {
-    acc[category.name] = category.subcategories.map((subcategory) => ({
-      id: subcategory._id,
-      name: subcategory.name,
-    }));
-    return acc;
-  }, {});
+  const transformedData =
+    Array.isArray(allCatgories) &&
+    allCatgories.reduce((acc, category) => {
+      acc[category.name] = category.subcategories.map((subcategory) => ({
+        id: subcategory._id,
+        name: subcategory.name,
+      }));
+      return acc;
+    }, {});
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -195,7 +200,17 @@ const Header = () => {
                 <MenuList className="font-jost text-xsm">
                   {transformedData[name.toLowerCase()].map((subcategory) => (
                     <MenuItem className="capitalize" key={subcategory.id}>
-                      {subcategory.name}
+                      <Link
+                        href={{
+                          pathname: "/shop",
+                          query: {
+                            subcategory: `${subcategory.name}`,
+                          },
+                        }}
+                      >
+                        {" "}
+                        {subcategory.name}
+                      </Link>
                     </MenuItem>
                   ))}
                 </MenuList>
@@ -216,7 +231,9 @@ const Header = () => {
       ))}
     </ul>
   );
-
+  if (allProductsStatus === "loading") {
+    return <Loader />;
+  }
   return (
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
@@ -449,7 +466,7 @@ const Header = () => {
                   )
                 }
               >
-                {allCatgories?.map((item, idx) => (
+                {/* {allCatgories?.map((item, idx) => (
                   <Option
                     className="font-jost text-xsm capitalize"
                     key={idx}
@@ -457,7 +474,7 @@ const Header = () => {
                   >
                     {item.name}
                   </Option>
-                ))}
+                ))} */}
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>

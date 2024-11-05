@@ -78,7 +78,7 @@ function CommonCategory({
                 data.options?.map((value, idx) => (
                   <ListItem
                     key={idx}
-                    className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm ${
+                    className={`bg-hidden hover:bg-hidden h-[30px] font-jost text-xsm cursor-default ${
                       data.title === "Filter by size"
                         ? "uppercase"
                         : "capitalize"
@@ -107,23 +107,31 @@ function CommonCategory({
 
                       {data.title === "Filter by color" && (
                         <>
-                          <CheckboxAndRadioGroup key={value}>
+                          <CheckboxAndRadioGroup key={value.id || value}>
                             <CheckboxAndRadioItem
                               type={data.type}
                               name={data.id}
-                              id={value.toLowerCase().trim()}
-                              label={value}
-                              value={value.toLowerCase().trim()}
-                              checked={isChecked(data.id, value)}
+                              id={
+                                value.id.toLowerCase().trim() ||
+                                value.toLowerCase().trim()
+                              }
+                              label={value?.name || value}
+                              value={
+                                value.id?.toLowerCase().trim() ||
+                                value.toLowerCase().trim()
+                              }
+                              checked={isChecked(data.id, value?.id || value)}
                               onChange={onChange}
-                              style={{ backgroundColor: value }}
+                              style={{
+                                backgroundColor: value?.selectedClass || value,
+                              }}
                               className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
                             />
                           </CheckboxAndRadioGroup>
                         </>
                       )}
                     </ListItemPrefix>
-                    {value}
+                    {value?.name || value}
                     {data.title !== "Filter by color" && (
                       <ListItemSuffix className="text-grey-200 text-base mr-1">
                         ({1})

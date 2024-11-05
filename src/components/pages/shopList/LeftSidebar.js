@@ -4,96 +4,54 @@ import CommonCategory from "./CommonCategory";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectAllCategories } from "../../features/product/productSlice";
-// import { Checkbox } from "@material-tailwind/react";
 
-// const colorData = {
-//   category: "Filter by color",
-//   data: [
-//     {
-//       title: "Light Brown (10)",
-//       value: 3,
-//       color: "#B5651D",
-//     },
-//     {
-//       title: "Blue(7)",
-//       value: 5,
-//       color: "red",
-//     },
-//     {
-//       title: "Light purploe(10)",
-//       value: 8,
-//       color: "green",
-//     },
-
-//     {
-//       title: "Pele Gray",
-//       value: 7,
-//       color: "blue",
-//     },
-//     {
-//       title: "Jean Blue",
-//       value: 6,
-//       color: "#B5651D",
-//     },
-//     {
-//       title: "Dark blue",
-//       value: 2,
-//       color: "yellow",
-//     },
-//     {
-//       title: "Red",
-//       value: 3,
-//       color: "green",
-//     },
-//   ],
-// };
-// const brandData = {
-//   category: "Brand",
-//   data: [
-//     {
-//       title: "Abc Fashion",
-//       value: 3,
-//     },
-//     {
-//       title: "squire style",
-//       value: 5,
-//     },
-//     {
-//       title: "Nice fashion",
-//       value: 8,
-//     },
-
-//     {
-//       title: "xozo fashion",
-//       value: 7,
-//     },
-//     {
-//       title: "style zone",
-//       value: 6,
-//     },
-//     {
-//       title: "Cool style",
-//       value: 2,
-//     },
-//     {
-//       title: "Modern look",
-//       value: 3,
-//     },
-//   ],
-// };
-// ====================
 const colors = [
-  "darkOrange",
-  "red",
-  "green",
-  "blue",
-  "thistle",
-  "yellow",
-  "powderBlue",
-  "lightGray",
+  {
+    name: "Light Brown",
+    class: "bg-priceColor",
+    selectedClass: "#B5651D",
+    id: "light_brown",
+  },
+  {
+    name: "Red",
+    class: "bg-primaryRed",
+    selectedClass: "red",
+    id: "red",
+  },
+  {
+    name: "Green",
+    class: "bg-successGreen",
+    selectedClass: "green",
+    id: "green",
+  },
+  {
+    name: "Blue",
+    class: "blue",
+    selectedClass: "blue",
+    id: "blue",
+  },
+  {
+    name: "Light Purple",
+    class: "light_purple",
+    selectedClass: "purple",
+    id: "light_purple",
+  },
+  {
+    name: "Jean Blue",
+    class: "jean blue",
+    selectedClass: "#B5651D",
+    id: "jean_blue",
+  },
+  {
+    name: "Yellow",
+    class: "yellow",
+    selectedClass: "yellow",
+    id: "yellow",
+  },
 ];
-const categories = ["Men cloth", "Women Cloth"];
-const sizes = ["S", "M", "L", "XL", "XXL"];
+
+// const categories = ["Men cloth", "Women Cloth"];
+const sizes = ["XXS", "XS", "S", "M", "L", "XL", "2XL", "3XL"];
 const sortingOrder = ["Newest", "Price Low - High", "Price High - Low"];
 const brands = [
   "Abc Fashion",
@@ -117,12 +75,12 @@ const filterOptions = [
     options: [],
     type: "slider",
   },
-  {
-    id: "categories",
-    title: "Prodcut Category",
-    options: categories,
-    type: "checkbox",
-  },
+  // {
+  //   id: "categories",
+  //   title: "Prodcut Category",
+  //   options: categories,
+  //   type: "checkbox",
+  // },
   {
     id: "sizes",
     title: "Filter by size",
@@ -170,6 +128,8 @@ function LeftSidebar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const allCatgories = useAppSelector(selectAllCategories);
+  const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
+  const [price, setPrice] = useState(0);
   console.log("allCategories 123", allCatgories);
   // const categories = allCatgories?.flatMap((category) =>   // note : it combines the category & subcategory name
   //   category.subcategories.map((sub) => `${category.name} - ${sub.name}`)
@@ -185,9 +145,6 @@ function LeftSidebar() {
   });
 
   console.log("Updated Filter Options:", updatedFilterOptions);
-
-  const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
-  const [price, setPrice] = useState(0);
 
   const handlePriceChange = (e) => {
     setPrice(parseInt(e?.target.value));
@@ -232,6 +189,7 @@ function LeftSidebar() {
   }
 
   function isChecked(id, option) {
+    // console.log("id, option", id, option);
     return (
       Boolean(selectedFilterQueries[id]) &&
       selectedFilterQueries[id].includes(option.toLowerCase())

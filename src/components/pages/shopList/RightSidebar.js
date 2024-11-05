@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import {
@@ -22,10 +23,10 @@ import { FaRegUser } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { CiShoppingCart } from "react-icons/ci";
 // import Link from "next/link";
-import { addToCart, getCart } from "../../../lib/features/cartSlice";
+// import { addToCart, getCart } from "../../../lib/features/cartSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
-import { getCarrency } from "../../../lib/features/currencySlice";
+// import { getCarrency } from "../../../lib/features/currencySlice";
 // import { convertStringToQueriesObject } from "./LeftSidebar";
 import { addToFav } from "../../../lib/features/favouriteSlice";
 import {
@@ -33,7 +34,11 @@ import {
   convertValidStringQueries,
 } from "./LeftSidebar";
 import toast from "react-hot-toast";
-import { selectAllProducts } from "../../features/product/productSlice";
+import {
+  fetchProductsByFiltersAsync,
+  selectAllProducts,
+  selectProductListStatus,
+} from "../../features/product/productSlice";
 import {
   addToFavouriteAsync,
   deleteItemFromFavouriteAsync,
@@ -41,17 +46,18 @@ import {
 } from "../../features/favourite/favouriteSlice";
 import {
   addToCartAsync,
-  deleteItemFromCartAsync,
+  // deleteItemFromCartAsync,
 } from "../../features/cart/cartSlice";
 import { selectLoggedInUser } from "../../features/auth/authSlice";
+import Loader from "../../common/Loader";
 const showNumber = [
-  {
-    label: "5",
-    value: "5",
-  },
   {
     label: "10",
     value: "10",
+  },
+  {
+    label: "20",
+    value: "20",
   },
   {
     label: "All",
@@ -61,14 +67,14 @@ const showNumber = [
 
 function RightSidebar() {
   const allProducts = useAppSelector(selectAllProducts);
+  const allProductsStatus = useAppSelector(selectProductListStatus);
   const cartItems = useAppSelector((state) => state.cart.items);
   const user = useAppSelector(selectLoggedInUser);
   const items = useAppSelector(selectFavouriteItems);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [isNumber, setIsNumber] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState(showNumber[0]);
-  // const [isSort, setIsSort] = useState(false);
-  // const [selectedSort, setSelectedSort] = useState(sortOption[0]);
+  const [sort, setSort] = useState({});
   const router = useRouter();
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
@@ -84,17 +90,12 @@ function RightSidebar() {
       }
     }
   });
+
   // = for view
   useEffect(() => {
     const paramsObj = convertStringToQueriesObject(searchParams);
     setSelectedFilterQueries(paramsObj);
   }, [searchParams]);
-
-  // for viewing products
-  const displayedProducts =
-    selectedNumber.value === "all"
-      ? allProducts
-      : allProducts.slice(0, parseInt(selectedNumber.value));
 
   function handleViewChange(viewType) {
     let queries = { ...selectedFilterQueries };
@@ -106,99 +107,16 @@ function RightSidebar() {
       scroll: false,
     });
   }
-  // ==
 
   const currentView = selectedFilterQueries.view?.[0] || "wf";
-  const paramsObj = selectedQueries;
-  let filteredProducts = displayedProducts?.filter((product) => {
-    const hasCategories = isAvailable(
-      [product?.category?.toLowerCase()],
-      paramsObj?.categories
-    );
-
-    const hasColors = isAvailable(product?.colors, paramsObj?.colors);
-    let productSizes = [];
-    if (product?.sizes) {
-      productSizes = product.sizes.map((size) => size.id);
-    }
-    const hasSize = isAvailable(productSizes, paramsObj?.sizes);
-    const hasBrand = isAvailable(
-      [product.brand.toLowerCase()],
-      paramsObj?.brand
-    );
-
-    // Check if the product's discount price falls within the price range
-    const priceRange = paramsObj?.price?.[0]?.split("-");
-    const minPrice = parseFloat(priceRange?.[0]) || 0;
-    const maxPrice = parseFloat(priceRange?.[1]) || Infinity;
-
-    const hasPrice =
-      parseInt(product.discountPrice) >= minPrice &&
-      parseInt(product.discountPrice) <= maxPrice;
-
-    return (hasSize || hasColors || hasCategories || hasBrand) && hasPrice;
-  });
+  // const paramsObj = selectedQueries;
 
   // Check if paramsObj has only the sort parameter or is empty
-  if (
-    Object.keys(paramsObj).length === 0 ||
-    (Object.keys(paramsObj).length === 1 && paramsObj.sort)
-  ) {
-    filteredProducts = [...displayedProducts].sort((p1, p2) => {
-      const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      switch (sortKey) {
-        case "newest":
-          return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
-        case "price high - low":
-          return parseFloat(p2.price) - parseFloat(p1.price);
-        case "price low - high":
-          return parseFloat(p1.price) - parseFloat(p2.price);
-        default:
-          return 0;
-      }
-    });
-  }
-  if (
-    (Object.keys(paramsObj)?.length === 1 ||
-      Object.keys(paramsObj)?.length === 2) &&
-    paramsObj.price
-  ) {
-    // if only price filter is applied
-    filteredProducts = displayedProducts?.filter((product) => {
-      const priceRange = paramsObj?.price?.[0]?.split("-");
-      const minPrice = parseFloat(priceRange?.[0]) || 0;
-      const maxPrice = parseFloat(priceRange?.[1]) || Infinity;
-
-      const hasPrice =
-        parseInt(product.discountPrice) >= minPrice &&
-        parseInt(product.discountPrice) <= maxPrice;
-
-      return hasPrice;
-    });
-  } else {
-    // if additional filters are applied
-    filteredProducts = filteredProducts.sort((p1, p2) => {
-      const sortKey = paramsObj?.sort?.[0]?.toLowerCase();
-      switch (sortKey) {
-        case "newest":
-          return Date.parse(p2.createdAt) - Date.parse(p1.createdAt);
-        case "price high - low":
-          return parseFloat(p2.price) - parseFloat(p1.price);
-        case "price low - high":
-          return parseFloat(p1.price) - parseFloat(p2.price);
-        default:
-          return 0;
-      }
-    });
-  }
 
   const handleShowItemClick = (number) => {
     setSelectedNumber(number);
     setIsNumber(false);
   };
-  if (filteredProducts.length === 0) {
-    return <p className="text-center text-slate-700">No products Available</p>;
-  }
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     // console.log("object id 33", prdDocumentId);
@@ -207,6 +125,29 @@ function RightSidebar() {
     }
   };
 
+  useEffect(() => {
+    if (Object.keys(selectedFilterQueries)?.length > 0) {
+      console.log("1234 clicked", selectedFilterQueries);
+      const pagination = {
+        _page: 1,
+        _limit: selectedNumber.value !== "all" ? selectedNumber.value : 1000,
+      };
+      dispatch(
+        fetchProductsByFiltersAsync({
+          selectedFilterQueries,
+          sort,
+          pagination,
+        })
+      );
+    }
+  }, [dispatch, selectedFilterQueries, sort, selectedNumber]);
+
+  if (allProductsStatus === "loading") {
+    return <Loader />;
+  }
+  if (allProducts?.length === 0) {
+    return <p className="text-center text-slate-700">No products Available</p>;
+  }
   return (
     <div>
       <div className="my-5 md:flex md:flex-row gap-3 lg:justify-between items-center">
@@ -275,8 +216,8 @@ function RightSidebar() {
                   Showing 1-
                   {selectedNumber.value !== "all"
                     ? selectedNumber.value
-                    : filteredProducts?.length}{" "}
-                  of {filteredProducts?.length} results
+                    : allProducts?.length}{" "}
+                  of {allProducts?.length} results
                 </p>
               </div>
             </div>
@@ -309,7 +250,7 @@ function RightSidebar() {
               />
             </IconButton>
             {/* </Badge> */}
-            <IconButton
+            {/* <IconButton
               color={currentView === "list" ? "black" : "white"}
               size="md"
               className="group rounded-none hover:bg-dark-900"
@@ -320,12 +261,12 @@ function RightSidebar() {
                   currentView === "list" ? "fill-white" : "fill-dark-700"
                 } group-hover:fill-white`}
               />
-            </IconButton>
+            </IconButton> */}
           </div>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-4">
-        {filteredProducts?.map((item, idx) => {
+        {allProducts?.map((item, idx) => {
           const {
             id,
             title,

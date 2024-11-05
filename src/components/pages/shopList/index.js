@@ -16,7 +16,7 @@ function ShopList() {
             Home
           </Link>
           <a href="#" className="capitalize">
-            {searchParams.get("category")}
+            {searchParams.get("category") || searchParams.get("subcategory")}
           </a>
         </Breadcrumbs>
       </div>
