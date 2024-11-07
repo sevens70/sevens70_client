@@ -466,15 +466,16 @@ const Header = () => {
                   )
                 }
               >
-                {/* {allCatgories?.map((item, idx) => (
-                  <Option
-                    className="font-jost text-xsm capitalize"
-                    key={idx}
-                    value={`${item.name}`}
-                  >
-                    {item.name}
-                  </Option>
-                ))} */}
+                {Array.isArray(allCatgories) &&
+                  allCatgories?.map((item, idx) => (
+                    <Option
+                      className="font-jost text-xsm capitalize"
+                      key={idx}
+                      value={`${item.name}`}
+                    >
+                      {item.name}
+                    </Option>
+                  ))}
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>

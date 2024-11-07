@@ -10,7 +10,7 @@ import { selectAllBanner } from "../../features/banners/bannersSlice";
 import Loader from "../../common/Loader";
 
 function Banner() {
-  const banners = useAppSelector(selectAllBanner);
+  const banners = useAppSelector(selectAllBanner) || [];
   return (
     <div className="pb-0 relative">
       <Slider
@@ -27,84 +27,84 @@ function Banner() {
           "--swiper-theme-color": "black-dark-900",
         }}
       >
-        {
-          banners === "loading" && <Loader/>
-        }
-        {banners?.map((item, key) => (
-          <SwiperSlide key={key} className="h-full">
-            <div className="">
-              <section className="md:pt-10 w-full bg-pageBg relative ">
-                <div
-                  className="absolute top-0 left-0 bannerLeft-bg px-5"
-                  style={{
-                    background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
-                    height: "285px",
-                    width: "502px",
-                    borderTopLeftRadius: "700px",
-                    borderTopRightRadius: "736px",
-                    transform: "rotate(122deg)",
-                  }}
-                ></div>
+        {banners === "loading" && <Loader />}
+        {Array.isArray(banners) &&
+          banners?.map((item, key) => (
+            <SwiperSlide key={key} className="h-full">
+              <div className="">
+                <section className="md:pt-10 w-full bg-pageBg relative ">
+                  <div
+                    className="absolute top-0 left-0 bannerLeft-bg px-5"
+                    style={{
+                      background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
+                      height: "285px",
+                      width: "502px",
+                      borderTopLeftRadius: "700px",
+                      borderTopRightRadius: "736px",
+                      transform: "rotate(122deg)",
+                    }}
+                  ></div>
 
-                <div className="w-11/12 md:w-10/12 mx-auto">
-                  {" "}
-                  <div className="flex flex-col-reverse md:flex-row 2xl:gap-16 lg:gap:12 relative">
-                    <div className="basis-3/5 my-5 flex flex-col justify-center items-start">
-                      <Button className="font-jost rounded-full bg-light-100 !h-[48px] mb-5 flex items-center text-md font-medium text-dark-500 uppercase">
-                        <img
-                          src={"./discount.png"}
-                          alt={"discount"}
-                          className="h-5 w-5 mr-2 rounded-full object-cover"
-                        />
-                        {item.offer}
-                        <span className="ml-2 md:hidden hidden lg:block font-normal normal-case capitalize">
-                          {" "}
-                          {item.tag}
-                        </span>
-                      </Button>
-                      <h2 className="font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px] ">
-                        {item.title}
-                      </h2>
-                      <p className="text-dark-300 text-[20px] mt-3">
-                        Crafted to convey a sense of discovery and exclusivity,
-                        enticing readers to explore indulge in the latest trends
-                        and offerings. The term suggests a grand reveal ,
-                        adding.
-                      </p>
-                      <Button
-                        size="md"
-                        className="font-jost font-medium text-sm capitalize bg-primaryRed rounded mt-5 flex items-center gap-2"
-                      >
-                        Shop Now <FaLongArrowAltRight className="fill-white" />
-                      </Button>
-                    </div>
-                    <div
-                      className="pt-8
+                  <div className="w-11/12 md:w-10/12 mx-auto">
+                    {" "}
+                    <div className="flex flex-col-reverse md:flex-row 2xl:gap-16 lg:gap:12 relative">
+                      <div className="basis-3/5 my-5 flex flex-col justify-center items-start">
+                        <Button className="font-jost rounded-full bg-light-100 !h-[48px] mb-5 flex items-center text-md font-medium text-dark-500 uppercase">
+                          <img
+                            src={"./discount.png"}
+                            alt={"discount"}
+                            className="h-5 w-5 mr-2 rounded-full object-cover"
+                          />
+                          {item.offer}
+                          <span className="ml-2 md:hidden hidden lg:block font-normal normal-case capitalize">
+                            {" "}
+                            {item.tag}
+                          </span>
+                        </Button>
+                        <h2 className="font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px] ">
+                          {item.title}
+                        </h2>
+                        <p className="text-dark-300 text-[20px] mt-3">
+                          Crafted to convey a sense of discovery and
+                          exclusivity, enticing readers to explore indulge in
+                          the latest trends and offerings. The term suggests a
+                          grand reveal , adding.
+                        </p>
+                        <Button
+                          size="md"
+                          className="font-jost font-medium text-sm capitalize bg-primaryRed rounded mt-5 flex items-center gap-2"
+                        >
+                          Shop Now{" "}
+                          <FaLongArrowAltRight className="fill-white" />
+                        </Button>
+                      </div>
+                      <div
+                        className="pt-8
                        flex-grow flex justify-center"
-                      style={{
-                        background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
-                        borderTopLeftRadius: "1000px",
-                        borderTopRightRadius: "1000px",
-                      }}
-                    >
-                      {" "}
-                      <img
-                        priority="true"
-                        src={item.bannerImage}
-                        alt="banner"
-                        className="img__banner"
-                        style={{minHeight: '485px'}}
-                        // className="object-cover object-center bg-dark-500 "
-                        width={300}
-                        height={300}
-                      />
+                        style={{
+                          background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
+                          borderTopLeftRadius: "1000px",
+                          borderTopRightRadius: "1000px",
+                        }}
+                      >
+                        {" "}
+                        <img
+                          priority="true"
+                          src={item.bannerImage}
+                          alt="banner"
+                          className="img__banner"
+                          style={{ minHeight: "485px" }}
+                          // className="object-cover object-center bg-dark-500 "
+                          width={300}
+                          height={300}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            </div>
-          </SwiperSlide>
-        ))}
+                </section>
+              </div>
+            </SwiperSlide>
+          ))}
       </Slider>
       <div className="absolute bottom-0 left-0 w-full">
         <div className="swiper-custom-pagination"></div>
