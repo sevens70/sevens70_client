@@ -2,6 +2,8 @@
 import { contacts } from "../../site/info";
 import Link from "next/link";
 import { Button, Input, Typography } from "@material-tailwind/react";
+import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
+import { useAppSelector } from "../../lib/hooks";
 const SITEMAP = [
   {
     title: "Quick Links",
@@ -24,38 +26,62 @@ const SITEMAP = [
 ];
 const data = [
   {
-    imageLink: "./imageOne.png",
+    imageLink: "./prd_final_images/01.jpg",
   },
   {
-    imageLink: "./g2.png",
+    imageLink: ".//prd_final_images/10.jpg",
   },
   {
-    imageLink: "./g3.png",
+    imageLink: "./prd_final_images/12.jpg",
   },
   {
-    imageLink: "./g4.png",
+    imageLink: "./prd_final_images/24.jpg",
   },
   {
-    imageLink: "./g5.png",
+    imageLink: "../prd_final_images/30.jpg",
   },
   {
-    imageLink: "./g6.png",
+    imageLink: "./prd_final_images/34.jpg",
   },
 ];
 const Footer = () => {
+  const websiteInfo = useAppSelector(selectWebsiteInfo);
+  console.log("websiteInfo 123", websiteInfo);
   return (
     <footer className="pt-10 !bg-pageBg custom-container overflow-x-hidden">
       <div className="w-11/12 md:w-10/12 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-start mx-auto ">
           <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
-            <img
+            {/* <img
               priority="true"
               src="/FooterLogo.png"
               className="w-full max-w-[150px] bg-white mb-3 rounded-none md:mx-0 h-full"
               alt="footer_logo"
               width={300}
               height={300}
-            />
+            /> */}
+            <Link href="/">
+              {websiteInfo?.length > 0 ? (
+                <img
+                  priority="true"
+                  // src="/Logo.png"
+                  src={websiteInfo[0]?.logoUrl}
+                  alt="logo"
+                  className="max-w-[150px] max-h-[30px] w-full h-full"
+                  width={300}
+                  height={300}
+                />
+              ) : (
+                <img
+                  priority="true"
+                  src="/Logo.png"
+                  alt="logo"
+                  className="max-w-[150px] w-full h-full"
+                  width={300}
+                  height={300}
+                />
+              )}
+            </Link>
             <p className="text-sm text-dark-600 leading-relexed text-left md:text-left">
               Want to create something <br />
               Great Together?
@@ -112,12 +138,16 @@ const Footer = () => {
             </p>
             <p>
               <Link href="tel:+" className="text-sm text-dark-600">
-                {contacts.email}
+                {websiteInfo?.length > 0
+                  ? websiteInfo[0]?.email
+                  : "infoshop@gmail.com"}
               </Link>
             </p>
             <p>
               <Link href="+1 707 797 0462" className="text-sm text-dark-600">
-                {contacts.phone}
+                {websiteInfo?.length > 0
+                  ? websiteInfo[0]?.phoneNumber
+                  : "880 1827969106"}
               </Link>
             </p>
             <div className="mt-4 flex bg-primary-default gap-2 text-blue-gray-900 sm:justify-start">
