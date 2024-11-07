@@ -93,7 +93,7 @@ function Categories() {
                     href={{
                       pathname: "/shop",
                       query: {
-                        category: `${category}`,
+                        category: `${category.toLowerCase()}`,
                       },
                     }}
                   >

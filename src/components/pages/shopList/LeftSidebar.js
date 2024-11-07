@@ -75,12 +75,12 @@ const filterOptions = [
     options: [],
     type: "slider",
   },
-  // {
-  //   id: "categories",
-  //   title: "Prodcut Category",
-  //   options: categories,
-  //   type: "checkbox",
-  // },
+  {
+    id: "category",
+    title: "Prodcut Category",
+    options: [],
+    type: "checkbox",
+  },
   {
     id: "sizes",
     title: "Filter by size",
@@ -138,7 +138,7 @@ function LeftSidebar() {
 
   // Update filterOptions categories' options dynamically
   const updatedFilterOptions = filterOptions.map((option) => {
-    if (option.id === "categories") {
+    if (option.id === "category") {
       return { ...option, options: categories };
     }
     return option;

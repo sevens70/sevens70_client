@@ -231,9 +231,9 @@ const Header = () => {
       ))}
     </ul>
   );
-  if (allProductsStatus === "loading") {
-    return <Loader />;
-  }
+  // if (allProductsStatus === "loading") {
+  //   return <Loader />;
+  // }
   return (
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
@@ -468,13 +468,24 @@ const Header = () => {
               >
                 {Array.isArray(allCatgories) &&
                   allCatgories?.map((item, idx) => (
-                    <Option
-                      className="font-jost text-xsm capitalize"
-                      key={idx}
-                      value={`${item.name}`}
+                    <Link
+                    style={{background: "none"}}
+                      href={{
+                        pathname: "/shop",
+                        query: {
+                          category: `${item.name}`,
+                        },
+                      }}
                     >
-                      {item.name}
-                    </Option>
+                      <Option
+                        className="font-jost text-xsm capitalize"
+                        style={{background: "none"}}
+                        key={idx}
+                        value={`${item.name}`}
+                      >
+                        {item.name}
+                      </Option>
+                    </Link>
                   ))}
               </Select>
             </div>

@@ -99,7 +99,7 @@ function CommonCategory({
                               value={value.toLowerCase().trim()}
                               checked={isChecked(data.id, value)}
                               onChange={onChange}
-                              className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent"
+                              className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent cursor-pointer"
                             />
                           </CheckboxAndRadioGroup>
                         </>
