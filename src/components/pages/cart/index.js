@@ -3,14 +3,14 @@ import React from "react";
 import { Breadcrumbs } from "@material-tailwind/react";
 import CartGallery from "./cartGallery";
 import CartInfo from "./cartInformation";
-import CommonCategories from "../../common/commonCategories";
-import Loader from "../../common/Loader";
+// import CommonCategories from "../../common/commonCategories";
+// import Loader from "../../common/Loader";
 import Link from "next/link";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectProductById } from "../../features/product/productSlice";
+// import Category from "../home/Category";
 function Cart() {
   const singleProduct = useAppSelector(selectProductById);
-  console.log("singleProduct 123", singleProduct);
   return (
     <section className="">
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">
@@ -23,8 +23,8 @@ function Cart() {
         </Breadcrumbs>
       </div>
       <CartGallery singleProduct={singleProduct} />
-      <CartInfo />
-      {singleProduct ? (
+      <CartInfo singleProduct={singleProduct} />
+      {/* {singleProduct ? (
         <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
           <h3 className="text-left text-xmd my-10 capitalize">
             People Also bought
@@ -33,7 +33,7 @@ function Cart() {
         </section>
       ) : (
         <Loader />
-      )}
+      )} */}
     </section>
   );
 }

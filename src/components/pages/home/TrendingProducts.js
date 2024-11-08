@@ -219,7 +219,7 @@ function TrendingProducts() {
                             {}
                             <FaCartShopping className="h-5 w-5" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
@@ -233,7 +233,7 @@ function TrendingProducts() {
                             size="sm"
                           >
                             <FaRegUser className="h-5 w-5" />
-                          </IconButton>
+                          </IconButton> */}
                         </>
                       ) : (
                         <>
@@ -258,7 +258,7 @@ function TrendingProducts() {
                           >
                             <FaCartShopping className="h-5 w-5" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               router.push(`/auth/signin`);
@@ -267,7 +267,7 @@ function TrendingProducts() {
                             size="sm"
                           >
                             <FaRegUser className="h-5 w-5" />
-                          </IconButton>
+                          </IconButton> */}
                         </>
                       )}
                     </div>

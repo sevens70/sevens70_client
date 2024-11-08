@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Tabs,
   TabsHeader,
@@ -6,76 +6,51 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-function cartInformation() {
+const defaultData = [
+  {
+    label: "Description",
+    value: "Description",
+    desc: ``,
+    info: [],
+  },
+  {
+    label: "Additional Information",
+    value: "Information",
+    desc: ``,
+    info: [],
+  },
+];
+function cartInformation({ singleProduct }) {
   const [activeTab, setActiveTab] = React.useState("Description");
-  const data = [
-    {
-      label: "Description",
-      value: "Description",
-      desc: `Button-up shirt sleeves and a relaxed silhouette. It’s tailored with drapey, crinkle-texture fabric that’s made from LENZING™ ECOVERO™ Viscose — responsibly sourced wood-based fibres produced through a process that reduces impact on forests, biodiversity and water supply.`,
-      info: [
-        {
-          title: "Features",
-          text: [
-            "Front button placket",
-            "Adjustable sleeve tabs",
-            "Babaton embroidered crest at placket and hem",
-          ],
-        },
-        {
-          title: "Materials Care",
-          text: [
-            "Content: 100% LENZING™ ECOVERO™ Viscose",
-            "Care: Hand wash",
-            "Imported",
-          ],
-        },
-      ],
-    },
-    {
-      label: "Additional Information",
-      value: "Information",
-      desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
-      info: [
-        {
-          title: "Availability",
-          value: "543",
-        },
-        {
-          title: "Size",
-          value: "XXL,  XL,  L, M, S",
-        },
-        {
-          title: "Weight",
-          value: "1.2 kg",
-        },
-        {
-          title: "Color",
-          value: "Red, Green, Pink, Yellow, Black",
-        },
-        {
-          title: "Material and Fabric",
-          value: "Cotton,  Linen,  Silk,  Chiffon,  Velvet",
-        },
-        {
-          title: "Care Instructions:",
-          value: "Great Styles Prodcuts",
-        },
-        {
-          title: "Fit and Cut",
-          value: "100% Fit",
-        },
-      ],
-    },
-    {
-      label: "Reviews",
-      value: "Reviews",
-      desc: `We're not always in the position that we want to be at.
-      We're constantly growing. We're constantly making mistakes. We're
-      constantly trying to express ourselves and actualize our dreams.`,
-    },
-  ];
+  const [data, setData] = useState(defaultData);
+
+  React.useEffect(() => {
+    if (Object.keys(singleProduct)?.length > 0) {
+      setData((prevData) =>
+        prevData.map((item) => {
+          if (item.label === "Description") {
+            return { ...item, desc: singleProduct.description };
+          } else if (item.label === "Additional Information") {
+            return {
+              ...item,
+              info: [
+                // { title: "Discount Price", value: singleProduct.discountPrice },
+                { title: "Rating", value: singleProduct.rating },
+                { title: "Stock", value: singleProduct.stock },
+                { title: "Brand", value: singleProduct.brand },
+                { title: "Category", value: singleProduct.category },
+                { title: "Subcategory", value: singleProduct.subcategory },
+                // { title: "Thumbnail", value: singleProduct.thumbnail },
+                { title: "Model", value: singleProduct.model },
+              ],
+            };
+          }
+          return item;
+        })
+      );
+    }
+  }, [singleProduct]);
+
   return (
     <div className="my-10 w-11/12 md:w-10/12 mx-auto ">
       <Tabs value={activeTab}>

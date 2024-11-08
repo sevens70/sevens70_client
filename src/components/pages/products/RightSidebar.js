@@ -501,9 +501,9 @@ function RightSidebar() {
                       <FaCartShopping className="h-5 w-5" />
                     </IconButton>
                     {/* </Badge> */}
-                    <IconButton color="white" size="sm">
+                    {/* <IconButton color="white" size="sm">
                       <FaRegUser className="h-5 w-5" />
-                    </IconButton>
+                    </IconButton> */}
                   </div>
                   <div
                     className={`md:hidden group-hover:block absolute bottom-3 ${

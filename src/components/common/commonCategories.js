@@ -99,7 +99,7 @@ function CommonCategories() {
                 href={{
                   pathname: "/shop",
                   query: {
-                    category: `${name}`,
+                    category: `${name.toLowerCase()}`,
                   },
                 }}
               >

@@ -132,11 +132,11 @@ function CommonCategory({
                       )}
                     </ListItemPrefix>
                     {value?.name || value}
-                    {data.title !== "Filter by color" && (
+                    {/* {data.title !== "Filter by color" && (
                       <ListItemSuffix className="text-grey-200 text-base mr-1">
-                        ({1})
+                        ({1})dd
                       </ListItemSuffix>
-                    )}
+                    )} */}
                   </ListItem>
                 ))
               )}

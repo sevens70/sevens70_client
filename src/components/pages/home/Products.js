@@ -322,10 +322,9 @@ function Products() {
                             color="white"
                             size="sm"
                           >
-                            {}
                             <FaCartShopping className="h-5 w-5" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
@@ -339,7 +338,7 @@ function Products() {
                             size="sm"
                           >
                             <FaRegUser className="h-5 w-5" />
-                          </IconButton>
+                          </IconButton> */}
                         </>
                       ) : (
                         <>
@@ -364,7 +363,7 @@ function Products() {
                           >
                             <FaCartShopping className="h-5 w-5" />
                           </IconButton>
-                          <IconButton
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               router.push(`/auth/signin`);
@@ -373,7 +372,7 @@ function Products() {
                             size="sm"
                           >
                             <FaRegUser className="h-5 w-5" />
-                          </IconButton>
+                          </IconButton> */}
                         </>
                       )}
                     </div>

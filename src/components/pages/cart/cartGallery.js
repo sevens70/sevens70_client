@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { FaCheck } from "react-icons/fa6";
-import { CiGrid2H } from "react-icons/ci";
-import { FaRegHeart } from "react-icons/fa";
+// import { CiGrid2H } from "react-icons/ci";
+// import { FaRegHeart } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -12,11 +12,15 @@ import SwiperCartGallery from "./swiperCartGallery";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
 import { addToCartAsync, selectItems } from "../../features/cart/cartSlice";
+import { selectLoggedInUser } from "../../features/auth/authSlice";
+import { useRouter } from "next/navigation";
 function CartGallery({ singleProduct }) {
   const currencyData = useAppSelector(getCarrency);
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const user = useAppSelector(selectLoggedInUser);
   const items = useAppSelector(selectItems);
   const [count, setCount] = useState(1);
   const handleColorChange = (color) => {
@@ -54,6 +58,11 @@ function CartGallery({ singleProduct }) {
   };
 
   const handleAddToCart = () => {
+    if (!user) {
+      // Redirect to sign-in page if user is not authenticated
+      router.push(`/auth/signin`);
+      return;
+    }
     if (items?.findIndex((item) => item.product.id === singleProduct?.id) < 0) {
       console.log({ items });
       const newItem = {
@@ -175,7 +184,7 @@ function CartGallery({ singleProduct }) {
               >
                 Add to cart
               </Button>
-              <Button
+              {/* <Button
                 size="md"
                 className="font-jost text-sm bg-transparent  font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
               >
@@ -186,7 +195,7 @@ function CartGallery({ singleProduct }) {
                 className="font-jost text-sm bg-transparent  font-normal capitalize text-white  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[50px] rounded-none mt-5 mb-2 flex items-center gap-2"
               >
                 <CiGrid2H />
-              </Button>
+              </Button> */}
             </div>
             <div className="mt-7">
               {" "}
