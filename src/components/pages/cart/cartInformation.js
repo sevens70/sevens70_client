@@ -25,7 +25,7 @@ function cartInformation({ singleProduct }) {
   const [data, setData] = useState(defaultData);
 
   React.useEffect(() => {
-    if (Object.keys(singleProduct)?.length > 0) {
+    if (singleProduct && Object.keys(singleProduct)?.length > 0) {
       setData((prevData) =>
         prevData.map((item) => {
           if (item.label === "Description") {

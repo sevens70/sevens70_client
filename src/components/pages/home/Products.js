@@ -77,25 +77,37 @@ function Products() {
   useEffect(() => {
     if (allProducts?.length > 0) {
       if (active === "all") {
-        setDisplayPrd(allProducts);
+        // setDisplayPrd(allProducts);
+        let filter = allProducts.filter(
+          (item) => item.type?.toLowerCase() === "top product"
+        );
+        setDisplayPrd(filter);
       } else if (active === "men") {
         let filter = allProducts.filter(
-          (item) => item.category.toLowerCase() === "men"
+          (item) =>
+            item.category?.toLowerCase() === "men" &&
+            item.type?.toLowerCase() === "top product"
         );
         setDisplayPrd(filter);
       } else if (active === "women") {
         let filter = allProducts.filter(
-          (item) => item.category.toLowerCase() === "women"
+          (item) =>
+            item.category?.toLowerCase() === "women" &&
+            item.type?.toLowerCase() === "top product"
         );
         setDisplayPrd(filter);
       } else if (active === "accessories") {
         let filter = allProducts.filter(
-          (item) => item.category.toLowerCase() === "accessories"
+          (item) =>
+            item.category?.toLowerCase() === "accessories" &&
+            item.type?.toLowerCase() === "top product"
         );
         setDisplayPrd(filter);
       }
     }
   }, [active, allProducts]);
+
+  console.log("display product 123", dispalyPrd);
 
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto pb-10 relative">
@@ -176,49 +188,129 @@ function Products() {
         {dispalyPrd?.length === 0 && (
           <p className="py-6 text-center">No data found.</p>
         )}
-        {dispalyPrd
-          ?.filter(
-            (item) => item?.type && item.type.toLowerCase() === "top product"
-          )
-          .map((item, idx) => {
-            const {
-              id,
-              title,
-              discountPrice,
-              price,
-              thumbnail,
-              rating,
-              category,
-              subcategory,
-              discountPercentage,
-            } = item;
-            return (
-              <SwiperSlide key={idx} className="h-full">
-                {" "}
-                <div key={idx} className="group">
-                  <Card
-                    onClick={() => {
-                      router.push(`/product/${id}`);
-                    }}
-                    className="h-[400px] shadow-sm relative cursor-pointer"
+        {dispalyPrd?.map((item, idx) => {
+          const {
+            id,
+            title,
+            discountPrice,
+            price,
+            thumbnail,
+            rating,
+            category,
+            subcategory,
+            discountPercentage,
+          } = item;
+          return (
+            <SwiperSlide key={idx} className="h-full">
+              {" "}
+              <div key={idx} className="group">
+                <Card
+                  onClick={() => {
+                    router.push(`/product/${id}`);
+                  }}
+                  className="h-[400px] shadow-sm relative cursor-pointer"
+                >
+                  <CardHeader
+                    floated={false}
+                    className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 "
                   >
-                    <CardHeader
-                      floated={false}
-                      className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 "
+                    <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
+                      <Link href="cart">
+                        {" "}
+                        <Button
+                          size="sm"
+                          className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!user) {
+                              router.push(`/auth/signin`);
+                              return;
+                            }
+
+                            if (
+                              cartItems?.findIndex(
+                                (item) => item.product.id === id
+                              ) < 0
+                            ) {
+                              const newItem = {
+                                product: id,
+                                quantity: 1,
+                              };
+
+                              dispatch(
+                                addToCartAsync({ item: newItem, toast })
+                              );
+                            } else {
+                              toast.error("Item Already added");
+                            }
+                          }}
+                        >
+                          <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
+                          Add To Cart
+                        </Button>
+                      </Link>
+                    </div>
+                    <img
+                      src={thumbnail}
+                      alt="profile-picture"
+                      className="object-cover object-center h-full w-full"
+                      width={300}
+                      height={300}
+                    />
+                    <Button
+                      size="sm"
+                      className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
                     >
-                      <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
-                        <Link href="cart">
+                      {discountPercentage ? `${discountPercentage} % OFF` : ""}
+                    </Button>
+                    <div className="hidden group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
+                      {user ? (
+                        <>
                           {" "}
-                          <Button
-                            size="sm"
-                            className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
+                          <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
                                 router.push(`/auth/signin`);
                                 return;
                               }
-
+                              if (
+                                items?.findIndex(
+                                  (item) => item.product.id === id
+                                ) < 0
+                              ) {
+                                const newItem = {
+                                  product: id,
+                                  category: category,
+                                };
+                                dispatch(
+                                  addToFavouriteAsync({
+                                    item: newItem,
+                                    toast,
+                                  })
+                                );
+                              } else {
+                                handleDeleteFavList(id);
+                              }
+                            }}
+                            color="white"
+                            size="sm"
+                          >
+                            {items?.findIndex(
+                              (item) => item.product.id === id
+                            ) < 0 ? (
+                              <GiSelfLove className="h-5 w-5 font-normal" />
+                            ) : (
+                              <GiSelfLove className="h-5 w-5 font-normal !fill-primaryRed" />
+                            )}
+                          </IconButton>
+                          <IconButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (!user) {
+                                router.push(`/auth/signin`);
+                                return;
+                              }
                               if (
                                 cartItems?.findIndex(
                                   (item) => item.product.id === id
@@ -226,9 +318,15 @@ function Products() {
                               ) {
                                 const newItem = {
                                   product: id,
+                                  // quantity: count,
                                   quantity: 1,
                                 };
-
+                                // if (selectedColor) {
+                                //   newItem.color = selectedColor;
+                                // }
+                                // if (selectedSize) {
+                                //   newItem.size = selectedSize;
+                                // }
                                 dispatch(
                                   addToCartAsync({ item: newItem, toast })
                                 );
@@ -236,104 +334,12 @@ function Products() {
                                 toast.error("Item Already added");
                               }
                             }}
+                            color="white"
+                            size="sm"
                           >
-                            <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
-                            Add To Cart
-                          </Button>
-                        </Link>
-                      </div>
-                      <img
-                        src={thumbnail}
-                        alt="profile-picture"
-                        className="object-cover object-center h-full w-full"
-                        width={300}
-                        height={300}
-                      />
-                      <Button
-                        size="sm"
-                        className="font-jost text-sm font-medium !py-1 !px-2 bg-white capitalize text-primaryRed absolute top-3 left-2"
-                      >
-                        {discountPercentage
-                          ? `${discountPercentage} % OFF`
-                          : ""}
-                      </Button>
-                      <div className="hidden group-hover:flex flex-col items-end gap-4 absolute right-2 top-3">
-                        {user ? (
-                          <>
-                            {" "}
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (!user) {
-                                  router.push(`/auth/signin`);
-                                  return;
-                                }
-                                if (
-                                  items?.findIndex(
-                                    (item) => item.product.id === id
-                                  ) < 0
-                                ) {
-                                  const newItem = {
-                                    product: id,
-                                    category: category,
-                                  };
-                                  dispatch(
-                                    addToFavouriteAsync({
-                                      item: newItem,
-                                      toast,
-                                    })
-                                  );
-                                } else {
-                                  handleDeleteFavList(id);
-                                }
-                              }}
-                              color="white"
-                              size="sm"
-                            >
-                              {items?.findIndex(
-                                (item) => item.product.id === id
-                              ) < 0 ? (
-                                <GiSelfLove className="h-5 w-5 font-normal" />
-                              ) : (
-                                <GiSelfLove className="h-5 w-5 font-normal !fill-primaryRed" />
-                              )}
-                            </IconButton>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                if (!user) {
-                                  router.push(`/auth/signin`);
-                                  return;
-                                }
-                                if (
-                                  cartItems?.findIndex(
-                                    (item) => item.product.id === id
-                                  ) < 0
-                                ) {
-                                  const newItem = {
-                                    product: id,
-                                    // quantity: count,
-                                    quantity: 1,
-                                  };
-                                  // if (selectedColor) {
-                                  //   newItem.color = selectedColor;
-                                  // }
-                                  // if (selectedSize) {
-                                  //   newItem.size = selectedSize;
-                                  // }
-                                  dispatch(
-                                    addToCartAsync({ item: newItem, toast })
-                                  );
-                                } else {
-                                  toast.error("Item Already added");
-                                }
-                              }}
-                              color="white"
-                              size="sm"
-                            >
-                              <FaCartShopping className="h-5 w-5" />
-                            </IconButton>
-                            {/* <IconButton
+                            <FaCartShopping className="h-5 w-5" />
+                          </IconButton>
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
@@ -348,31 +354,31 @@ function Products() {
                           >
                             <FaRegUser className="h-5 w-5" />
                           </IconButton> */}
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                router.push(`/auth/signin`);
-                              }}
-                              color="white"
-                              size="sm"
-                            >
-                              <GiSelfLove className="h-5 w-5 font-normal" />
-                            </IconButton>
-                            <IconButton
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                router.push(`/auth/signin`);
-                              }}
-                              color="white"
-                              size="sm"
-                            >
-                              <FaCartShopping className="h-5 w-5" />
-                            </IconButton>
-                            {/* <IconButton
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <IconButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/auth/signin`);
+                            }}
+                            color="white"
+                            size="sm"
+                          >
+                            <GiSelfLove className="h-5 w-5 font-normal" />
+                          </IconButton>
+                          <IconButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/auth/signin`);
+                            }}
+                            color="white"
+                            size="sm"
+                          >
+                            <FaCartShopping className="h-5 w-5" />
+                          </IconButton>
+                          {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
                               router.push(`/auth/signin`);
@@ -382,34 +388,34 @@ function Products() {
                           >
                             <FaRegUser className="h-5 w-5" />
                           </IconButton> */}
-                          </>
-                        )}
-                      </div>
-                    </CardHeader>
+                        </>
+                      )}
+                    </div>
+                  </CardHeader>
 
-                    <CardBody className="text-center px-2 mb-1 mt-1">
-                      <div className="flex justify-between items-center">
-                        <p className="text-sm text-grey-600 capitalize">
-                          {subcategory}
-                        </p>
-                        <h6 className="flex justify-center items-center text-dark-700">
-                          <GoDotFill className="fill-primaryRed" />
-                          {rating}
-                        </h6>
-                      </div>
-                      <h6 className="text-left text-dark-700">{title}</h6>
-                      <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
-                        {/* {currencyData?.symbol} */}৳ {discountPrice}
-                        <span className="font-normal line-through text-grey-600">
-                          {/* {currencyData?.symbol} */}৳ {price}
-                        </span>
+                  <CardBody className="text-center px-2 mb-1 mt-1">
+                    <div className="flex justify-between items-center">
+                      <p className="text-sm text-grey-600 capitalize">
+                        {subcategory}
+                      </p>
+                      <h6 className="flex justify-center items-center text-dark-700">
+                        <GoDotFill className="fill-primaryRed" />
+                        {rating}
                       </h6>
-                    </CardBody>
-                  </Card>
-                </div>
-              </SwiperSlide>
-            );
-          })}
+                    </div>
+                    <h6 className="text-left text-dark-700">{title}</h6>
+                    <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
+                      {/* {currencyData?.symbol} */}৳ {discountPrice}
+                      <span className="font-normal line-through text-grey-600">
+                        {/* {currencyData?.symbol} */}৳ {price}
+                      </span>
+                    </h6>
+                  </CardBody>
+                </Card>
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Slider>
       <div className="absolute bottom-0 left-0 w-full">
         <div className="swiper-custom-pagination"></div>

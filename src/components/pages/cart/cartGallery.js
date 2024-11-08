@@ -127,11 +127,11 @@ function CartGallery({ singleProduct }) {
                   key={idx}
                   // name="color"
                   // color="gray"
-                  checked={selectedColor === item.id}
-                  onChange={() => handleColorChange(item.id)}
-                  className={`h-8 w-8 text-primaryRed border-none ${item.class} ${item.selectedClass}`}
+                  checked={selectedColor === item?.id}
+                  onChange={() => handleColorChange(item?.id)}
+                  className={`h-8 w-8 text-primaryRed border-none ${item?.class} ${item?.selectedClass}`}
                   style={{
-                    backgroundColor: `${item.selectedClass}`,
+                    backgroundColor: `${item?.selectedClass}`,
                     // border: "1px solid yellow",
                   }}
                 />
@@ -141,14 +141,14 @@ function CartGallery({ singleProduct }) {
             <div className="flex flex-wrap gap-3 md:gap-5">
               {singleProduct?.sizes?.map((item, idx) => (
                 <Radio
-                  key={item.id}
+                  key={item?.id}
                   name="size"
                   // color="purple"
-                  checked={selectedSize === item.id}
-                  onChange={() => handleSizeChange(item.id)}
+                  checked={selectedSize === item?.id}
+                  onChange={() => handleSizeChange(item?.id)}
                   label={
                     <p className="text-xsm text-dark-900 uppercase">
-                      {item.id}
+                      {item?.id}
                     </p>
                   }
                 />

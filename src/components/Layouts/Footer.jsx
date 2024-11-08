@@ -26,22 +26,22 @@ const SITEMAP = [
 ];
 const data = [
   {
-    imageLink: "./prd_final_images/01.jpg",
+    imageLink: "/prd_final_images/01.jpg",
   },
   {
-    imageLink: "./prd_final_images/10.jpg",
+    imageLink: "/prd_final_images/10.jpg",
   },
   {
-    imageLink: "./prd_final_images/12.jpg",
+    imageLink: "/prd_final_images/12.jpg",
   },
   {
-    imageLink: "./prd_final_images/24.jpg",
+    imageLink: "/prd_final_images/24.jpg",
   },
   {
-    imageLink: "../prd_final_images/30.jpg",
+    imageLink: "/prd_final_images/30.jpg",
   },
   {
-    imageLink: "./prd_final_images/34.jpg",
+    imageLink: "/prd_final_images/34.jpg",
   },
 ];
 const Footer = () => {
@@ -270,7 +270,7 @@ const Footer = () => {
                 {data.map(({ imageLink }, index) => (
                   <div key={index}>
                     <img
-                      className="h-20 max-w-full rounded-lg object-cover object-center md:h-20"
+                      className="!h-[55px] !w-[60px] rounded-lg object-cover object-center md:h-20"
                       src={imageLink}
                       alt=""
                     />
