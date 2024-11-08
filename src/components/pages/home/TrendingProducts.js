@@ -127,13 +127,13 @@ function TrendingProducts() {
                 >
                   <CardHeader
                     floated={false}
-                    className="min-w-[200px] basis-4/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
+                    className="min-w-[200px] basis-3/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
                   >
                     <img
                       src={thumbnail}
                       alt="profile-picture"
                       className="max-h-[350px] object-cover object-center w-full h-full trending__image"
-                      style={{ maxHeight: "310px" }}
+                      style={{ maxHeight: "300px", minHeight: "300px" }}
                       width={300}
                       height={300}
                     />

@@ -65,10 +65,7 @@ function Banner() {
                           {item.title}
                         </h2>
                         <p className="text-dark-300 text-[20px] mt-3">
-                          Crafted to convey a sense of discovery and
-                          exclusivity, enticing readers to explore indulge in
-                          the latest trends and offerings. The term suggests a
-                          grand reveal , adding.
+                          {item?.subtitle}
                         </p>
                         <Button
                           size="md"
@@ -85,6 +82,7 @@ function Banner() {
                           background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
                           borderTopLeftRadius: "1000px",
                           borderTopRightRadius: "1000px",
+                          overflow: "hidden",
                         }}
                       >
                         {" "}

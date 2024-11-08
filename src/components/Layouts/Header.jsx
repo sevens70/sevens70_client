@@ -42,7 +42,26 @@ import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
 import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
 import { SearchBar } from "../../components/search/SearchBar";
 import { SearchResultsList } from "../../components/search/SearchResultsList";
-import Loader from "../common/Loader";
+// import Loader from "../common/Loader";
+const categories = [
+  "Home",
+  "Men",
+  "Women",
+  "Accessories",
+  "Shop",
+  "Boyes",
+  "Girls",
+  "Electronics",
+  "Appliance",
+  "Kids",
+  "Home & lifestyle",
+  "Health & beuty",
+  "Jewellery",
+  "Sunglass",
+  "Puja sale",
+  "Eid sale",
+  "Become a seller",
+];
 
 const menu = [
   {
@@ -409,8 +428,8 @@ const Header = () => {
 
               <nav className="lg:flex lg:gap-2 items-center hidden ">
                 <a
-                  href="tel:+1 (647) 539-6755"
-                  className="flex items-center justify-center md:gap-2 md:gap-1 py-2 md:px-3 group"
+                  href="email:seven.admin@gmail.com"
+                  className="flex items-center justify-center md:gap-2 md:gap-1 py-2 md:px-3 group cursor-default"
                 >
                   <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark 2xl:flex lg:hidden">
                     <FaMailBulk className="inline-block fill-primaryRed " />
@@ -423,7 +442,7 @@ const Header = () => {
                 </a>
                 <a
                   href="tel:+1 (647) 539-6755"
-                  className="flex items-center justify-center md:gap-2 md:gap-1 py-2 md:px-3 sm:px-1 group"
+                  className="flex items-center justify-center md:gap-2 md:gap-1 py-2 md:px-3 sm:px-1 group cursor-default"
                 >
                   <span className="h-9 w-9 rounded-full justify-center items-center bg-dark-50/10 flex group-hover:bg-dark 2xl:flex lg:hidden">
                     <FaPhone className="inline-block fill-primaryRed" />
@@ -466,24 +485,24 @@ const Header = () => {
                   )
                 }
               >
-                {Array.isArray(allCatgories) &&
-                  allCatgories?.map((item, idx) => (
+                {Array.isArray(categories) &&
+                  categories?.map((item, idx) => (
                     <Link
-                    style={{background: "none"}}
+                      style={{ background: "none" }}
                       href={{
                         pathname: "/shop",
                         query: {
-                          category: `${item.name}`,
+                          category: `${item.toLowerCase()}`,
                         },
                       }}
                     >
                       <Option
                         className="font-jost text-xsm capitalize"
-                        style={{background: "none"}}
+                        style={{ background: "none" }}
                         key={idx}
-                        value={`${item.name}`}
+                        value={`${item}`}
                       >
-                        {item.name}
+                        {item}
                       </Option>
                     </Link>
                   ))}

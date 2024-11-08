@@ -61,7 +61,6 @@ function Checkout() {
   };
 
   const handleAddress = (e) => {
-    console.log(e.target.value);
     setSelectedAddress(user.addresses[e.target.value]);
   };
 
@@ -332,7 +331,10 @@ function Checkout() {
                   {user.addresses.map((address, index) => (
                     <li
                       key={index}
-                      className="flex text-sm justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200 mb-3"
+                      className="flex text-sm justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200 mb-3 cursor-pointer"
+                      onClick={() =>
+                        handleAddress({ target: { value: index } })
+                      }
                     >
                       <div className="flex gap-x-4">
                         <input
@@ -340,7 +342,9 @@ function Checkout() {
                           name="address"
                           type="radio"
                           value={index}
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
+                          checked={selectedAddress === user.addresses[index]} // Ensure the radio remains active when selected
+                          onClick={(e) => e.stopPropagation()} // Prevent the li click when clicking the radio
                         />
                         <div className="min-w-0 flex-auto">
                           <p className="text-xsm font-semibold leading-6 text-gray-900">
@@ -380,7 +384,12 @@ function Checkout() {
                     Choose One
                   </p>
                   <div className="mt-6 space-y-6">
-                    <div className="flex items-center gap-x-3">
+                    <div
+                      className="flex items-center gap-x-3 cursor-pointer"
+                      onClick={() =>
+                        handlePayment({ target: { value: "cash" } })
+                      }
+                    >
                       <input
                         id="cash"
                         name="payments"
@@ -388,28 +397,35 @@ function Checkout() {
                         value="cash"
                         type="radio"
                         checked={paymentMethod === "cash"}
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
+                        onClick={(e) => e.stopPropagation()} // Prevent parent div's onClick
                       />
                       <label
                         htmlFor="cash"
-                        className="block text-sm font-medium leading-6 text-gray-900"
+                        className="block text-sm font-medium leading-6 text-gray-900 cursor-pointer"
                       >
                         Cash
                       </label>
                     </div>
-                    <div className="flex items-center gap-x-3">
+                    <div
+                      className="flex items-center gap-x-3 cursor-pointer"
+                      onClick={() =>
+                        handlePayment({ target: { value: "card" } })
+                      }
+                    >
                       <input
                         id="card"
                         onChange={handlePayment}
                         name="payments"
-                        checked={paymentMethod === "card"}
                         value="card"
                         type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        checked={paymentMethod === "card"}
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600 cursor-pointer"
+                        onClick={(e) => e.stopPropagation()} // Prevent parent div's onClick
                       />
                       <label
                         htmlFor="card"
-                        className="block text-sm font-medium leading-6 text-gray-900"
+                        className="block text-sm font-medium leading-6 text-gray-900 cursor-pointer"
                       >
                         Card Payment
                       </label>

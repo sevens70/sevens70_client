@@ -17,7 +17,7 @@ function OrdersList() {
         <h6 variant="h5" color="blue-gray" className="">
           Latest orders
         </h6>
-        <Link
+        {/* <Link
           as="a"
           href="#"
           variant="small"
@@ -25,7 +25,7 @@ function OrdersList() {
           className="font-bold text-sm"
         >
           View all
-        </Link>
+        </Link> */}
       </div>
       <OrdersPage />
     </div>

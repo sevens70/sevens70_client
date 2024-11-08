@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -65,12 +65,38 @@ function Products() {
   const status = useAppSelector(selectProductListStatus);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const [active, setActive] = useState("all");
+  const [dispalyPrd, setDisplayPrd] = useState([]);
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     if (prdDocumentId) {
       dispatch(deleteItemFromFavouriteAsync(prdDocumentId?.id));
     }
   };
+
+  useEffect(() => {
+    if (allProducts?.length > 0) {
+      if (active === "all") {
+        setDisplayPrd(allProducts);
+      } else if (active === "men") {
+        let filter = allProducts.filter(
+          (item) => item.category.toLowerCase() === "men"
+        );
+        setDisplayPrd(filter);
+      } else if (active === "women") {
+        let filter = allProducts.filter(
+          (item) => item.category.toLowerCase() === "women"
+        );
+        setDisplayPrd(filter);
+      } else if (active === "accessories") {
+        let filter = allProducts.filter(
+          (item) => item.category.toLowerCase() === "accessories"
+        );
+        setDisplayPrd(filter);
+      }
+    }
+  }, [active, allProducts]);
+
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto pb-10 relative">
       <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
@@ -78,29 +104,50 @@ function Products() {
           <h6 className="text-grey-700 font-normal">Our Products</h6>
           <h3 className="text-xmd mt-1 text-dark-700">Our Top Products</h3>
         </div>
+
         <div>
           <div className="flex w-max md:gap-4 gap-2">
             <Button
-              className="font-jost bg-primaryRed !text-white md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50"
+              onClick={() => setActive("all")}
+              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
+                active === "all"
+                  ? "bg-primaryRed !text-white "
+                  : "bg-transparent text-dark-700"
+              }`}
               size="sm"
             >
               All
             </Button>
             <Button
+              onClick={() => setActive("women")}
               size="sm"
-              className="font-jost bg-transparent font-normal md:text-sm text-xsm rounded-none capitalize text-dark-700 border  border-light-50"
+              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
+                active === "women"
+                  ? "bg-primaryRed !text-white "
+                  : "bg-transparent text-dark-700"
+              }`}
             >
-              Woman
+              Women
             </Button>
             <Button
+              onClick={() => setActive("men")}
               size="sm"
-              className="font-jost bg-transparent font-normal md:text-sm text-xsm rounded-none capitalize  text-dark-700 border  border-light-50"
+              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
+                active === "men"
+                  ? "bg-primaryRed !text-white "
+                  : "bg-transparent text-dark-700"
+              }`}
             >
-              Man
+              Men
             </Button>
             <Button
+              onClick={() => setActive("accessories")}
               size="sm"
-              className="font-jost bg-transparent font-normal md:text-sm text-xsm  rounded-none capitalize  text-dark-700 border  border-light-50"
+              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
+                active === "accessories"
+                  ? "bg-primaryRed !text-white "
+                  : "bg-transparent text-dark-700"
+              }`}
             >
               Accessories
             </Button>
@@ -126,7 +173,10 @@ function Products() {
       >
         {" "}
         {status === "loading" && <Loader />}
-        {allProducts?.map((item, idx) => {
+        {dispalyPrd?.length === 0 && (
+          <p className="py-6 text-center">No data found.</p>
+        )}
+        {dispalyPrd?.map((item, idx) => {
           const {
             id,
             title,
