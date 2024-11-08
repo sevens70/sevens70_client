@@ -184,11 +184,11 @@ const SignIn = () => {
             </div>
           </div> */}
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
               <h2 className="mb-9 text-center text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to Xartso
+                Sign In
               </h2>
 
               {/* =========================== */}
@@ -421,14 +421,14 @@ const SignIn = () => {
                 Sign in with Google
               </button> */}
 
-                {/* <div className="mt-6 text-center">
+                <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
                     <Link href="/auth/signup" className="text-primary">
                       Sign Up
                     </Link>
                   </p>
-                </div> */}
+                </div>
               </form>
             </div>
           </div>
