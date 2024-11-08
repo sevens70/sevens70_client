@@ -5,6 +5,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { SwiperSlide } from "swiper/react";
 import Slider from "../../Slider";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { useRouter } from "next/navigation";
 const shop = [
   {
     tag: "New Arrivals",
@@ -49,6 +50,7 @@ const breakpoints = {
   },
 };
 function Shop() {
+  const router = useRouter();
   return (
     <section className="w-11/12 mt-10 md:w-10/12 mx-auto">
       <Slider
@@ -78,6 +80,7 @@ function Shop() {
                   <h5 className="font-medium text-md">{title}</h5>
                   <p className="text-dark-300 text-xsm mt-3">{text}</p>
                   <Button
+                    onClick={() => router.push("/shop")}
                     size="md"
                     className="font-jost capitalize text-sm font-normal bg-white text-dark-700 rounded mt-5 flex items-center gap-2"
                   >

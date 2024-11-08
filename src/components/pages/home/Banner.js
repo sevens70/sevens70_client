@@ -8,8 +8,11 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectAllBanner } from "../../features/banners/bannersSlice";
 import Loader from "../../common/Loader";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Banner() {
+  const router = useRouter();
   const banners = useAppSelector(selectAllBanner) || [];
   return (
     <div className="pb-0 relative">
@@ -68,6 +71,7 @@ function Banner() {
                           {item?.subtitle}
                         </p>
                         <Button
+                          onClick={() => router.push("/shop")}
                           size="md"
                           className="font-jost font-medium text-sm capitalize bg-primaryRed rounded mt-5 flex items-center gap-2"
                         >

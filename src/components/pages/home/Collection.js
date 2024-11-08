@@ -7,9 +7,11 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectAllBanner } from "../../features/banners/bannersSlice";
+import { useRouter } from "next/navigation";
 
 function Collection() {
   const banners = useAppSelector(selectAllBanner) || [];
+  const router = useRouter();
   return (
     <section className="w-11/12 mt-20 md:w-10/12 mx-auto">
       {/* <div className="grid grid-cols-12 gap-4"> */}
@@ -46,6 +48,7 @@ function Collection() {
                       {item?.subtitle}
                     </p>
                     <Button
+                      onClick={() => router.push("/shop")}
                       size="md"
                       className="font-jost text-sm bg-primaryRed capitalize text-white rounded mt-5 flex items-center gap-2"
                     >
