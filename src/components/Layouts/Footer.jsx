@@ -140,7 +140,7 @@ const Footer = () => {
               <Link href="tel:+" className="text-sm text-dark-600">
                 {websiteInfo?.length > 0
                   ? websiteInfo[0]?.email
-                  : "infoshop@gmail.com"}
+                  : "seven.admin@gmail.com"}
               </Link>
             </p>
             <p>
