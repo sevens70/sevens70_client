@@ -216,7 +216,7 @@ const Header = () => {
 
               {/* Render the subcategories dynamically if available in transformedData */}
               {transformedData[name.toLowerCase()] && (
-                <MenuList className="font-jost text-xsm">
+                <MenuList className="font-jost text-xsm !z-[1000]">
                   {transformedData[name.toLowerCase()].map((subcategory) => (
                     <MenuItem className="capitalize" key={subcategory.id}>
                       <Link
@@ -386,7 +386,7 @@ const Header = () => {
                   />
                 )}
               </Link>
-              {/* ================================ */}
+
               <div className="search-bar-container relative">
                 <SearchBar
                   setResults={setResults}
@@ -578,11 +578,11 @@ const Header = () => {
                       </IconButton>
                     </ListItem>
                   </MenuHandler>{" "}
-                  <MenuList>
+                  <MenuList className="!z-[1000]">
                     {user ? (
                       <>
                         {" "}
-                        <MenuItem className="flex items-center gap-2">
+                        {/* <MenuItem className="flex items-center gap-2">
                           <svg
                             width="16"
                             height="16"
@@ -604,7 +604,7 @@ const Header = () => {
                           >
                             My Profile
                           </h6>
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem
                           onClick={() => router.push("/orders")}
                           className="flex items-center gap-2"
@@ -618,7 +618,7 @@ const Header = () => {
                             Orders
                           </h6>
                         </MenuItem>
-                        <MenuItem className="flex items-center gap-2">
+                        {/* <MenuItem className="flex items-center gap-2">
                           <svg
                             width="16"
                             height="16"
@@ -637,7 +637,7 @@ const Header = () => {
                           <h6 className="text-xsm font-jost font-normal text-gray-600">
                             Edit Profile
                           </h6>
-                        </MenuItem>
+                        </MenuItem> */}
                         <hr className="my-2 border-blue-gray-50" />
                         <MenuItem className="flex items-center gap-2 ">
                           <svg
