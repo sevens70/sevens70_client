@@ -113,10 +113,10 @@ function Categories() {
                       </CardHeader>
                       <CardBody className="text-center p-2">
                         <h6>{category}</h6>
-                        <p className="flex justify-center items-center text-sm text-grey-600">
+                        {/* <p className="flex justify-center items-center text-sm text-grey-600">
                           <GoDotFill className="fill-primaryRed" />
                           {`${stock}+ Item`}
-                        </p>
+                        </p> */}
                       </CardBody>
                     </Card>
                   </Link>

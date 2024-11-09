@@ -14,7 +14,7 @@ import { updateUserAsync } from "../../../components/features/user/userSlice";
 import { useEffect, useState } from "react";
 import {
   createOrderAsync,
-  selectCurrentOrder,
+  // selectCurrentOrder,
   selectStatus,
 } from "../../../components/features/order/orderSlice";
 import { selectUserInfo } from "../../../components/features/user/userSlice";
@@ -22,7 +22,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { useAppSelector } from "../../../lib/hooks";
 import { useRouter } from "next/navigation";
-import Loader from "../../common/Loader";
+// import Loader from "../../common/Loader";
 import { getCarrency } from "../../../lib/features/currencySlice";
 
 function Checkout() {
@@ -145,7 +145,7 @@ function Checkout() {
                         htmlFor="name"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Full name
+                        Full name <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -167,7 +167,7 @@ function Checkout() {
                         htmlFor="email"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Email address
+                        Email address <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -189,7 +189,7 @@ function Checkout() {
                         htmlFor="phone"
                         className="pl-3 block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Phone
+                        Phone <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -211,7 +211,7 @@ function Checkout() {
                         htmlFor="street-address"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        Street address
+                        Street address <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -235,7 +235,7 @@ function Checkout() {
                         htmlFor="city"
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
-                        City
+                        City <span className="text-red-500">*</span>
                       </label>
                       <div className="mt-2">
                         <input
@@ -264,15 +264,15 @@ function Checkout() {
                         <input
                           type="text"
                           {...register("state", {
-                            required: "state is required",
+                            // required: "state is required",
                           })}
                           id="state"
                           autoComplete="address-level1"
                           className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors.state && (
+                        {/* {errors.state && (
                           <p className="text-red-500">{errors.state.message}</p>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -287,16 +287,16 @@ function Checkout() {
                         <input
                           type="text"
                           {...register("pinCode", {
-                            required: "pinCode is required",
+                            // required: "pinCode is required",
                           })}
                           id="pinCode"
                           className="pl-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors.pinCode && (
+                        {/* {errors.pinCode && (
                           <p className="text-red-500">
                             {errors.pinCode.message}
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>

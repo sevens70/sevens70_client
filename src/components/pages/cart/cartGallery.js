@@ -200,7 +200,10 @@ function CartGallery({ singleProduct }) {
             <div className="mt-7">
               {" "}
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
-                MKS : <p className="text-dark-900">{singleProduct?.model}</p>
+                SKU :{" "}
+                <p className="text-dark-900 capitalize">
+                  {singleProduct?.sku ?? "Unavailable"}
+                </p>
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Category :{" "}
@@ -208,7 +211,7 @@ function CartGallery({ singleProduct }) {
               </p>
               <p className="flex gap-3 text-grey-200 text-xsm mb-3">
                 Tags :{" "}
-                <p className="text-dark-900">
+                <p className="text-dark-900 capitalize">
                   {singleProduct?.tags?.map((tag) => tag.name).join(", ")}
                 </p>
               </p>
