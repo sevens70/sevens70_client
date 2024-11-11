@@ -13,6 +13,7 @@ import {
 } from "./orderSlice";
 import { selectLoggedInUser } from "../../../components/features/auth/authSlice";
 import Loader from "../../common/Loader";
+import { IconButton } from "@material-tailwind/react";
 
 function OrdersPage() {
   const user = useSelector(selectLoggedInUser);
@@ -101,7 +102,7 @@ function OrdersPage() {
                     <th className="px-6 py-3 text-center font-medium">
                       Payment Method
                     </th>
-                    <th className="px-6 py-3 text-center font-medium">
+                    <th className="px-4 py-3 text-center font-medium">
                       Payment Status
                     </th>
                     <th
@@ -121,101 +122,108 @@ function OrdersPage() {
                           <ArrowDownIcon className="inline h-4 w-4"></ArrowDownIcon>
                         ))}
                     </th>
-                    {/* <th className="pr-4 py-3 text-center font-medium">Actions</th> */}
+                    {/* <th className="pr-4 py-3 text-center font-medium">
+                      Review
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-jost">
-                  {orders?.map((order) => (
-                    <tr
-                      key={order?.id}
-                      className="border-gray-200 hover:bg-gray-100 border-b"
-                    >
-                      <td className="px-0 py-3 text-left">
-                        {order?.items?.map((item, index) => (
-                          <div
-                            key={index}
-                            className="flex gap-3 my-3 items-center"
-                          >
-                            <div className="mr-2">
-                              <img
-                                className="h-[70px] w-[70] rounded-full"
-                                src={item.product.thumbnail}
-                                alt={item.product.title}
-                              />
-                            </div>
-
-                            <div>
-                              <p>{item.product.title}</p>
-                              <p>
-                                price: {item.product.discountPrice} - Qty:{" "}
-                                {item.quantity}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </td>
-                      <td className="px-0 py-3 text-center">
-                        <div className="flex items-center justify-center">
-                          {order?.totalItems}
-                        </div>
-                      </td>
-                      <td className="px-0 py-3 text-center">
-                        <div className="flex items-center justify-center">
-                          ৳ {order?.totalAmount}
-                        </div>
-                      </td>
-                      <td className="px-0 py-3 text-center">
-                        <span
-                          className={`${chooseColor(
-                            order?.status
-                          )} rounded-full !px-3 !py-2 text-xsm capitalize`}
-                        >
-                          {order?.status}
-                        </span>
-                      </td>
-
-                      <td className="px-0 py-3 text-center">
-                        <div className="flex items-center justify-center">
-                          {order?.paymentMethod}
-                        </div>
-                      </td>
-
-                      <td className="px-0 py-3 text-center">
-                        <span
-                          className={`${chooseColor(
-                            order?.paymentStatus
-                          )} rounded-full !px-3 !py-2  text-xsm capitalize`}
-                        >
-                          {order?.paymentStatus}
-                        </span>
-                      </td>
-
-                      <td className="px-0 py-3 text-center">
-                        <div className="flex items-center justify-center">
-                          {order?.createdAt
-                            ? new Date(order?.createdAt)?.toLocaleString()
-                            : null}
-                        </div>
-                      </td>
-
-                      {/* <td className="px-0 py-3 text-center">
-                        <div className="item-center flex justify-center">
-                          <div className="hover:scale-120 mr-2 w-6 transform hover:text-purple-500">
-                            <IconButton
-                              // onClick={() => {
-                              //   dispatch(remove(id));
-                              //   toast.success("Item is deleted from Cart.");
-                              // }}
-                              // onClick={() => handleRemove(id)}
-                              className="rounded bg-[#ea4335] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                  {orders?.map((order) => {
+                    console.log("order 0000000000", order);
+                    return (
+                      <tr
+                        key={order?.id}
+                        className="border-gray-200 hover:bg-gray-100 border-b"
+                      >
+                        <td className="px-0 py-3 text-left">
+                          {order?.items?.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex gap-3 my-3 items-center"
                             >
-                              <MdDelete className="fill-white" />
-                            </IconButton>
+                              <div className="mr-2">
+                                <img
+                                  className="h-[70px] w-[70] rounded-full"
+                                  src={item.product.thumbnail}
+                                  alt={item.product.title}
+                                />
+                              </div>
+
+                              <div>
+                                <p>{item.product.title}</p>
+                                <p>
+                                  price: {item.product.discountPrice} - Qty:{" "}
+                                  {item.quantity}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </td>
+                        <td className="px-0 py-3 text-center">
+                          <div className="flex items-center justify-center">
+                            {order?.totalItems}
                           </div>
-                        </div>
-                      </td> */}
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="px-0 py-3 text-center">
+                          <div className="flex items-center justify-center">
+                            ৳ {order?.totalAmount}
+                          </div>
+                        </td>
+                        <td className="px-0 py-3 text-center">
+                          <span
+                            className={`${chooseColor(
+                              order?.status
+                            )} rounded-full !px-3 !py-2 text-xsm capitalize`}
+                          >
+                            {order?.status}
+                          </span>
+                        </td>
+
+                        <td className="px-0 py-3 text-center">
+                          <div className="flex items-center justify-center">
+                            {order?.paymentMethod}
+                          </div>
+                        </td>
+
+                        <td className="px-0 py-3 text-center">
+                          <span
+                            className={`${chooseColor(
+                              order?.paymentStatus
+                            )} rounded-full !px-3 !py-2  text-xsm capitalize`}
+                          >
+                            {order?.paymentStatus}
+                          </span>
+                        </td>
+
+                        <td className="px-0 py-3 text-center">
+                          <div className="flex items-center justify-center">
+                            {order?.createdAt
+                              ? new Date(order?.createdAt)?.toLocaleString()
+                              : null}
+                          </div>
+                        </td>
+
+                        {/* <td className="px-0 py-3 text-center">
+                          <div className="item-center flex justify-center">
+                            <div className="hover:scale-120 transform hover:text-purple-500 w-full">
+                              <IconButton
+                                // onClick={() => {
+                                //   dispatch(remove(id));
+                                //   toast.success("Item is deleted from Cart.");
+                                // }}
+                                // onClick={() => handleRemove(id)}
+                                className="rounded capitalize !max-w-[70px] bg-[#fefefe] !px-3 hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                              >
+                                {order?.status === "recieved"
+                                  ? "Add Review"
+                                  : "Reviewed"}
+                              </IconButton>
+                            </div>
+                          </div>
+                        </td> */}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

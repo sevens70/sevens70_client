@@ -109,7 +109,7 @@ function Client() {
                     <p className="text-sm text-dark-900 font-medium">
                       {user?.name}
                     </p>
-                    <p className="text-xsm text-grey-700 ">{user.email}</p>
+                    <p className="text-xsm text-grey-700 ">Buyer</p>
                   </div>
                 </CardBody>
               </Card>
