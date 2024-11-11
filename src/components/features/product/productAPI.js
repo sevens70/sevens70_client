@@ -146,7 +146,6 @@ export function createSubCategories(payload) {
     resolve({ data });
   });
 }
-
 export function fetchBrands() {
   const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {

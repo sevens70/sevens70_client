@@ -156,10 +156,7 @@ export const { clearSelectedProduct } = productSlice.actions;
 
 export const selectAllProducts = (state) => state.product?.products;
 export const selectAllCategories = (state) => state.product?.categories;
-// export const fetchedCategories = (state) =>
-//   state.product?.fetchedCategoriesData;
-export const selectBrands = (state) => state.product?.brands;
-// export const selectCategories = (state) => state.product?.categories;
+export const allBrand = (state) => state.product?.brands;
 export const selectProductById = (state) => state.product?.selectedProduct;
 export const selectProductListStatus = (state) => state.product?.status;
 

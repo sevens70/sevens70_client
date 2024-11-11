@@ -4,6 +4,9 @@ import { Card, CardHeader, CardBody, Button } from "@material-tailwind/react";
 import Slider from "../../Slider";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { allBrand } from "../../features/product/productSlice";
+import { useAppSelector } from "../../../lib/hooks";
+import Link from "next/link";
 const breakpoints = {
   0: {
     slidesPerView: 3,
@@ -27,27 +30,8 @@ const breakpoints = {
     slidesPerView: 6,
   },
 };
-const brand = [
-  {
-    img: "/brand/new/dior.jpg",
-  },
-  {
-    img: "/brand/new/iv.jpg",
-  },
-  {
-    img: "/brand/new/gucci.jpg",
-  },
-  {
-    img: "/brand/new/nike.jpg",
-  },
-  {
-    img: "/brand/new/ysl.jpg",
-  },
-  {
-    img: "/brand/new/dior.jpg",
-  },
-];
 function Brand() {
+  const allBrandData = useAppSelector(allBrand);
   return (
     <section className="w-11/12 pb-10  relative md:w-10/12 mx-auto">
       <div className="divide-y divide-dashed border border-1 my-12 "></div>
@@ -70,7 +54,7 @@ function Brand() {
         }}
       >
         {" "}
-        {brand.map(({ img }, idx) => (
+        {allBrandData?.map(({ image, name }, idx) => (
           <SwiperSlide key={idx} className="h-full">
             <div
               key={idx}
@@ -78,13 +62,24 @@ function Brand() {
             >
               <Card className="shadow-none">
                 <CardHeader className="!rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0">
-                  <img
-                    src={img}
-                    alt="profile-picture"
-                    className="object-cover object-center w-full h-full max-w-[100px]"
-                    height={100}
-                    width={100}
-                  />
+                  <Link
+                    className="cursor-pointer"
+                    href={{
+                      pathname: "/shop",
+                      query: {
+                        brand: `${name.toLowerCase()}`,
+                      },
+                    }}
+                  >
+                    {" "}
+                    <img
+                      src={image}
+                      alt="profile-picture"
+                      className="object-cover object-center w-full h-full max-w-[100px]"
+                      height={100}
+                      width={100}
+                    />
+                  </Link>
                 </CardHeader>
               </Card>
             </div>

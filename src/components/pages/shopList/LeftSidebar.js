@@ -3,7 +3,10 @@ import React, { useState, useEffect } from "react";
 import CommonCategory from "./CommonCategory";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector } from "../../../lib/hooks";
-import { selectAllCategories } from "../../features/product/productSlice";
+import {
+  allBrand,
+  selectAllCategories,
+} from "../../features/product/productSlice";
 
 const colors = [
   {
@@ -53,15 +56,6 @@ const colors = [
 // const categories = ["Men cloth", "Women Cloth"];
 const sizes = ["XXS", "XS", "S", "M", "L", "XL", "2XL", "3XL"];
 const sortingOrder = ["Newest", "Price Low - High", "Price High - Low"];
-const brands = [
-  "Abc Fashion",
-  "squire style",
-  "Nice fashion",
-  "xozo fashion",
-  "style zone",
-  "Cool style",
-  "Modern look",
-];
 const filterOptions = [
   {
     id: "sort",
@@ -96,7 +90,7 @@ const filterOptions = [
   {
     id: "brand",
     title: "Brand",
-    options: brands,
+    options: [],
     type: "checkbox",
   },
 ];
@@ -128,23 +122,26 @@ function LeftSidebar() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const allCatgories = useAppSelector(selectAllCategories);
+  const allBrandData = useAppSelector(allBrand);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});
   const [price, setPrice] = useState(0);
   console.log("allCategories 123", allCatgories);
   // const categories = allCatgories?.flatMap((category) =>   // note : it combines the category & subcategory name
   //   category.subcategories.map((sub) => `${category.name} - ${sub.name}`)
   // );
-  const categories = allCatgories.map((category) => category.name);
-
+  const categories = allCatgories?.map((category) => category.name);
+  const brands = allBrandData?.map((brand) => brand.name);
   // Update filterOptions categories' options dynamically
   const updatedFilterOptions = filterOptions.map((option) => {
     if (option.id === "category") {
       return { ...option, options: categories };
     }
+    if (option.id === "brand") {
+      return { ...option, options: brands };
+    }
     return option;
   });
 
-  console.log("Updated Filter Options:", updatedFilterOptions);
 
   const handlePriceChange = (e) => {
     setPrice(parseInt(e?.target.value));
