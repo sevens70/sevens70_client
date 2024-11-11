@@ -149,13 +149,13 @@ export default function AddToCart() {
                         <td className={classes}>
                           <Link href={`/product/${product.id}`}>
                             {" "}
-                            <p className="font-normal text-grey-600 font-jost">
+                            <p className="font-normal text-grey-600 font-jost capitalize">
                               {product?.title}
                             </p>
                           </Link>
                         </td>
                         <td className={classes}>
-                          <p className="font-xsm text-grey-600 font-jost">
+                          <p className="font-xsm text-grey-600 font-jost capitalize">
                             {product?.category}
                           </p>
                         </td>
@@ -206,8 +206,8 @@ export default function AddToCart() {
                             variant="small"
                             className="font-normal text-gray-600"
                           >
-                            {/* {currencyData?.symbol} */}
-                            ৳ {`${product?.discountPrice}.00`}
+                            {/* {currencyData?.symbol} */}৳{" "}
+                            {`${product?.discountPrice}.00`}
                           </p>
                         </td>
                         <td className={classes}>
@@ -215,8 +215,8 @@ export default function AddToCart() {
                             variant="small"
                             className="font-normal text-gray-600"
                           >
-                            {/* {currencyData?.symbol} */}
-                            ৳ {product?.discountPrice * quantity}
+                            {/* {currencyData?.symbol} */}৳{" "}
+                            {product?.discountPrice * quantity}
                           </p>
                         </td>
                         <td className={classes}>
@@ -239,8 +239,7 @@ export default function AddToCart() {
                 <h6 className="font-jost flex justify-end my-2 mr-7">
                   Total:{" "}
                   <span className="ml-7 !text-light-500">
-                    {/* {currencyData?.symbol} */}
-                    ৳ {totalAmount}
+                    {/* {currencyData?.symbol} */}৳ {totalAmount}
                   </span>
                 </h6>
               </div>

@@ -21,20 +21,20 @@ export function addToRating(item) {
 }
 
 export function fetchAllRating() {
-    const token = sessionStorage.getItem("authToken");
-    return new Promise(async (resolve) => {
-      const response = await fetch(`${BASE_URL}/ratings`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
-      const data = await response.json();
-      resolve({ data: { ratings: data } });
+  const token = sessionStorage.getItem("authToken");
+  return new Promise(async (resolve) => {
+    const response = await fetch(`${BASE_URL}/ratings`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
     });
-  }
-  
+    const data = await response.json();
+    resolve({ data: { ratings: data } });
+  });
+}
+
 export function deleteItemFromRatings(ratingId) {
   const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
@@ -52,5 +52,3 @@ export function deleteItemFromRatings(ratingId) {
     resolve({ data: { id: ratingId }, status: response.status });
   });
 }
-
-

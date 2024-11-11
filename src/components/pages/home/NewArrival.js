@@ -7,62 +7,64 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
-import { GoDotFill } from "react-icons/go";
+
+import { FcRating } from "react-icons/fc";
 import { FaCartShopping } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa";
 import { GiSelfLove } from "react-icons/gi";
-import { CiShoppingCart } from "react-icons/ci";
 import Slider from "../../Slider";
 import { SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import Link from "next/link";
-import toast from "react-hot-toast";
-import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+// import { getCarrency } from "../../../lib/features/currencySlice";
+// import { addToCart, getCart } from "../../../lib/features/cartSlice";
+// import { addToFav } from "../../../lib/features/favouriteSlice";
+import toast from "react-hot-toast";
 import {
   selectAllProducts,
   selectProductListStatus,
 } from "../../features/product/productSlice";
-import { addToCartAsync } from "../../features/cart/cartSlice";
-import { selectLoggedInUser } from "../../features/auth/authSlice";
+import Loader from "../../common/Loader";
 import {
   addToFavouriteAsync,
   deleteItemFromFavouriteAsync,
   selectFavouriteItems,
 } from "../../features/favourite/favouriteSlice";
-import Loader from "../../common/Loader";
-function Products() {
-  const breakpoints = {
-    0: {
-      slidesPerView: 1,
-    },
-    400: {
-      slidesPerView: 1,
-    },
-    550: {
-      slidesPerView: 2,
-    },
-    865: {
-      slidesPerView: 2,
-    },
-    1000: {
-      slidesPerView: 3,
-    },
-    1500: {
-      slidesPerView: 4,
-    },
-    1700: {
-      slidesPerView: 4,
-    },
-  };
-  const items = useAppSelector(selectFavouriteItems);
-  const cartItems = useAppSelector((state) => state.cart.items);
-  const user = useAppSelector(selectLoggedInUser);
+import { addToCartAsync } from "../../features/cart/cartSlice";
+import { selectLoggedInUser } from "../../features/auth/authSlice";
+const breakpoints = {
+  0: {
+    slidesPerView: 1,
+  },
+  400: {
+    slidesPerView: 1,
+  },
+  639: {
+    slidesPerView: 1,
+  },
+  865: {
+    slidesPerView: 1,
+  },
+  1000: {
+    slidesPerView: 2,
+  },
+  1500: {
+    slidesPerView: 2,
+  },
+  1700: {
+    slidesPerView: 2,
+  },
+};
+function NewArrival() {
   const allProducts = useAppSelector(selectAllProducts);
   const status = useAppSelector(selectProductListStatus);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const user = useAppSelector(selectLoggedInUser);
+  const items = useAppSelector(selectFavouriteItems);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [active, setActive] = useState("all");
-  const [dispalyPrd, setDisplayPrd] = useState([]);
+  const [displayProduct, setDisplayProduct] = useState([]);
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     if (prdDocumentId) {
@@ -72,104 +74,37 @@ function Products() {
 
   useEffect(() => {
     if (allProducts?.length > 0) {
-      if (active === "all") {
-        let filter = allProducts.filter(
-          (item) => item.type?.toLowerCase() === "top product"
-        );
-        setDisplayPrd(filter);
-      } else if (active === "men") {
-        let filter = allProducts.filter(
-          (item) =>
-            item.category?.toLowerCase() === "men" &&
-            item.type?.toLowerCase() === "top product"
-        );
-        setDisplayPrd(filter);
-      } else if (active === "women") {
-        let filter = allProducts.filter(
-          (item) =>
-            item.category?.toLowerCase() === "women" &&
-            item.type?.toLowerCase() === "top product"
-        );
-        setDisplayPrd(filter);
-      } else if (active === "accessories") {
-        let filter = allProducts.filter(
-          (item) =>
-            item.category?.toLowerCase() === "accessories" &&
-            item.type?.toLowerCase() === "top product"
-        );
-        setDisplayPrd(filter);
-      }
+      const topProducts = allProducts.filter(
+        (item) => item?.type?.toLowerCase() === "new arrival"
+      );
+      setDisplayProduct(topProducts);
     }
-  }, [active, allProducts]);
-
-  console.log("display product 123", dispalyPrd);
-
+  }, [allProducts]);
+  console.log("display product 0000000000000", displayProduct);
   return (
-    <section className="w-11/12 mt-20 md:w-10/12 mx-auto pb-10 relative">
-      <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+    <section className="w-11/12 mt-20 pb-10 relative md:w-10/12 mx-auto">
+      <div className="flex flex-wrap md:justify-center justify-start items-center gap-3 mb-10">
         <div>
-          <h6 className="text-grey-700 font-normal">Our Products</h6>
-          <h3 className="text-xmd mt-1 text-dark-700">Our Top Products</h3>
-        </div>
-
-        <div>
-          <div className="flex w-max md:gap-4 gap-2">
-            <Button
-              onClick={() => setActive("all")}
-              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
-                active === "all"
-                  ? "bg-primaryRed !text-white "
-                  : "bg-transparent text-dark-700"
-              }`}
-              size="sm"
-            >
-              All
-            </Button>
-            <Button
-              onClick={() => setActive("women")}
-              size="sm"
-              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
-                active === "women"
-                  ? "bg-primaryRed !text-white "
-                  : "bg-transparent text-dark-700"
-              }`}
-            >
-              Women
-            </Button>
-            <Button
-              onClick={() => setActive("men")}
-              size="sm"
-              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
-                active === "men"
-                  ? "bg-primaryRed !text-white "
-                  : "bg-transparent text-dark-700"
-              }`}
-            >
-              Men
-            </Button>
-            <Button
-              onClick={() => setActive("accessories")}
-              size="sm"
-              className={`font-jost md:text-sm text-xsm  font-normal rounded-none capitalize border  border-light-50 ${
-                active === "accessories"
-                  ? "bg-primaryRed !text-white "
-                  : "bg-transparent text-dark-700"
-              }`}
-            >
-              Accessories
-            </Button>
-          </div>
+          <h6 className="md:text-center text-left font-normal text-grey-700">
+            Our Products
+          </h6>
+          <h3
+            className="mt-2 text-xmd text-dark-700"
+            style={{ lineHeight: "46px" }}
+          >
+            New Arrival Product
+          </h3>
         </div>
       </div>
       {/* <div className="grid grid-cols-12 gap-4"> */}
       <Slider
         className="overflow-hidden"
-        id="product-slider"
-        autoPlayEnabled={false}
-        pagination={true}
-        slidesPerView={4}
-        spaceBetween={30}
-        autoplay={false}
+        id="trending-product-slider"
+        autoPlayEnabled={true}
+        pagination={false}
+        slidesPerView={2}
+        spaceBetween={20}
+        autoplay={true}
         breakpoints={breakpoints}
         modules={[Autoplay, Navigation, Pagination]}
         navigation
@@ -178,77 +113,42 @@ function Products() {
           "--swiper-theme-color": "black-dark-900",
         }}
       >
-        {" "}
         {status === "loading" && <Loader />}
-        {dispalyPrd?.length === 0 && (
+        {displayProduct?.length === 0 && (
           <p className="py-6 text-center">No data found.</p>
         )}
-        {dispalyPrd?.map((item, idx) => {
+
+        {displayProduct.map((item, idx) => {
           const {
             id,
             title,
+            description,
             discountPrice,
             price,
             thumbnail,
+            discountPercentage,
             rating,
             category,
             subcategory,
-            discountPercentage,
           } = item;
           return (
             <SwiperSlide key={idx} className="h-full">
-              {" "}
               <div key={idx} className="group">
                 <Card
                   onClick={() => {
                     router.push(`/product/${id}`);
                   }}
-                  className="h-[400px] shadow-sm relative cursor-pointer"
+                  className="md:flex-row flex-col shadow-sm cursor-pointer"
                 >
                   <CardHeader
                     floated={false}
-                    className="h-4/5 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 "
+                    className="min-w-[200px] basis-3/6 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none !m-0 relative"
                   >
-                    <div className="md:hidden group-hover:block  absolute bottom-3 left-[25%]">
-                      <Link href="cart">
-                        {" "}
-                        <Button
-                          size="sm"
-                          className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!user) {
-                              router.push(`/auth/signin`);
-                              return;
-                            }
-
-                            if (
-                              cartItems?.findIndex(
-                                (item) => item.product.id === id
-                              ) < 0
-                            ) {
-                              const newItem = {
-                                product: id,
-                                quantity: 1,
-                              };
-
-                              dispatch(
-                                addToCartAsync({ item: newItem, toast })
-                              );
-                            } else {
-                              toast.error("Item Already added");
-                            }
-                          }}
-                        >
-                          <CiShoppingCart className="fill-text-dark-500 mr-2" />{" "}
-                          Add To Cart
-                        </Button>
-                      </Link>
-                    </div>
                     <img
                       src={thumbnail}
                       alt="profile-picture"
-                      className="object-cover object-center h-full w-full"
+                      className="max-h-[350px] object-cover object-center w-full h-full trending__image"
+                      style={{ maxHeight: "300px", minHeight: "300px" }}
                       width={300}
                       height={300}
                     />
@@ -266,6 +166,7 @@ function Products() {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
+                                // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -303,6 +204,7 @@ function Products() {
                             onClick={(e) => {
                               e.stopPropagation();
                               if (!user) {
+                                // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -332,6 +234,7 @@ function Products() {
                             color="white"
                             size="sm"
                           >
+                            {}
                             <FaCartShopping className="h-5 w-5" />
                           </IconButton>
                           {/* <IconButton
@@ -387,24 +290,52 @@ function Products() {
                       )}
                     </div>
                   </CardHeader>
-
-                  <CardBody className="text-center px-2 mb-1 mt-1">
-                    <div className="flex justify-between items-center">
-                      <p className="text-sm text-grey-600 capitalize">
-                        {subcategory}
-                      </p>
-                      <h6 className="flex justify-center items-center text-dark-700">
-                        <GoDotFill className="fill-primaryRed" />
-                        {rating}
-                      </h6>
-                    </div>
-                    <h6 className="text-left text-dark-700">{title}</h6>
-                    <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
+                  <CardBody className="flex-grow items-center text-left p-3 mt-2">
+                    <p className="text-sm text-grey-600 ">{subcategory}</p>
+                    <h6 className="text-left text-dark-700 mt-1">{title}</h6>
+                    <h6 className="flex gap-3 justify-start items-center font-medium text-dark-700 mt-1">
                       {/* {currencyData?.symbol} */}৳ {discountPrice}
-                      <span className="font-normal line-through text-grey-600">
+                      <span className="font-[400] line-through text-grey-600">
                         {/* {currencyData?.symbol} */}৳ {price}
                       </span>
                     </h6>
+                    <h6 className="mt-2 flex justify-start items-center gap-1 text-dark-700">
+                      <FcRating className="fill-primaryRed" />
+                      {rating}
+                    </h6>
+                    <p className="text-sm text-grey-700 mt-2">{description}</p>
+                    <Button
+                      size="sm"
+                      className="font-jost text-sm flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[40px] rounded-none"
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        // Check if user is authenticated
+                        if (!user) {
+                          // Redirect to sign-in page if user is not authenticated
+                          router.push(`/auth/signin`);
+                          return;
+                        }
+
+                        if (
+                          cartItems?.findIndex(
+                            (item) => item.product.id === id
+                          ) < 0
+                        ) {
+                          const newItem = {
+                            product: id,
+                            quantity: 1,
+                          };
+
+                          dispatch(addToCartAsync({ item: newItem, toast }));
+                        } else {
+                          toast.error("Item Already added");
+                        }
+                      }}
+                    >
+                      <FaCartShopping className="fill-dark-700 hover:fill-white group-hover:fill-dark-700" />
+                      Add To Cart
+                    </Button>
                   </CardBody>
                 </Card>
               </div>
@@ -415,8 +346,9 @@ function Products() {
       <div className="absolute bottom-0 left-0 w-full">
         <div className="swiper-custom-pagination"></div>
       </div>
+      {/* </div> */}
     </section>
   );
 }
 
-export default Products;
+export default NewArrival;

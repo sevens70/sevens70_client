@@ -21,6 +21,7 @@ import {
 } from "../components/features/product/productSlice";
 import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websiteInfoSlice";
 import { fetchAllBannerAsync } from "../components/features/banners/bannersSlice";
+import { fetchAllRatingByAsync } from "../components/features/ratings/ratingsSlice";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ export default function MainPage() {
     dispatch(checkAuthAsync());
     dispatch(fetchWebsiteInfoAsync());
     dispatch(fetchAllBannerAsync());
+    dispatch(fetchAllRatingByAsync());
     dispatch(fetchCategoriesAsync());
     dispatch(fetchBrandsAsync());
     dispatch(fetchAllProductByAsinc());

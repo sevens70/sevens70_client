@@ -63,7 +63,7 @@ function OrdersPage() {
       </div>
     );
   }
-
+  let ordersData = [];
   return (
     <div className="w-full">
       {" "}
@@ -221,12 +221,16 @@ function OrdersPage() {
             </div>
           </div>
         </div>
-        <Pagination
-          page={page}
-          setPage={setPage}
-          handlePage={handlePage}
-          totalItems={totalOrders}
-        ></Pagination>
+        {orders?.length > 0 ? (
+          <Pagination
+            page={page}
+            setPage={setPage}
+            handlePage={handlePage}
+            totalItems={totalOrders}
+          ></Pagination>
+        ) : (
+          <p className="text-center my-10">No data found.</p>
+        )}
       </div>
     </div>
   );

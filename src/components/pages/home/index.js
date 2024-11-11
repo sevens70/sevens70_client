@@ -7,6 +7,7 @@ import Products from "./Products";
 import Collection from "./Collection";
 import TrendingProducts from "./TrendingProducts";
 import Client from "./Client";
+import NewArrival from "./NewArrival";
 // import BlogNews from "./BlogNews";
 import Brand from "./Brand";
 
@@ -17,6 +18,7 @@ function Home() {
       <Category />
       {/* <Shop /> */}
       <Products />
+      <NewArrival />
       <Collection />
       <TrendingProducts />
       <Client />
