@@ -8,9 +8,6 @@ import { MdDelete } from "react-icons/md";
 import { Card, IconButton } from "@material-tailwind/react";
 
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
-import { getCarrency } from "../../../lib/features/currencySlice";
-
-import { remove, clearFavList } from "../../../lib/features/favouriteSlice";
 import {
   deleteItemFromFavouriteAsync,
   fetchFavouriteItemsByUserIdAsync,
@@ -43,15 +40,11 @@ const TABLE_HEAD = [
 export default function Favourite() {
   const pathname = usePathname();
   const router = useRouter();
-  const currencyData = useAppSelector(getCarrency);
-  // const { items } = useAppSelector((state) => state.favourites);
   const items = useAppSelector(selectFavouriteItems);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchFavouriteItemsByUserIdAsync());
   }, []);
-
-  console.log("items fav", items);
 
   if (items?.length === 0) {
     return (

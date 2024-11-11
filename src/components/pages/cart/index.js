@@ -3,12 +3,9 @@ import React from "react";
 import { Breadcrumbs } from "@material-tailwind/react";
 import CartGallery from "./cartGallery";
 import CartInfo from "./cartInformation";
-// import CommonCategories from "../../common/commonCategories";
-// import Loader from "../../common/Loader";
 import Link from "next/link";
 import { useAppSelector } from "../../../lib/hooks";
 import { selectProductById } from "../../features/product/productSlice";
-// import Category from "../home/Category";
 function Cart() {
   const singleProduct = useAppSelector(selectProductById);
   return (
@@ -24,16 +21,6 @@ function Cart() {
       </div>
       <CartGallery singleProduct={singleProduct} />
       <CartInfo singleProduct={singleProduct} />
-      {/* {singleProduct ? (
-        <section className="w-11/12 mt-15 pb-10 relative md:w-10/12 mx-auto">
-          <h3 className="text-left text-xmd my-10 capitalize">
-            People Also bought
-          </h3>
-          <CommonCategories />
-        </section>
-      ) : (
-        <Loader />
-      )} */}
     </section>
   );
 }

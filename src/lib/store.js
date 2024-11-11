@@ -6,6 +6,7 @@ import OrdersReducer from "../components/features/order/orderSlice";
 import AuthReducer from "../components/features/auth/authSlice";
 import cartReducer from "../components/features/cart/cartSlice";
 import favouriteReducer from "../components/features/favourite/favouriteSlice";
+import ratingsReducer from "../components/features/ratings/ratingsSlice";
 import productReducer from "../components/features/product/productSlice";
 import userReducer from "../components/features/user/userSlice";
 import websiteInfoReducer from "../components/features/websiteInfo/websiteInfoSlice";
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   order: OrdersReducer,
   auth: AuthReducer,
   product: productReducer,
+  ratings: ratingsReducer,
   cart: cartReducer,
   favourite: favouriteReducer,
   // order: orderReducer,

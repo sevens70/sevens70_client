@@ -24,7 +24,13 @@ const SignIn = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/");
+      const lastVisitedPath = localStorage.getItem("lastVisitedPath");
+      if (lastVisitedPath) {
+        localStorage.removeItem("lastVisitedPath");
+        router.push(lastVisitedPath)
+      } else {
+        router.push("/");
+      }
     }
   }, [user, router]);
 

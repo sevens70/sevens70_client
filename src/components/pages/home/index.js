@@ -6,7 +6,7 @@ import Category from "./Category";
 import Products from "./Products";
 import Collection from "./Collection";
 import TrendingProducts from "./TrendingProducts";
-// import Client from "./Client";
+import Client from "./Client";
 // import BlogNews from "./BlogNews";
 import Brand from "./Brand";
 
@@ -19,7 +19,7 @@ function Home() {
       <Products />
       <Collection />
       <TrendingProducts />
-      {/* <Client /> */}
+      <Client />
       {/* <BlogNews /> */}
       <Brand />
     </div>

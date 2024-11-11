@@ -30,7 +30,7 @@ import { RxCross2 } from "react-icons/rx";
 import { contacts } from "../../site/info";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
 import {
   selectAllCategories,
@@ -117,45 +117,31 @@ const currency = [
 ];
 
 const Header = () => {
-  const currencyData = useAppSelector(getCarrency);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  // const { totalCount, items } = useAppSelector((state) => state.cart);
+  const lastVisitedPath = usePathname();
   const cartItems = useAppSelector(selectItems);
   const websiteInfo = useAppSelector(selectWebsiteInfo);
   const favouriteItems = useAppSelector(selectFavouriteItems);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
   const allProducts = useAppSelector(selectAllProducts);
-  const allProductsStatus = useAppSelector(selectProductListStatus);
-
-  // const [categories, setCategories] = useState({});
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
-  const [isCurrencyOpen, setIsCurrencyOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState(
-    currencyData ?? currency[0]
-  );
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
-  const containerRef = useRef(null);
 
   const handleLogout = () => {
     dispatch(signOutAsync());
-  };
-  // useEffect(() => {
-  //   if (!user) {
-  //     router.push("/auth/signin");
-  //   }
-  // }, [user, router]);
-
-  const handleMenuItemClick = (currency) => {
-    dispatch(addToCurrency(currency));
-    setSelectedCurrency(currency);
-    setIsCurrencyOpen(false);
+    if (["/orders", "/cart", "/favourite"].includes(lastVisitedPath)) {
+      localStorage.setItem("lastVisitedPath", lastVisitedPath);
+      router.push("/");
+    } else {
+      localStorage.setItem("lastVisitedPath", lastVisitedPath);
+    }
   };
 
   React.useEffect(() => {
@@ -508,7 +494,7 @@ const Header = () => {
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>
-            <nav className="gap-1 items-center 2xl:flex lg:hidden md:flex flex">
+            <nav className="gap-1 items-center 2xl:flex  md:flex flex">
               <div className="flex items-end gap-4">
                 {user ? (
                   <Badge

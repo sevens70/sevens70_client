@@ -2,14 +2,11 @@
 import { useParams } from "next/navigation";
 import React, { useEffect, useCallback } from "react";
 import Cart from "../../../components/pages/cart";
-import Loader from "../../../components/common/Loader";
-import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { useAppDispatch } from "../../../lib/hooks";
 import { fetchProductByIdAsync } from "../../../components/features/product/productSlice";
 import DefaultLayout from "../../../components/Layouts/DefaultLayout";
 export default function Page() {
   const { id } = useParams();
-  console.log("1234 id", id);
-  // const { singleProduct, getSingleProduct } = useApi();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id));
@@ -22,7 +19,6 @@ export default function Page() {
         className="mx-auto"
         style={{ height: "auto", backgroundColor: "#fff" }}
       >
-        {/* {singleProduct ? <Cart singleProduct={singleProduct} /> : <Loader />} */}
         <Cart />
       </div>
     </DefaultLayout>
