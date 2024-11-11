@@ -16,6 +16,7 @@ import { fetchFavouriteItemsByUserIdAsync } from "../components/features/favouri
 import { fetchAllOrderByUserId } from "../components/features/order/orderAPI";
 import {
   fetchAllProductByAsinc,
+  fetchBrandsAsync,
   fetchCategoriesAsync,
 } from "../components/features/product/productSlice";
 import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websiteInfoSlice";
@@ -32,6 +33,7 @@ export default function MainPage() {
     dispatch(fetchWebsiteInfoAsync());
     dispatch(fetchAllBannerAsync());
     dispatch(fetchCategoriesAsync());
+    dispatch(fetchBrandsAsync());
     dispatch(fetchAllProductByAsinc());
   }, [dispatch]);
 
