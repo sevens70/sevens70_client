@@ -51,6 +51,7 @@ function StarIcon() {
 
 function Client() {
   const clientData = useAppSelector(selectRatingItems);
+  console.log("1234 clientData", clientData);
   return (
     <section className="w-11/12 mt-10 pb-10 relative md:w-10/12 mx-auto">
       <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
@@ -101,7 +102,7 @@ function Client() {
                       className="custom__avatar !bg-[#fafafa] text-black"
                       size="60"
                       round={true}
-                      name={user.name}
+                      name={user?.name}
                     />
                   </div>
 
