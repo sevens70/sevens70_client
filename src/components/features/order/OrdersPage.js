@@ -185,7 +185,7 @@ function OrdersPage() {
                               <Link
                                 href={`/product/${item?.product.id}`}
                               ></Link>
-                              <p>{item.product.title}</p>
+                              <p className="capitalize">{item.product.title}</p>
                               <p>
                                 price: {item.product.discountPrice} - Qty:{" "}
                                 {item.quantity}
@@ -255,7 +255,7 @@ function OrdersPage() {
                                   }}
                                   className={`rounded capitalize block px-2 py-1 border border-black 
                                  ${
-                                   order?.status === "delivered"
+                                   order?.status === "delivered" && !matchedId
                                      ? "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
                                      : "bg-gray-300 cursor-not-allowed"
                                  }
@@ -267,7 +267,10 @@ function OrdersPage() {
                                : "mb-8"
                            }
                                      `}
-                                  disabled={order?.status !== "delivered"}
+                                  // disabled={
+                                  //   order?.status !== "delivered" ||
+                                  //   (order?.status === "delivered" && matchedId)
+                                  // }
                                 >
                                   {order?.status === "delivered" && matchedId
                                     ? "Reviewed"

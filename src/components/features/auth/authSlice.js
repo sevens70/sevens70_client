@@ -21,10 +21,17 @@ const initialState = {
 
 export const createUserAsync = createAsyncThunk(
   "user/createUser",
-  async (userData) => {
-    // console.log("1237, createUser, userData", userData);
-    const response = await createUser(userData);
-    return response.data;
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await createUser(userData);
+      if (response.data?.token) {
+        sessionStorage.setItem("authToken", response.data.token);
+      }
+      return response.data;
+    } catch (error) {
+      toast.error("Failed to create account.");
+      return rejectWithValue(error);
+    }
   }
 );
 
@@ -103,6 +110,10 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = action.payload;
+      })
+      .addCase(createUserAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.payload;
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
