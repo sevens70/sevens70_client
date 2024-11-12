@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Banner from "./Banner";
+// import Banner from "./Banner";
 import Category from "./Category";
 // import Shop from "./shop";
 import Products from "./Products";
@@ -10,11 +10,12 @@ import Client from "./Client";
 import NewArrival from "./NewArrival";
 // import BlogNews from "./BlogNews";
 import Brand from "./Brand";
-
+import TopBanner from "../../../components/features/topBanners/topBannerPage";
 function Home() {
   return (
     <div>
-      <Banner />
+      {/* <Banner /> */}
+      <TopBanner />
       <Category />
       {/* <Shop /> */}
       <Products />

@@ -16,10 +16,15 @@ import Loader from "../../common/Loader";
 import { IconButton } from "@material-tailwind/react";
 import Link from "next/link";
 import ModalDialog from "../../../components/common/Modal";
-import { addToRatingAsync } from "../ratings/ratingsSlice";
+import {
+  addToRatingAsync,
+  fetchAllRatingByUserIdAsync,
+  selectRatingItems,
+} from "../ratings/ratingsSlice";
 import toast from "react-hot-toast";
 function OrdersPage() {
   const user = useSelector(selectLoggedInUser);
+  const allRatingByUser = useSelector(selectRatingItems);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
@@ -56,13 +61,14 @@ function OrdersPage() {
         return "bg-purple-200 text-purple-600";
     }
   };
-
+  useEffect(() => {
+    dispatch(fetchAllRatingByUserIdAsync({ user }));
+  }, [dispatch]);
   useEffect(() => {
     // console.log("1234 user & status", user, status);
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchAllOrderByUserIdAsync({ sort, pagination, user }));
   }, [dispatch, page, sort]);
-
   if (status === "loading") {
     return (
       <div className="w-full text-center">
@@ -235,24 +241,40 @@ function OrdersPage() {
                       <td className="px-6 py-3 text-center">
                         <div className="">
                           <div className="flex flex-col justify-center hover:scale-120 transform hover:text-purple-500 w-full">
-                            {order?.items?.map((item, index) => (
-                              <button
-                                // onClick={() => {
-                                //   dispatch(remove(id));
-                                //   toast.success("Item is deleted from Cart.");
-                                // }}
-                                // onClick={() => handleRemove(id)}
-                                onClick={() => {
-                                  setItem(item);
-                                  setSize("sm");
-                                }}
-                                className="rounded capitalize block mb-8 bg-[#fefefe] border border-black px-2 py-1 hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
-                              >
-                                {order?.status === "recieved"
-                                  ? "Reviewed"
-                                  : "Add Review"}
-                              </button>
-                            ))}
+                            {order?.items?.map((item, index) => {
+                              const matchedId = allRatingByUser.some(
+                                (ratingItem) =>
+                                  ratingItem?.product?.id === item?.product?.id
+                              );
+
+                              return (
+                                <button
+                                  onClick={() => {
+                                    setItem(item);
+                                    setSize("sm");
+                                  }}
+                                  className={`rounded capitalize block px-2 py-1 border border-black 
+                                 ${
+                                   order?.status === "delivered"
+                                     ? "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                                     : "bg-gray-300 cursor-not-allowed"
+                                 }
+                           ${
+                             order?.items?.length === 1
+                               ? ""
+                               : index === order.items.length - 1
+                               ? "mb-0"
+                               : "mb-8"
+                           }
+                                     `}
+                                  disabled={order?.status !== "delivered"}
+                                >
+                                  {order?.status === "delivered" && matchedId
+                                    ? "Reviewed"
+                                    : "Add Review"}
+                                </button>
+                              );
+                            })}
                           </div>
                         </div>
                       </td>

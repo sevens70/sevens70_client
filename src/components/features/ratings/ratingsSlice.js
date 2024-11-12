@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-import { addToRating, deleteItemFromRatings, fetchAllRating } from "./ratingsAPI";
+import {
+  addToRating,
+  deleteItemFromRatings,
+  fetchAllRating,
+  fetchAllRatingByUserId,
+} from "./ratingsAPI";
 
 const initialState = {
   status: "idle",
@@ -11,7 +16,6 @@ const initialState = {
 export const addToRatingAsync = createAsyncThunk(
   "rating/addToRating",
   async ({ item, toast }) => {
-    console.log("1234 rating", item)
     const response = await addToRating(item);
     if (response.status === 201) {
       toast.success("Successfully Added");
@@ -22,13 +26,21 @@ export const addToRatingAsync = createAsyncThunk(
   }
 );
 export const fetchAllRatingByAsync = createAsyncThunk(
-    "rating/allRating",
-    async () => {
-      const response = await fetchAllRating();
-      return response.data;
-    }
-  );
-
+  "rating/allRating",
+  async () => {
+    const response = await fetchAllRating();
+    return response.data;
+  }
+);
+export const fetchAllRatingByUserIdAsync = createAsyncThunk(
+  "rating/fetchAllRatingByUserId",
+  async ({ user }) => {
+    console.log("response 000 pre", user);
+    const response = await fetchAllRatingByUserId(user);
+    console.log("response 000", response);
+    return response.data;
+  }
+);
 export const deleteItemFromRatingsAsync = createAsyncThunk(
   "rating/deleteItemFromRatings",
   async (itemId) => {
@@ -40,8 +52,6 @@ export const deleteItemFromRatingsAsync = createAsyncThunk(
     return response.data;
   }
 );
-
-
 
 export const ratingsSlice = createSlice({
   name: "ratings",
@@ -66,6 +76,16 @@ export const ratingsSlice = createSlice({
       .addCase(fetchAllRatingByAsync.rejected, (state, action) => {
         state.status = "failed";
       })
+      .addCase(fetchAllRatingByUserIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAllRatingByUserIdAsync.fulfilled, (state, action) => {
+        state.status = "success";
+        state.items = action.payload.ratings;
+      })
+      .addCase(fetchAllRatingByUserIdAsync.rejected, (state, action) => {
+        state.status = "failed";
+      })
       .addCase(deleteItemFromRatingsAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -75,10 +95,9 @@ export const ratingsSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.items.splice(index, 1);
-      })
+      });
   },
 });
-
 
 export const selectRatingItems = (state) => state.ratings.items;
 export const selectRatingStatus = (state) => state.ratings.status;

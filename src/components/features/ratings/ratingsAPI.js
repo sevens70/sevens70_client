@@ -34,6 +34,33 @@ export function fetchAllRating() {
     resolve({ data: { ratings: data } });
   });
 }
+export function fetchAllRatingByUserId(user) {
+  const token = sessionStorage.getItem("authToken");
+  let queryString = "";
+
+  for (let key in sort) {
+    queryString += `${key}=${sort[key]}&`;
+  }
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
+  return new Promise(async (resolve) => {
+    const response = await fetch(
+      `${BASE_URL}/ratings/${user.id}?${queryString}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    const totalRating = await response.headers.get("X-Total-Count");
+    resolve({ data: { ratings: data, totalRating: +totalRating } });
+  });
+}
 
 export function deleteItemFromRatings(ratingId) {
   const token = sessionStorage.getItem("authToken");

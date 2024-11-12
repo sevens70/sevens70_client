@@ -49,18 +49,12 @@ function StarIcon() {
   );
 }
 
-function Client() {
-  const clientData = useAppSelector(selectRatingItems);
-
+function CardReview({ filteredReview }) {
+  // const clientData = useAppSelector(selectRatingItems);
+  console.log("1234 clientData", filteredReview);
   return (
-    <section className="w-11/12 mt-10 pb-10 relative md:w-10/12 mx-auto">
-      <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
-        <div>
-          <h6 className="text-center text-grey-700">Feedback</h6>
-          <h3 className="text-xmd mt-2">Happy Clients</h3>
-        </div>
-      </div>
-      {/* <div className="grid grid-cols-12 gap-4 mt-7"> */}
+    // <section className="w-11/12 mt-10 pb-10 relative md:w-10/12 mx-auto">
+    <section className=" mx-auto font-jost">
       <Slider
         className="overflow-hidden"
         id="client-slider"
@@ -77,17 +71,15 @@ function Client() {
           "--swiper-theme-color": "black-dark-900",
         }}
       >
-        {clientData?.length === 0 && (
-          <p className="text-center py-4">No feedback found.</p>
-        )}
-        {clientData?.map(({ product, rating, comment, user }, idx) => (
+        {" "}
+        {filteredReview?.map(({ product, rating, comment, user }, idx) => (
           <SwiperSlide key={idx} className="h-full">
             <div key={idx} className="group">
-              <Card className="p-5 shadow-sm">
+              <Card className="p-5 shadow-lg rounded bg-gradient-to-l from-white via-gray-50 to-white hover:shadow-xl transition-shadow duration-300">
                 <CardHeader floated={false} className="shadow-none !m-0">
                   <div className="flex items-center gap-0">
                     {Array.from({ length: rating }).map((_, index) => (
-                      <StarIcon key={index} />
+                      <StarIcon key={index} className="text-yellow-500" />
                     ))}
                   </div>
                   <h6 className="text-left text-dark-900 mt-2">
@@ -96,12 +88,9 @@ function Client() {
                   <p className="text-sm text-grey-700 mt-1">{comment}</p>
                 </CardHeader>
                 <CardBody className="mx-0 flex items-start gap-3 mt-5 p-0">
-                  {/* <Avatar size="md" variant="circular" src={img} /> */}
-                  {/* <AvatarComponent name="Anamul Haque" /> */}
                   <div className="custom__avatar-area">
-                    {" "}
                     <Avatar
-                      className="custom__avatar font-jost !bg-[#fafafa] text-black"
+                      className="custom__avatar !bg-[#fafafa] font-jost text-black"
                       size="60"
                       round={true}
                       name={user?.name}
@@ -112,7 +101,7 @@ function Client() {
                     <p className="text-sm text-dark-900 font-medium">
                       {user?.name}
                     </p>
-                    <p className="text-xsm text-grey-700 ">Buyer</p>
+                    <p className="text-xsm text-grey-700">Buyer</p>
                   </div>
                 </CardBody>
               </Card>
@@ -128,4 +117,4 @@ function Client() {
   );
 }
 
-export default Client;
+export default CardReview;

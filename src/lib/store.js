@@ -11,6 +11,7 @@ import productReducer from "../components/features/product/productSlice";
 import userReducer from "../components/features/user/userSlice";
 import websiteInfoReducer from "../components/features/websiteInfo/websiteInfoSlice";
 import bannerReducer from "../components/features/banners/bannersSlice";
+import topBannerReducer from "../components/features/topBanners/topBannersSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   // order: orderReducer,
   user: userReducer,
   websiteInfo: websiteInfoReducer,
+  topBanner: topBannerReducer,
 });
 
 const persistConfig = {

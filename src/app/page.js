@@ -22,6 +22,7 @@ import {
 import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websiteInfoSlice";
 import { fetchAllBannerAsync } from "../components/features/banners/bannersSlice";
 import { fetchAllRatingByAsync } from "../components/features/ratings/ratingsSlice";
+import { fetchTopBannersAsync } from "../components/features/topBanners/topBannersSlice";
 
 export default function MainPage() {
   const dispatch = useAppDispatch();
@@ -32,7 +33,8 @@ export default function MainPage() {
   useEffect(() => {
     dispatch(checkAuthAsync());
     dispatch(fetchWebsiteInfoAsync());
-    dispatch(fetchAllBannerAsync());
+    dispatch(fetchTopBannersAsync());
+    dispatch(fetchAllBannerAsync()); //it's for offer section
     dispatch(fetchAllRatingByAsync());
     dispatch(fetchCategoriesAsync());
     dispatch(fetchBrandsAsync());

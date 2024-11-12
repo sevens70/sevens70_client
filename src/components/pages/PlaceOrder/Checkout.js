@@ -71,8 +71,8 @@ function Checkout() {
 
   useEffect(() => {
     if (status === "success") {
-      toast.success("Order created successfully");
       dispatch(resetCartAsync());
+      toast.success("Order created successfully");
       router.push("/orders");
     }
   }, [status]);
