@@ -180,7 +180,7 @@ function Products() {
       >
         {" "}
         {status === "loading" && <Loader />}
-        {dispalyPrd?.length === 0 && (
+        {dispalyPrd?.length === 0 && status !== "loading" && (
           <p className="py-6 text-center">No data found.</p>
         )}
         {dispalyPrd?.map((item, idx) => {

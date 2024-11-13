@@ -1,4 +1,3 @@
-
 "use client";
 import Slider from "../../../components/Slider";
 import { SwiperSlide } from "swiper/react";
@@ -39,6 +38,15 @@ function TopBanner() {
               </div>
             </SwiperSlide>
           ))}
+        {Array.isArray(banners) && banners?.length === 0 && (
+          <div className="w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
+            <img
+              src="https://res.cloudinary.com/dz04rcdiy/image/upload/v1731292022/ppptgcdovtxre9hdniy0.png"
+              alt="banner"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        )}
       </Slider>
       <div className="absolute bottom-0 left-0 w-full">
         <div className="swiper-custom-pagination"></div>

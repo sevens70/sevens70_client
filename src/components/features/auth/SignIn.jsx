@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { selectError, selectLoggedInUser, loginUserAsync } from "./authSlice";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectError);
+  // const error = useAppSelector(selectError);
   const user = useAppSelector(selectLoggedInUser);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +18,6 @@ const SignIn = () => {
   };
   // const user = useSelector(selectLoggedInUser);
 
-  console.log("user1234", user, error);
   const {
     register,
     handleSubmit,
@@ -32,7 +31,8 @@ const SignIn = () => {
         localStorage.removeItem("lastVisitedPath");
         router.push(lastVisitedPath);
       } else {
-        router.push("/");
+        // router.push("/");
+        router.push(lastVisitedPath);
       }
     }
   }, [user, router]);

@@ -135,6 +135,7 @@ const Header = () => {
   const [input, setInput] = useState("");
 
   const handleLogout = () => {
+    console.log("lastVisitedPath 123", lastVisitedPath);
     dispatch(signOutAsync());
     if (["/orders", "/cart", "/favourite"].includes(lastVisitedPath)) {
       localStorage.setItem("lastVisitedPath", lastVisitedPath);
@@ -515,7 +516,10 @@ const Header = () => {
                   </Badge>
                 ) : (
                   <IconButton
-                    onClick={() => router.push("/auth/signin")}
+                    onClick={() => {
+                      localStorage.setItem("lastVisitedPath", lastVisitedPath);
+                      router.push("/auth/signin");
+                    }}
                     color="white"
                     size="sm"
                     className="shadow-none hide__item"
