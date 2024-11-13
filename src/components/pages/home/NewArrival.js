@@ -114,9 +114,9 @@ function NewArrival() {
         }}
       >
         {status === "loading" && <Loader />}
-        {displayProduct?.length === 0 &&
-          status !==
-            "loading"(<p className="py-6 text-center">No data found.</p>)}
+        {displayProduct?.length === 0 && status !== "loading" && (
+          <p className="py-6 text-center">No data found.</p>
+        )}
 
         {displayProduct.map((item, idx) => {
           const {
