@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-const BASE_URL = process.env.API_ENDPOINT;
+const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export async function createTopBanner(payload) {
   const token = sessionStorage.getItem("authToken");

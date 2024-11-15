@@ -1,4 +1,4 @@
-const BASE_URL = process.env.API_ENDPOINT;
+const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export function addToRating(item) {
   const token = sessionStorage.getItem("authToken");
