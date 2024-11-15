@@ -1,6 +1,6 @@
 const BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://xartso-server-xpr7.vercel.app"
+    ? "https://sevens70.vercel.app"
     : "http://localhost:8080";
 
 export async function createOrder(order) {
@@ -25,10 +25,10 @@ export async function createOrder(order) {
     }
 
     const data = await response.json();
-    return { data }; 
+    return { data };
   } catch (error) {
     console.error("Order creation error:", error.message);
-    return { error: error.message }; 
+    return { error: error.message };
   }
 }
 
