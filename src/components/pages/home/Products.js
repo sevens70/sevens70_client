@@ -55,7 +55,7 @@ function Products() {
     },
   };
   const items = useAppSelector(selectFavouriteItems);
-  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartItems = useAppSelector((state) => state.cart?.items);
   const user = useAppSelector(selectLoggedInUser);
   const allProducts = useAppSelector(selectAllProducts);
   const status = useAppSelector(selectProductListStatus);

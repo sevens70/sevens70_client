@@ -78,6 +78,6 @@ export const {
   addToCart,
 } = cartSlice.actions;
 
-export const getCart = (state) => state.cart.items;
+export const getCart = (state) => state.cart?.items;
 
 export default cartSlice.reducer;

@@ -59,7 +59,7 @@ const breakpoints = {
 function TrendingProducts() {
   const allProducts = useAppSelector(selectAllProducts);
   const status = useAppSelector(selectProductListStatus);
-  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartItems = useAppSelector((state) => state.cart?.items);
   const user = useAppSelector(selectLoggedInUser);
   const items = useAppSelector(selectFavouriteItems);
   const dispatch = useAppDispatch();

@@ -68,7 +68,7 @@ const showNumber = [
 function RightSidebar() {
   const allProducts = useAppSelector(selectAllProducts);
   const allProductsStatus = useAppSelector(selectProductListStatus);
-  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartItems = useAppSelector((state) => state.cart?.items);
   const user = useAppSelector(selectLoggedInUser);
   const items = useAppSelector(selectFavouriteItems);
   const [selectedFilterQueries, setSelectedFilterQueries] = useState({});

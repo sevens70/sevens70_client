@@ -65,7 +65,7 @@ function Collection() {
                       Shop Now <FaLongArrowAltRight className="fill-white" />
                     </Button>
                   </div>
-                  <div className="flex flex-grow items-end justify-center">
+                  {/* <div className="flex flex-grow items-end justify-center">
                     <img
                       className="object-cover object-center"
                       src={item?.bannerImage}
@@ -74,7 +74,7 @@ function Collection() {
                       width={300}
                       height={300}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </SwiperSlide>
