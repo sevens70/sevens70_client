@@ -108,33 +108,33 @@ export const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.loggedInUserToken = action.payload;
       })
       .addCase(createUserAsync.rejected, (state, action) => {
-        state.status = "idle";
+        state.status = "failed";
         state.error = action.payload;
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.loggedInUserToken = action.payload;
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
-        state.status = "idle";
+        state.status = "failed";
         state.error = action.payload;
       })
       .addCase(signOutAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(signOutAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.status = "success";
         state.loggedInUserToken = null;
       })
       .addCase(checkAuthAsync.pending, (state) => {
-        state.status = "loading";
+        state.status = "failed";
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -167,6 +167,7 @@ export const authSlice = createSlice({
 });
 
 export const selectLoggedInUser = (state) => state.auth?.loggedInUserToken;
+export const authStatus = (state) => state.auth?.status;
 export const selectError = (state) => state.auth?.error;
 export const selectUserChecked = (state) => state.auth?.userChecked;
 export const selectMailSent = (state) => state.auth?.mailSent;

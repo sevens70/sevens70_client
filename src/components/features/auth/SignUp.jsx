@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Image from "next/image";
-import { createUserAsync, selectLoggedInUser } from "./authSlice";
+import { authStatus, createUserAsync, selectLoggedInUser } from "./authSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 
@@ -16,8 +16,10 @@ function SignUp() {
   } = useForm();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectLoggedInUser);
+  const status = useAppSelector(authStatus);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const togglePasswordVisibility = (event) => {
     event.preventDefault();
     setShowPassword((prev) => !prev);
@@ -27,6 +29,9 @@ function SignUp() {
     setShowConfirmPassword((prev) => !prev);
   };
   useEffect(() => {
+    if (status === "success" || status === "failed") {
+      setIsDisabled(false);
+    }
     if (user) {
       router.push("/");
     }
@@ -199,6 +204,7 @@ function SignUp() {
                 className="space-y-6"
                 onSubmit={handleSubmit((data) => {
                   console.log("1237 data", data);
+                  setIsDisabled(true);
                   dispatch(
                     createUserAsync({
                       name: data.name,
@@ -223,7 +229,7 @@ function SignUp() {
                       })}
                       type="text"
                       placeholder="Enter your full name"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
 
                     <span className="absolute right-4 top-4">
@@ -266,7 +272,7 @@ function SignUp() {
                       })}
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
                     {errors.email && (
                       <p className="text-red-500">{errors.email.message}</p>
@@ -307,7 +313,7 @@ function SignUp() {
                       })}
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
                     {errors.password && (
                       <p className="text-red-500">{errors.password.message}</p>
@@ -371,7 +377,7 @@ function SignUp() {
                       })}
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Re-enter your password"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
                     {errors.confirmPassword && (
                       <p className="text-red-500">
@@ -425,8 +431,13 @@ function SignUp() {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Create account"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isDisabled ? "Creating account.." : "Create account"}
+                    disabled={isDisabled}
+                    className={`w-full crounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 ${
+                      isDisabled
+                        ? "cursor-not-allowed opacity-50"
+                        : "cursor-pointer"
+                    }`}
                   />
                 </div>
 

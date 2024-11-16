@@ -1,17 +1,23 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { selectError, selectLoggedInUser, loginUserAsync } from "./authSlice";
+import {
+  selectLoggedInUser,
+  loginUserAsync,
+  authStatus,
+} from "./authSlice";
 import { useForm } from "react-hook-form";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
-
 const SignIn = () => {
   const dispatch = useAppDispatch();
   // const error = useAppSelector(selectError);
   const user = useAppSelector(selectLoggedInUser);
+  const status = useAppSelector(authStatus);
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const togglePasswordVisibility = (event) => {
     event.preventDefault();
     setShowPassword((prev) => !prev);
@@ -25,6 +31,9 @@ const SignIn = () => {
   } = useForm();
 
   useEffect(() => {
+    if (status === "success" || status === "failed") {
+      setIsDisabled(false);
+    }
     if (user) {
       const lastVisitedPath = localStorage.getItem("lastVisitedPath");
       if (lastVisitedPath) {
@@ -32,15 +41,15 @@ const SignIn = () => {
         router.push(lastVisitedPath);
       } else {
         // router.push("/");
-        router.push(lastVisitedPath);
+        router.push(lastVisitedPath ?? "/");
       }
     }
-  }, [user, router]);
+  }, [user, router, status]);
 
   return (
     <>
       <div
-        className="signIn-area h-[100vh] rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+        className="signIn-area h-[100vh] rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark font-jost"
         style={{ alignContent: "center" }}
       >
         <div className="flex flex-wrap items-center justify-center">
@@ -53,6 +62,7 @@ const SignIn = () => {
               <form
                 noValidate
                 onSubmit={handleSubmit((data) => {
+                  setIsDisabled(true);
                   console.log("data", data);
                   dispatch(
                     loginUserAsync({
@@ -79,7 +89,7 @@ const SignIn = () => {
                       })}
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
                     {errors.email && (
                       <p className="text-red-500">{errors.email.message}</p>
@@ -116,7 +126,7 @@ const SignIn = () => {
                       })}
                       type={showPassword ? "text" : "password"}
                       placeholder="6+ Characters, 1 Capital letter"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary !font-jost"
                     />
                     {errors.password && (
                       <p className="text-red-500">{errors.password.message}</p>
@@ -168,8 +178,14 @@ const SignIn = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    value={isDisabled ? "Signing In.." : "Sign In"}
+                    disabled={isDisabled}
+                    className={`btn !font-jost ${
+                      isDisabled
+                        ? "w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition cursor-not-allowed opacity-50"
+                        : "w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    }`}
+                    // className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
 

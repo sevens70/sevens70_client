@@ -41,7 +41,7 @@ export function checkAuth() {
     try {
       const token = sessionStorage.getItem("authToken");
       const response = await fetch(`${BASE_URL}/auth/check`, {
-        method: "GET",
+        // method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

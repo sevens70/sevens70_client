@@ -31,7 +31,11 @@ import { contacts } from "../../site/info";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { addToCurrency, getCarrency } from "../../lib/features/currencySlice";
 import { usePathname, useRouter } from "next/navigation";
-import { selectLoggedInUser, signOutAsync } from "../features/auth/authSlice";
+import {
+  authStatus,
+  selectLoggedInUser,
+  signOutAsync,
+} from "../features/auth/authSlice";
 import {
   selectAllCategories,
   selectAllProducts,
@@ -123,6 +127,7 @@ const Header = () => {
   const cartItems = useAppSelector(selectItems);
   const websiteInfo = useAppSelector(selectWebsiteInfo);
   const favouriteItems = useAppSelector(selectFavouriteItems);
+  const status = useAppSelector(authStatus);
   const user = useAppSelector(selectLoggedInUser);
   const allCatgories = useAppSelector(selectAllCategories);
   const allProducts = useAppSelector(selectAllProducts);
@@ -133,18 +138,24 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
-
+  const [isDisabled, setIsDisabled] = useState(false);
   const handleLogout = () => {
-    console.log("lastVisitedPath 123", lastVisitedPath);
+    setIsDisabled(false);
     dispatch(signOutAsync());
     if (["/orders", "/cart", "/favourite"].includes(lastVisitedPath)) {
       localStorage.setItem("lastVisitedPath", lastVisitedPath);
       router.push("/");
     } else {
-      localStorage.setItem("lastVisitedPath", lastVisitedPath);
+      localStorage.setItem("lastVisitedPath", lastVisitedPath ?? "/");
     }
   };
 
+  useEffect(() => {
+    if (status === "success" || status === "failed") {
+      setIsDisabled(false);
+    }
+  }, [status]);
+  console.log("lastVisitedPath 123 status", status);
   React.useEffect(() => {
     window.addEventListener(
       "resize",
@@ -472,26 +483,36 @@ const Header = () => {
                 }
               >
                 {Array.isArray(categories) &&
-                  categories?.map((item, idx) => (
-                    <Link
-                      style={{ background: "none" }}
-                      href={{
-                        pathname: "/shop",
-                        query: {
-                          category: `${item.toLowerCase()}`,
-                        },
-                      }}
-                    >
-                      <Option
-                        className="font-jost text-xsm capitalize"
-                        style={{ background: "none" }}
+                  categories?.map((item, idx) =>
+                    item === "Become a seller" ? (
+                      <div
                         key={idx}
-                        value={`${item}`}
+                        className="font-jost text-xsm capitalize cursor-not-allowed opacity-50 px-2 py-1"
+                        style={{ background: "none" }}
                       >
                         {item}
-                      </Option>
-                    </Link>
-                  ))}
+                      </div>
+                    ) : (
+                      <Link
+                        key={idx}
+                        style={{ background: "none" }}
+                        href={{
+                          pathname: "/shop",
+                          query: {
+                            category: `${item.toLowerCase()}`,
+                          },
+                        }}
+                      >
+                        <Option
+                          className="font-jost text-xsm capitalize"
+                          style={{ background: "none" }}
+                          value={`${item}`}
+                        >
+                          {item}
+                        </Option>
+                      </Link>
+                    )
+                  )}
               </Select>
             </div>
             <nav className="hidden lg:block">{navList}</nav>
@@ -648,7 +669,7 @@ const Header = () => {
                             onClick={() => handleLogout()}
                             className="text-xsm font-jost font-normal text-gray-600"
                           >
-                            Sign Out
+                            {isDisabled ? "Signing Out.." : " Sign Out"}
                           </h6>
                         </MenuItem>{" "}
                       </>
@@ -805,7 +826,7 @@ const Header = () => {
                 onClick={() => handleLogout()}
                 className="text-xsm font-jost font-normal text-gray-400"
               >
-                Sign Out
+                {isDisabled ? "Signing Out.." : " Sign Out"}
               </h6>
             </Button>
           )}

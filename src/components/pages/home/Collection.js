@@ -34,15 +34,25 @@ function Collection() {
         {Array.isArray(banners) &&
           banners.map((item, idx) => (
             <SwiperSlide key={idx} className="h-full">
-              <div key={idx} className="bg-light-200 rounded-xl">
+              <div
+                key={idx}
+                className="bg-light-200 rounded-xl"
+                style={{
+                  backgroundImage: `url(${item?.bannerImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              >
                 <div className="px-5 py-0 h-auto flex flex-col-reverse md:flex-row gap:3">
                   <div className="min-h-[400px] basis-1/2 flex flex-col justify-center items-start py-5">
-                    <h6 className="text-primaryRed mb-1">Get {item?.offer}</h6>
+                    {/* <h6 className="text-primaryRed mb-1">Get {item?.offer}</h6> */}
+                    <h6 className="text-primaryRed mb-1"> {item?.offer}</h6>
                     <h2
                       className="capitalize font-medium text-4xl  md:text-5xl lg:text-6xl lg:leading-[70px]"
                       //   style={{ lg:lineHeight: "60px" }}
                     >
-                      {item.title} <span className="text-primaryRed">2024</span>
+                      {item.title}
+                      {/* <span className="text-primaryRed">2024</span> */}
                     </h2>
                     <p className="text-dark-900 text-[20px] leading-6 mt-3">
                       {item?.subtitle}
@@ -60,6 +70,7 @@ function Collection() {
                       className="object-cover object-center"
                       src={item?.bannerImage}
                       alt="img"
+                      style={{ minHeight: "300px" }}
                       width={300}
                       height={300}
                     />

@@ -19,6 +19,7 @@ export function fetchLoggedInUser() {
   const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/users/own`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

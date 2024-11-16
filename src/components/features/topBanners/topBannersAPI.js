@@ -35,6 +35,7 @@ export function fetchTopBanners() {
   const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/topbanner`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
