@@ -29,7 +29,7 @@ function TopBanner() {
         {Array.isArray(banners) &&
           banners?.map((item, key) => (
             <SwiperSlide key={key} className="h-full">
-              <div className="w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
+              <div className="w-full xsm:h-[230px] sm:h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden">
                 <img
                   src={item.bannerImage}
                   alt={item.name}
@@ -39,7 +39,7 @@ function TopBanner() {
             </SwiperSlide>
           ))}
         {Array.isArray(banners) && banners?.length === 0 && (
-          <div className="w-full h-[300px] bg-grey-300 md:h-[400px] lg:h-[500px] overflow-hidden"></div>
+          <div className="w-full xsm:h-[230px] sm:h-[300px] bg-grey-300 md:h-[400px] lg:h-[500px] overflow-hidden"></div>
         )}
       </Slider>
       <div className="absolute bottom-0 left-0 w-full">

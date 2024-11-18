@@ -11,6 +11,9 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      screens: {
+        xsm: { max: "540px" }, // Custom breakpoint for widths less than 540px
+      },
       fontSize: {
         sm: "18px",
         xsm: "16px",
