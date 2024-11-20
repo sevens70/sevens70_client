@@ -47,15 +47,24 @@ export default function SwiperCartGallery({ singleProduct }) {
                 }}
                 modules={[Navigation, Thumbs]}
               >
-                {singleProduct?.images?.map((slide, index) => {
-                  return (
+                {singleProduct?.images?.length > 0 ? (
+                  singleProduct.images.map((slide, index) => (
                     <SwiperSlide key={index}>
                       <div className="slider__image">
                         <img src={slide} alt="" />
                       </div>
                     </SwiperSlide>
-                  );
-                })}
+                  ))
+                ) : (
+                  <SwiperSlide>
+                    <div className="slider__image">
+                      <img
+                        src={singleProduct?.thumbnail}
+                        alt="Product Thumbnail"
+                      />
+                    </div>
+                  </SwiperSlide>
+                )}
               </Swiper>
             </div>
 
@@ -74,7 +83,6 @@ export default function SwiperCartGallery({ singleProduct }) {
               slidesPerView={1}
               spaceBetween={32}
               loop={true}
-              // mousewheel={true}
               navigation={{
                 nextEl: ".slider__next",
                 prevEl: ".slider__prev",
@@ -90,15 +98,25 @@ export default function SwiperCartGallery({ singleProduct }) {
               className="swiper-container2"
               modules={[Navigation, Thumbs, Mousewheel]}
             >
-              {singleProduct?.images?.map((slide, index) => {
-                return (
+              {singleProduct?.images?.length > 0 ? (
+                singleProduct.images.map((slide, index) => (
                   <SwiperSlide key={index}>
                     <div className="slider__image">
-                      <img src={slide} alt="" />
+                      <img src={slide} alt={`Product Image ${index + 1}`} />
                     </div>
                   </SwiperSlide>
-                );
-              })}
+                ))
+              ) : (
+                <SwiperSlide>
+                  <div className="slider__image">
+                    <img
+                      src={singleProduct?.thumbnail}
+                      alt="Product Thumbnail"
+                    />
+                  </div>
+                </SwiperSlide>
+              )}
+
               <div className="slider__prev absolute top-1/2 left-3 bg-primaryRed z-[1000]">
                 <MdKeyboardArrowLeft className="fill-white" />
               </div>
