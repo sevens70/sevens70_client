@@ -286,7 +286,9 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row justify-between items-center w-full my-5 md:mt-0 ">
               <p className="text-sm text-dark-600 ">
                 2024 © All rights reserved by{" "}
-                <span className="underline text-dark-600">ecarto</span>
+                <span className="underline text-dark-600">
+                  <Link href="https://www.facebook.com/sevens7.0">Sevens</Link>
+                </span>
               </p>
 
               <p className="text-sm text-dark-600 ">

@@ -730,7 +730,7 @@ const Header = () => {
       </header>
       <Drawer open={open} onClose={closeDrawer} className="p-4">
         <div className="mb-6 flex items-center justify-between">
-          <a href="/">
+          {/* <a href="/">
             <img
               priority="true"
               src="/Logo.png"
@@ -739,7 +739,29 @@ const Header = () => {
               width={300}
               height={300}
             />
-          </a>
+          </a> */}
+          <Link href="/">
+            {websiteInfo?.length > 0 ? (
+              <img
+                priority="true"
+                // src="/Logo.png"
+                src={websiteInfo[0]?.logoUrl}
+                alt="logo"
+                className="max-w-[150px] max-h-[30px] w-full h-full"
+                width={300}
+                height={300}
+              />
+            ) : (
+              <img
+                priority="true"
+                src="/Logo.png"
+                alt="logo"
+                className="max-w-[150px] w-full h-full"
+                width={300}
+                height={300}
+              />
+            )}
+          </Link>
           <IconButton
             variant="text"
             color="blue-gray"
