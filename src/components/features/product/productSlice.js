@@ -99,7 +99,6 @@ export const productSlice = createSlice({
       })
       .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
         state.status = "success";
-        // console.log("allCatgories 01 02", action.payload);
         state.categories = action.payload;
       })
       .addCase(fetchCategoriesAsync.rejected, (state, action) => {

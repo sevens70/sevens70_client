@@ -1,7 +1,6 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export function createUser(userData) {
-  console.log("1237 data userData", userData);
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/auth/signup`, {
       method: "POST",

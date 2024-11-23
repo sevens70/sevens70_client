@@ -80,7 +80,6 @@ function NewArrival() {
       setDisplayProduct(topProducts);
     }
   }, [allProducts]);
-  console.log("display product 0000000000000", displayProduct);
   return (
     <section className="w-11/12 mt-20 pb-10 relative md:w-10/12 mx-auto">
       <div className="flex flex-wrap md:justify-center justify-start items-center gap-3 mb-10">

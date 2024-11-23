@@ -93,7 +93,6 @@ function Checkout() {
       toast.error("Enter Address and Payment method");
     }
   };
-  // console.log("status 001", status);
   return (
     <>
       {/* {!items.length && <Navigate to="/" replace={true}></Navigate>} */}
@@ -120,7 +119,6 @@ function Checkout() {
               className="bg-white px-5 py-12 mt-12"
               noValidate
               onSubmit={handleSubmit((data) => {
-                console.log("user details data 01", data);
                 dispatch(
                   updateUserAsync({
                     ...user,

@@ -4,7 +4,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export function fetchAllBanner() {
   const token = sessionStorage.getItem("authToken");
-  console.log("BASE_URL 123", BASE_URL);
   return new Promise(async (resolve) => {
     const response = await fetch(`${BASE_URL}/banner`, {
       headers: {

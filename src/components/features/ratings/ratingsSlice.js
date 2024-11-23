@@ -35,9 +35,7 @@ export const fetchAllRatingByAsync = createAsyncThunk(
 export const fetchAllRatingByUserIdAsync = createAsyncThunk(
   "rating/fetchAllRatingByUserId",
   async ({ user }) => {
-    console.log("response 000 pre", user);
     const response = await fetchAllRatingByUserId(user);
-    console.log("response 000", response);
     return response.data;
   }
 );
@@ -45,7 +43,6 @@ export const deleteItemFromRatingsAsync = createAsyncThunk(
   "rating/deleteItemFromRatings",
   async (itemId) => {
     const response = await deleteItemFromRatings(itemId);
-    console.log("response for ratings", response);
     if (response.status === 200) {
       toast.success("Deleted successfully");
     }

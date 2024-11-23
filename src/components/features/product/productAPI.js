@@ -129,7 +129,6 @@ export function fetchCategories() {
 export function createSubCategories(payload) {
   const token = sessionStorage.getItem("authToken");
   return new Promise(async (resolve) => {
-    console.log("12345", payload);
     const response = await fetch(`${BASE_URL}/categories/add-subcategory`, {
       method: "POST",
       body: JSON.stringify(payload),

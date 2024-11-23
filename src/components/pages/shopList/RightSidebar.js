@@ -119,7 +119,6 @@ function RightSidebar() {
   };
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
-    // console.log("object id 33", prdDocumentId);
     if (prdDocumentId) {
       dispatch(deleteItemFromFavouriteAsync(prdDocumentId?.id));
     }
@@ -127,7 +126,6 @@ function RightSidebar() {
 
   useEffect(() => {
     if (Object.keys(selectedFilterQueries)?.length > 0) {
-      console.log("1234 clicked", selectedFilterQueries);
       const pagination = {
         _page: 1,
         _limit: selectedNumber.value !== "all" ? selectedNumber.value : 1000,
