@@ -5,14 +5,13 @@ import {
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
   Accordion,
   AccordionHeader,
   AccordionBody,
   Checkbox,
   Slider,
 } from "@material-tailwind/react";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useAppSelector } from "../../../lib/hooks";
 import { getCarrency } from "../../../lib/features/currencySlice";
 function CommonCategory({
@@ -23,28 +22,35 @@ function CommonCategory({
   handlePriceChange,
 }) {
   const currencyData = useAppSelector(getCarrency);
+
+  const [isOpen, setIsOpen] = useState(true); // Default is open
+  const toggleAccordion = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  console.log("allow & data", isOpen, data);
+
   return (
     <div>
       <List>
         <Accordion
-          // open={open === 1}
-          open={true}
+          open={isOpen}
           icon={
             <ChevronDownIcon
               strokeWidth={2.5}
-              className="mx-auto h-4 w-4"
-              // className={`mx-auto h-4 w-4 transition-transform ${
-              //   open === 1 ? "rotate-180" : ""
-              // }`}
+              className={`mx-auto h-4 w-4 transition-transform ${
+                isOpen ? "rotate-180" : ""
+              }`}
             />
           }
         >
           <ListItem
             className="p-0 bg-hidden hover:bg-hidden h-[40px]"
-            // selected={open === 1}
+            selected={isOpen}
           >
             <AccordionHeader
-              // onClick={() => handleOpen(1)}
+              // onClick={() => toggleAccordion(data.id)}
+              onClick={toggleAccordion}
               className="border-b-0 p-3"
             >
               <Typography
@@ -60,7 +66,6 @@ function CommonCategory({
               {data.type === "slider" ? (
                 <div className="price-filter px-3">
                   <Slider
-                    // defaultValue={50}
                     size="sm"
                     max={1000}
                     className="text-[#F87643]"
@@ -72,7 +77,7 @@ function CommonCategory({
                   />
                   <p className="text-xsm text-dark-700 mt-2">
                     {`Price: ${currencyData?.symbol} 0 - ${currencyData?.symbol} ${price}`}
-                  </p>{" "}
+                  </p>
                 </div>
               ) : (
                 data.options?.map((value, idx) => (
@@ -86,57 +91,47 @@ function CommonCategory({
                   >
                     <ListItemPrefix>
                       {(data.title === "Sorting Order" ||
-                        data.title === "Prodcut Category" ||
+                        data.title === "Product Category" ||
                         data.title === "Filter by size" ||
                         data.title === "Brand") && (
-                        <>
-                          <CheckboxAndRadioGroup key={value}>
-                            <CheckboxAndRadioItem
-                              type={data.type}
-                              name={data.id}
-                              id={value.toLowerCase().trim()}
-                              label={value}
-                              value={value.toLowerCase().trim()}
-                              checked={isChecked(data.id, value)}
-                              onChange={onChange}
-                              className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent cursor-pointer"
-                            />
-                          </CheckboxAndRadioGroup>
-                        </>
+                        <CheckboxAndRadioGroup key={value}>
+                          <CheckboxAndRadioItem
+                            type={data.type}
+                            name={data.id}
+                            id={value.toLowerCase().trim()}
+                            label={value}
+                            value={value.toLowerCase().trim()}
+                            checked={isChecked(data.id, value)}
+                            onChange={onChange}
+                            className="h-5 w-5 rounded-full text-white bg-gray-900/10 transition-all hover:scale-105 hover:before:opacity-0 checked:bg-transparent cursor-pointer"
+                          />
+                        </CheckboxAndRadioGroup>
                       )}
-
                       {data.title === "Filter by color" && (
-                        <>
-                          <CheckboxAndRadioGroup key={value.id || value}>
-                            <CheckboxAndRadioItem
-                              type={data.type}
-                              name={data.id}
-                              id={
-                                value.id.toLowerCase().trim() ||
-                                value.toLowerCase().trim()
-                              }
-                              label={value?.name || value}
-                              value={
-                                value.id?.toLowerCase().trim() ||
-                                value.toLowerCase().trim()
-                              }
-                              checked={isChecked(data.id, value?.id || value)}
-                              onChange={onChange}
-                              style={{
-                                backgroundColor: value?.selectedClass || value,
-                              }}
-                              className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
-                            />
-                          </CheckboxAndRadioGroup>
-                        </>
+                        <CheckboxAndRadioGroup key={value.id || value}>
+                          <CheckboxAndRadioItem
+                            type={data.type}
+                            name={data.id}
+                            id={
+                              value.id.toLowerCase().trim() ||
+                              value.toLowerCase().trim()
+                            }
+                            label={value?.name || value}
+                            value={
+                              value.id?.toLowerCase().trim() ||
+                              value.toLowerCase().trim()
+                            }
+                            checked={isChecked(data.id, value?.id || value)}
+                            onChange={onChange}
+                            style={{
+                              backgroundColor: value?.selectedClass || value,
+                            }}
+                            className="h-7 w-7 rounded-full bg-dark-500 transition-all hover:scale-105 hover:before:opacity-0 checked:border-transparent"
+                          />
+                        </CheckboxAndRadioGroup>
                       )}
                     </ListItemPrefix>
                     {value?.name || value}
-                    {/* {data.title !== "Filter by color" && (
-                      <ListItemSuffix className="text-grey-200 text-base mr-1">
-                        ({1})dd
-                      </ListItemSuffix>
-                    )} */}
                   </ListItem>
                 ))
               )}
@@ -147,17 +142,17 @@ function CommonCategory({
     </div>
   );
 }
+
 function CheckboxAndRadioGroup({ children }) {
   return <div className="">{children}</div>;
 }
+
 function CheckboxAndRadioItem({ id, label, type, ...props }) {
   return (
     <>
       {type === "checkbox" && <Checkbox ripple={false} {...props} />}
       {type === "radio" && (
-        <>
-          <input type="radio" id={id} className="w-4 h-4 shrink-0" {...props} />
-        </>
+        <input type="radio" id={id} className="w-4 h-4 shrink-0" {...props} />
       )}
     </>
   );

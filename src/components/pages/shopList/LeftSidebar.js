@@ -71,7 +71,7 @@ const filterOptions = [
   },
   {
     id: "category",
-    title: "Prodcut Category",
+    title: "Product Category",
     options: [],
     type: "checkbox",
   },
@@ -141,7 +141,6 @@ function LeftSidebar() {
     }
     return option;
   });
-
 
   const handlePriceChange = (e) => {
     setPrice(parseInt(e?.target.value));

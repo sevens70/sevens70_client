@@ -246,7 +246,6 @@ function OrdersPage() {
                                 (ratingItem) =>
                                   ratingItem?.product?.id === item?.product?.id
                               );
-
                               return (
                                 <button
                                   onClick={() => {
@@ -254,23 +253,25 @@ function OrdersPage() {
                                     setSize("sm");
                                   }}
                                   className={`rounded capitalize block px-2 py-1 border border-black 
-                                 ${
-                                   order?.status === "delivered" && !matchedId
-                                     ? "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
-                                     : "bg-gray-300 cursor-not-allowed"
-                                 }
-                           ${
-                             order?.items?.length === 1
-                               ? ""
-                               : index === order.items.length - 1
-                               ? "mb-0"
-                               : "mb-8"
-                           }
-                                     `}
-                                  // disabled={
-                                  //   order?.status !== "delivered" ||
-                                  //   (order?.status === "delivered" && matchedId)
-                                  // }
+                                  ${
+                                    (order?.status === "delivered" &&
+                                      matchedId) ||
+                                    order?.status !== "delivered"
+                                      ? "bg-gray-300 cursor-not-allowed"
+                                      : "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                                  }
+                                  ${
+                                    order?.items?.length === 1
+                                      ? ""
+                                      : index === order.items.length - 1
+                                      ? "mb-0"
+                                      : "mb-8"
+                                  }`}
+                                  disabled={
+                                    (order?.status === "delivered" &&
+                                      matchedId) ||
+                                    order?.status !== "delivered"
+                                  }
                                 >
                                   {order?.status === "delivered" && matchedId
                                     ? "Reviewed"

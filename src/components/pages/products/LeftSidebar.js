@@ -59,7 +59,7 @@ const filterOptions = [
   },
   {
     id: "categories",
-    title: "Prodcut Category",
+    title: "Product Category",
     options: categories,
     type: "checkbox",
   },
