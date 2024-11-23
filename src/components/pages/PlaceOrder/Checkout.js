@@ -79,16 +79,18 @@ function Checkout() {
 
   const handleOrder = (e) => {
     if (selectedAddress && paymentMethod) {
-      const order = {
-        items,
-        totalAmount,
-        totalItems,
-        user: user.id,
-        paymentMethod,
-        selectedAddress,
-        status: "pending", // other status can be delivered, received.
-      };
-      dispatch(createOrderAsync(order));
+      console.log(paymentMethod);
+      
+      // const order = {
+      //   items,
+      //   totalAmount,
+      //   totalItems,
+      //   user: user.id,
+      //   paymentMethod,
+      //   selectedAddress,
+      //   status: "pending", // other status can be delivered, received.
+      // };
+      // dispatch(createOrderAsync(order));
     } else {
       toast.error("Enter Address and Payment method");
     }
