@@ -28,6 +28,38 @@ import { getCarrency } from "../../../lib/features/currencySlice";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
+const ConfirmModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+        </div>
+        <div className="mb-6">
+          <p className="text-gray-600">{message}</p>
+        </div>
+        <div className="flex justify-end space-x-3">
+          <button
+            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
+            onClick={onCancel}
+          >
+            Cancel
+          </button>
+          <button
+            id="bKash_button"
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            onClick={onConfirm}
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function Checkout() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -76,7 +108,6 @@ function Checkout() {
   const initializeBkashPayment = () => {
     console.log("initialized");
     $("#bKash_button").removeAttr("disabled");
-    let paymentID = "";
 
     bKash.init({
       paymentMode: "checkout",
@@ -107,12 +138,8 @@ function Checkout() {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("data", data);
-
             if (data.status === "successful") {
-              paymentID = data.data.paymentID;
               setBKashPayId(data.data.paymentID);
-              console.log("paymentID => ", paymentID);
               bKash.create().onSuccess(data.data);
             } else {
               bKash.create().onError();
@@ -173,24 +200,35 @@ function Checkout() {
 
   const handleOrder = (e) => {
     if (selectedAddress && paymentMethod) {
-      console.log(paymentMethod);
-      if (paymentMethod === "cash") {
-        initializeBkashPayment();
+      if (paymentMethod === "card") {
+        // initializeBkashPayment();
+        // handleOpenModal();
+      } else {
+        const order = {
+          items,
+          totalAmount,
+          totalItems,
+          user: user.id,
+          paymentMethod,
+          selectedAddress,
+          status: "pending",
+        };
+        dispatch(createOrderAsync(order));
       }
-
-      // const order = {
-      //   items,
-      //   totalAmount,
-      //   totalItems,
-      //   user: user.id,
-      //   paymentMethod,
-      //   selectedAddress,
-      //   status: "pending", // other status can be delivered, received.
-      // };
-      // dispatch(createOrderAsync(order));
     } else {
       toast.error("Enter Address and Payment method");
     }
+  };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
+
+  const handleConfirm = () => {
+    console.log("Action confirmed!");
+    initializeBkashPayment();
+    handleCloseModal();
   };
 
   useEffect(() => {
@@ -202,8 +240,10 @@ function Checkout() {
   }, [status]);
 
   useEffect(() => {
-    initializeBkashPayment();
-  }, [totalAmount, bKashPayId]);
+    if (paymentMethod === "card" && selectedAddress) {
+      initializeBkashPayment();
+    }
+  }, [totalAmount, bKashPayId, paymentMethod, selectedAddress]);
 
   return (
     <>
@@ -223,6 +263,14 @@ function Checkout() {
       ) : (
 
       )} */}
+      {/* <ConfirmModal
+        isOpen={isModalOpen}
+        title="Confirm Action"
+        message="Do you want to pay with bKash?"
+        onConfirm={handleConfirm}
+        onCancel={handleCloseModal}
+      /> */}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
@@ -538,7 +586,7 @@ function Checkout() {
                         htmlFor="card"
                         className="block text-sm font-medium leading-6 text-gray-900 cursor-pointer"
                       >
-                        Card Payment
+                        Pay with Bkash
                       </label>
                     </div>
                   </div>
@@ -639,13 +687,22 @@ function Checkout() {
                 </div>
 
                 <div className="mt-6">
-                  <div
-                    id="bKash_button"
-                    onClick={handleOrder}
-                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
-                  >
-                    Order Now
-                  </div>
+                  {selectedAddress && paymentMethod === "card" ? (
+                    <div
+                      id="bKash_button"
+                      onClick={handleOrder}
+                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                    >
+                      Order Now with Bkash
+                    </div>
+                  ) : (
+                    <div
+                      onClick={handleOrder}
+                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                    >
+                      Order Now
+                    </div>
+                  )}
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>
