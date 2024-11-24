@@ -1,6 +1,7 @@
 // import { Link } from "react-router-dom";
 "use client";
 import { useSelector, useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
 import {
   deleteItemFromCartAsync,
   resetCartAsync,
@@ -24,6 +25,8 @@ import { useAppSelector } from "../../../lib/hooks";
 import { useRouter } from "next/navigation";
 // import Loader from "../../common/Loader";
 import { getCarrency } from "../../../lib/features/currencySlice";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -69,18 +72,63 @@ function Checkout() {
     setPaymentMethod(e.target.value);
   };
 
-  useEffect(() => {
-    if (status === "success") {
-      dispatch(resetCartAsync());
-      toast.success("Order created successfully");
-      router.push("/orders");
-    }
-  }, [status]);
+  const initializeBkashPayment = () => {
+    let paymentID = "";
+    $("#bKash_button").removeAttr("disabled");
+
+    bKash.init({
+      paymentMode: "checkout",
+      paymentRequest: {
+        amount: totalAmount,
+        intent: "sale",
+      },
+      createRequest: function () {
+        document.getElementById("bKashFrameWrapper").style.display = "block";
+
+        fetch(`${BASE_URL}/bkash/init`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            amount: totalAmount,
+            merchantInvoiceNumber: nanoid(),
+            cart: items,
+            items,
+            totalAmount,
+            totalItems,
+            user: user.id,
+            paymentMethod,
+            selectedAddress,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "successful") {
+              paymentID = data.data.paymentID;
+              bKash.create().onSuccess(data.data);
+            } else {
+              bKash.create().onError();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error("Can not connect to server");
+          });
+      },
+      executeRequestOnAuthorization: function () {},
+      onClose: function () {},
+    });
+  };
 
   const handleOrder = (e) => {
     if (selectedAddress && paymentMethod) {
       console.log(paymentMethod);
-      
+      if (paymentMethod === "cash") {
+        initializeBkashPayment();
+      }
+
       // const order = {
       //   items,
       //   totalAmount,
@@ -95,7 +143,19 @@ function Checkout() {
       toast.error("Enter Address and Payment method");
     }
   };
-  // console.log("status 001", status);
+
+  useEffect(() => {
+    if (status === "success") {
+      dispatch(resetCartAsync());
+      toast.success("Order created successfully");
+      router.push("/orders");
+    }
+  }, [status]);
+
+  useEffect(() => {
+    initializeBkashPayment();
+  }, []);
+
   return (
     <>
       {/* {!items.length && <Navigate to="/" replace={true}></Navigate>} */}
@@ -112,7 +172,7 @@ function Checkout() {
       {/* {status === "loading" ? (
         <Loader />
       ) : (
-    
+
       )} */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
@@ -531,6 +591,7 @@ function Checkout() {
 
                 <div className="mt-6">
                   <div
+                    id="bKash_button"
                     onClick={handleOrder}
                     className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
