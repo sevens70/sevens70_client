@@ -54,6 +54,7 @@ function Checkout() {
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [bKashPayId, setBKashPayId] = useState("");
 
   const handleQuantity = (e, item) => {
     dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
@@ -73,8 +74,9 @@ function Checkout() {
   };
 
   const initializeBkashPayment = () => {
-    let paymentID = "";
+    console.log("initialized");
     $("#bKash_button").removeAttr("disabled");
+    let paymentID = "";
 
     bKash.init({
       paymentMode: "checkout",
@@ -105,8 +107,12 @@ function Checkout() {
         })
           .then((res) => res.json())
           .then((data) => {
+            console.log("data", data);
+
             if (data.status === "successful") {
               paymentID = data.data.paymentID;
+              setBKashPayId(data.data.paymentID);
+              console.log("paymentID => ", paymentID);
               bKash.create().onSuccess(data.data);
             } else {
               bKash.create().onError();
@@ -117,8 +123,51 @@ function Checkout() {
             message.error("Can not connect to server");
           });
       },
-      executeRequestOnAuthorization: function () {},
-      onClose: function () {},
+      executeRequestOnAuthorization: function () {
+        console.log("bkash", bKashPayId);
+
+        fetch(`${BASE_URL}/bkash/exec`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            paymentID: bKashPayId,
+            user: user.id,
+            totalAmount,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.errorCode !== undefined) {
+              bKash.execute().onError();
+            } else {
+              const order = {
+                items,
+                totalAmount,
+                totalItems,
+                user: user.id,
+                paymentMethod,
+                selectedAddress,
+                status: "pending",
+              };
+              dispatch(createOrderAsync(order));
+              document.getElementById("bKashFrameWrapper").style.display =
+                "none";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("Unable to create the payment");
+            document.getElementById("bKashFrameWrapper").style.display = "none";
+            bKash.execute().onError();
+          });
+      },
+      onClose: function () {
+        document.getElementById("bKashFrameWrapper").style.display = "none";
+        toast.error("Payment Canceled");
+      },
     });
   };
 
@@ -154,7 +203,7 @@ function Checkout() {
 
   useEffect(() => {
     initializeBkashPayment();
-  }, []);
+  }, [totalAmount, bKashPayId]);
 
   return (
     <>
