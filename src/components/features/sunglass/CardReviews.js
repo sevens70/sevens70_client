@@ -71,7 +71,7 @@ export default function CardReviews() {
         </h2>
         <div className="px[20px] md:px[50px] lg:px-[150px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 sm:px-8 lg:px-16">
           {/* =================== */}
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -139,7 +139,7 @@ export default function CardReviews() {
               </Tooltip>
             </CardFooter>
           </Card>
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -207,7 +207,7 @@ export default function CardReviews() {
               </Tooltip>
             </CardFooter>
           </Card>
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -275,7 +275,7 @@ export default function CardReviews() {
               </Tooltip>
             </CardFooter>
           </Card>
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -343,7 +343,7 @@ export default function CardReviews() {
               </Tooltip>
             </CardFooter>
           </Card>
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -411,7 +411,7 @@ export default function CardReviews() {
               </Tooltip>
             </CardFooter>
           </Card>
-          <Card className="w-96">
+          <Card className="w-[100%]">
             <CardHeader
               floated={false}
               shadow="none"
@@ -480,32 +480,32 @@ export default function CardReviews() {
             </CardFooter>
           </Card>
 
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>
           </div>
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>
           </div>
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>
           </div>
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>
           </div>
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>
           </div>
-          <div className="w-96 max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+          <div className="w-[100%] max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
               <span className="text-blue-500 text-3xl font-bold">▶</span>
             </div>

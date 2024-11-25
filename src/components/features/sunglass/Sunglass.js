@@ -4,6 +4,7 @@ import SunglassBanner from "./SunglassBanner";
 import Headline from "./Headline";
 import SliderPage from "./SliderPage";
 import CardReviews from "./CardReviews";
+import OrderForm from "./OrderForm";
 import FooterSection from "./FooterSection";
 export default function Sunglass() {
   return (
@@ -13,6 +14,7 @@ export default function Sunglass() {
         <Headline />
         <SliderPage />
         <CardReviews />
+        <OrderForm />
         <FooterSection />
         {/* ); */}
       </div>
