@@ -43,7 +43,6 @@ const breakpoints = {
 function Categories() {
   const allProducts = useAppSelector(selectAllProducts);
   const status = useAppSelector(selectProductListStatus);
-  console.log("allProducts 11", allProducts, status);
   const matchedCategories = allProducts?.reduce((acc, product) => {
     const productCategory = product.category.toLowerCase();
     if (

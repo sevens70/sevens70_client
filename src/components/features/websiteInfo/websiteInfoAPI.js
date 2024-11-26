@@ -11,7 +11,6 @@ export function fetchWebsiteInfo() {
       credentials: "include",
     });
     const data = await response.json();
-    console.log("data for website info", data);
     resolve({ data });
   });
 }

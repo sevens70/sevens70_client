@@ -787,7 +787,13 @@ const Header = () => {
         <nav className="gap-2 flex flex-col">
           {menu.map((item, key) => (
             <Link
-              href={item.url}
+              // href={item.url}
+              href={{
+                pathname: "/shop",
+                query: {
+                  category: `${item?.name?.toLowerCase()}`,
+                },
+              }}
               className="flex items-center gap-2 py-2 px-3 group"
               onClick={closeDrawer}
               key={key}

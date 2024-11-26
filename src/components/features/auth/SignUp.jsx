@@ -203,7 +203,6 @@ function SignUp() {
                 noValidate
                 className="space-y-6"
                 onSubmit={handleSubmit((data) => {
-                  console.log("1237 data", data);
                   setIsDisabled(true);
                   dispatch(
                     createUserAsync({
@@ -214,7 +213,7 @@ function SignUp() {
                       role: "user",
                     })
                   );
-                  console.log(data);
+            
                 })}
               >
                 <div className="mb-4">

@@ -85,7 +85,7 @@ function CommonCategory({
                   >
                     <ListItemPrefix>
                       {(data.title === "Sorting Order" ||
-                        data.title === "Prodcut Category" ||
+                        data.title === "Product Category" ||
                         data.title === "Filter by size" ||
                         data.title === "Categories" ||
                         data.title === "Shoe Type" ||

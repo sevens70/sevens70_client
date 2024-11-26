@@ -23,15 +23,19 @@ import { fetchWebsiteInfoAsync } from "../components/features/websiteInfo/websit
 import { fetchAllBannerAsync } from "../components/features/banners/bannersSlice";
 import { fetchAllRatingByAsync } from "../components/features/ratings/ratingsSlice";
 import { fetchTopBannersAsync } from "../components/features/topBanners/topBannersSlice";
-
+import { getAuthToken } from "../lib/utils/utils";
 export default function MainPage() {
   const dispatch = useAppDispatch();
+  const token = getAuthToken();
   const user = useAppSelector(selectLoggedInUser);
   // const userChecked = useAppSelector(selectUserChecked);
   // const router = useRouter();
 
   useEffect(() => {
-    dispatch(checkAuthAsync());
+    // dispatch(checkAuthAsync());
+    if (token) {
+      dispatch(checkAuthAsync());
+    }
     dispatch(fetchWebsiteInfoAsync());
     dispatch(fetchTopBannersAsync());
     dispatch(fetchAllBannerAsync()); //it's for offer section
@@ -42,7 +46,7 @@ export default function MainPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       dispatch(fetchLoggedInUserAsync());
       dispatch(fetchItemsByUserIdAsync());
       dispatch(fetchFavouriteItemsByUserIdAsync());
@@ -51,7 +55,7 @@ export default function MainPage() {
     // {
     //   router.push("/auth/signin");
     // }
-  }, [dispatch, user]);
+  }, [dispatch, user, token]);
 
   return (
     <div>

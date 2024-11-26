@@ -67,6 +67,7 @@ a {
   }
   input::placeholder {
     font-family: jost !important;
+    /* color: black; */
   }
   table {
     font-family: jost !important;

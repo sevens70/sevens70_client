@@ -41,7 +41,6 @@ function OrdersPage() {
 
   const handleSort = (sortOption) => {
     const sort = { _sort: sortOption.sort, _order: sortOption.order };
-    console.log({ sort });
     setSort(sort);
   };
 
@@ -65,7 +64,6 @@ function OrdersPage() {
     dispatch(fetchAllRatingByUserIdAsync({ user }));
   }, [dispatch]);
   useEffect(() => {
-    // console.log("1234 user & status", user, status);
     const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
     dispatch(fetchAllOrderByUserIdAsync({ sort, pagination, user }));
   }, [dispatch, page, sort]);
@@ -243,7 +241,6 @@ function OrdersPage() {
                                 (ratingItem) =>
                                   ratingItem?.product?.id === item?.product?.id
                               );
-
                               return (
                                 <button
                                   onClick={() => {

@@ -48,7 +48,6 @@ export const deleteItemFromFavouriteAsync = createAsyncThunk(
   "favourite/deleteItemFromFavourite",
   async (itemId) => {
     const response = await deleteItemFromFavourite(itemId);
-    console.log("response for fav", response);
     if (response.status === 200) {
       toast.success("Deleted successfully");
     }
@@ -82,7 +81,6 @@ export const favouriteSlice = createSlice({
       })
       .addCase(fetchFavouriteItemsByUserIdAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log("items fav action payload", action.payload);
         state.items = action.payload;
         state.cartLoaded = true;
       })

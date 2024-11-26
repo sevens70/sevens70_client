@@ -70,9 +70,7 @@ export function deleteItemFromRatings(ratingId) {
       },
       credentials: "include",
     });
-    console.log("response for rating in fetch", response?.status);
-    const data = await response.json();
-    console.log("response for fav in fetch 011", data);
+    // const data = await response.json();
     resolve({ data: { id: ratingId }, status: response.status });
   });
 }

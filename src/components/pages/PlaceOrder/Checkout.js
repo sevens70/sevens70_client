@@ -243,7 +243,6 @@ function Checkout() {
               className="bg-white px-5 py-12 mt-12"
               noValidate
               onSubmit={handleSubmit((data) => {
-                console.log("user details data 01", data);
                 dispatch(
                   updateUserAsync({
                     ...user,
@@ -658,7 +657,7 @@ function Checkout() {
                       className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
                         isOrdering ? "opacity-50 cursor-not-allowed" : ""
                       }`}
-                     disabled={isOrdering}
+                      disabled={isOrdering}
                     >
                       {isOrdering ? "Submitting Order" : "Order Now with Bkash"}
                     </button>
@@ -668,7 +667,7 @@ function Checkout() {
                       className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
                         isOrdering ? "opacity-50 cursor-not-allowed" : ""
                       }`}
-                     disabled={isOrdering}
+                      disabled={isOrdering}
                     >
                       {isOrdering ? "Submitting Order" : "Order Now"}
                     </button>

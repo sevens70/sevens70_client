@@ -50,10 +50,7 @@ function StarIcon() {
 }
 
 function CardReview({ filteredReview }) {
-  // const clientData = useAppSelector(selectRatingItems);
-  console.log("1234 clientData", filteredReview);
   return (
-    // <section className="w-11/12 mt-10 pb-10 relative md:w-10/12 mx-auto">
     <section className=" mx-auto font-jost">
       <Slider
         className="overflow-hidden"

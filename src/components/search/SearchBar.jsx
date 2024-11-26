@@ -21,7 +21,6 @@ export const SearchBar = ({ setResults, input, setInput, allProducts }) => {
 
   const handleChange = (value) => {
     setInput(value);
-    // fetchData(value);
     const results = allProducts.filter((product) => {
       return (
         value &&
@@ -30,7 +29,6 @@ export const SearchBar = ({ setResults, input, setInput, allProducts }) => {
         product.title.toLowerCase().includes(value.toLowerCase())
       );
     });
-    // console.log("results 1234", results);
     setResults(results);
   };
 
