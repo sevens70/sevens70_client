@@ -22,8 +22,8 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${jost.variable} ${montserrat.variable}`}>
       <body className={jost.className}>
         <Script src="https://code.jquery.com/jquery-3.6.0.min.js" />
-
-        <Script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js" />
+        {/* <Script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js" /> */}
+        <Script src="https://scripts.pay.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout.js" />
 
         {/* Main Application */}
         <ReduxProvider>
