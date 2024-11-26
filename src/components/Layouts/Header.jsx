@@ -155,7 +155,7 @@ const Header = () => {
       setIsDisabled(false);
     }
   }, [status]);
-  console.log("lastVisitedPath 123 status", status);
+
   React.useEffect(() => {
     window.addEventListener(
       "resize",

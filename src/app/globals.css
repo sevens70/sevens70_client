@@ -199,3 +199,7 @@ input::placeholder {
     display: none;
   }
 } */
+input {
+  font-family: Josh, "josh", Courier, monospace !important;
+  color: gray;
+}
