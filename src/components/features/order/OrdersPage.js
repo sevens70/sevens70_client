@@ -97,10 +97,8 @@ function OrdersPage() {
   };
   return (
     <div className="w-full overflow-auto">
-      {" "}
       <div className=" relative overflow-auto !overflow-x-auto">
         <div className=" bg-gray-100 font-sans flex items-center justify-center">
-          {/* <div className="w-full"> */}
           <div className="w-full rounded bg-white overflow-auto shadow-md">
             <table className="table-auto">
               <thead className="font-jost font-medium">
@@ -250,24 +248,22 @@ function OrdersPage() {
                                     setSize("sm");
                                   }}
                                   className={`rounded capitalize block px-2 py-1 border border-black 
-                                  ${
-                                    (order?.status === "delivered" &&
-                                      matchedId) ||
-                                    order?.status !== "delivered"
-                                      ? "bg-gray-300 cursor-not-allowed"
-                                      : "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
-                                  }
-                                  ${
-                                    order?.items?.length === 1
-                                      ? ""
-                                      : index === order.items.length - 1
-                                      ? "mb-0"
-                                      : "mb-8"
-                                  }`}
+                                 ${
+                                   order?.status === "delivered" && !matchedId
+                                     ? "bg-[#fefefe] hover:shadow-[#ea4335]/20 focus:shadow-[#ea4335]/20 active:shadow-[#ea4335]/10"
+                                     : "bg-gray-300 cursor-not-allowed"
+                                 }
+                           ${
+                             order?.items?.length === 1
+                               ? ""
+                               : index === order.items.length - 1
+                               ? "mb-0"
+                               : "mb-8"
+                           }
+                                     `}
                                   disabled={
-                                    (order?.status === "delivered" &&
-                                      matchedId) ||
-                                    order?.status !== "delivered"
+                                    order?.status !== "delivered" ||
+                                    (order?.status === "delivered" && matchedId)
                                   }
                                 >
                                   {order?.status === "delivered" && matchedId

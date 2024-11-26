@@ -46,7 +46,7 @@ const data = [
 ];
 const Footer = () => {
   const websiteInfo = useAppSelector(selectWebsiteInfo);
-  console.log("websiteInfo 123", websiteInfo);
+
   return (
     <footer className="pt-10 !bg-pageBg custom-container overflow-x-hidden">
       <div className="w-11/12 md:w-10/12 mx-auto">

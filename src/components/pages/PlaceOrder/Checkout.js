@@ -1,6 +1,7 @@
 // import { Link } from "react-router-dom";
 "use client";
 import { useSelector, useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
 import {
   deleteItemFromCartAsync,
   resetCartAsync,
@@ -24,6 +25,8 @@ import { useAppSelector } from "../../../lib/hooks";
 import { useRouter } from "next/navigation";
 // import Loader from "../../common/Loader";
 import { getCarrency } from "../../../lib/features/currencySlice";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -49,8 +52,11 @@ function Checkout() {
     ) + deliveryCharge;
   const totalItems = items?.reduce((total, item) => item.quantity + total, 0);
 
+  const [isOrdering, setIsOrdering] = useState(false);
+
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [bKashPayId, setBKashPayId] = useState("");
 
   const handleQuantity = (e, item) => {
     dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
@@ -69,6 +75,126 @@ function Checkout() {
     setPaymentMethod(e.target.value);
   };
 
+  const initializeBkashPayment = () => {
+    console.log("initialized");
+    $("#bKash_button").removeAttr("disabled");
+
+    bKash.init({
+      paymentMode: "checkout",
+      paymentRequest: {
+        amount: totalAmount,
+        intent: "sale",
+      },
+      createRequest: function () {
+        document.getElementById("bKashFrameWrapper").style.display = "block";
+
+        fetch(`${BASE_URL}/bkash/init`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            amount: totalAmount,
+            merchantInvoiceNumber: nanoid(),
+            cart: items,
+            items,
+            totalAmount,
+            totalItems,
+            user: user.id,
+            paymentMethod,
+            selectedAddress,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === "successful") {
+              setBKashPayId(data.data.paymentID);
+              bKash.create().onSuccess(data.data);
+            } else {
+              bKash.create().onError();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            message.error("Can not connect to server");
+          });
+      },
+      executeRequestOnAuthorization: function () {
+        console.log("bkash", bKashPayId);
+
+        fetch(`${BASE_URL}/bkash/exec`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            paymentID: bKashPayId,
+            user: user.id,
+            totalAmount,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.errorCode !== undefined) {
+              bKash.execute().onError();
+            } else {
+              const order = {
+                items,
+                totalAmount,
+                totalItems,
+                user: user.id,
+                paymentMethod,
+                selectedAddress,
+                status: "pending",
+              };
+              dispatch(createOrderAsync(order));
+              setIsOrdering(false);
+              document.getElementById("bKashFrameWrapper").style.display =
+                "none";
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsOrdering(false);
+            toast.error("Unable to create the payment");
+            document.getElementById("bKashFrameWrapper").style.display = "none";
+            bKash.execute().onError();
+          });
+      },
+      onClose: function () {
+        setIsOrdering(false);
+        document.getElementById("bKashFrameWrapper").style.display = "none";
+        toast.error("Payment Canceled");
+      },
+    });
+  };
+
+  const handleOrder = (e) => {
+    setIsOrdering(true);
+    if (selectedAddress && paymentMethod) {
+      if (paymentMethod === "card") {
+        // initializeBkashPayment();
+      } else {
+        setIsOrdering(true);
+        const order = {
+          items,
+          totalAmount,
+          totalItems,
+          user: user.id,
+          paymentMethod,
+          selectedAddress,
+          status: "pending",
+        };
+        dispatch(createOrderAsync(order));
+        setIsOrdering(false);
+      }
+    } else {
+      toast.error("Enter Address and Payment method");
+    }
+  };
+
   useEffect(() => {
     if (status === "success") {
       dispatch(resetCartAsync());
@@ -77,22 +203,12 @@ function Checkout() {
     }
   }, [status]);
 
-  const handleOrder = (e) => {
-    if (selectedAddress && paymentMethod) {
-      const order = {
-        items,
-        totalAmount,
-        totalItems,
-        user: user.id,
-        paymentMethod,
-        selectedAddress,
-        status: "pending", // other status can be delivered, received.
-      };
-      dispatch(createOrderAsync(order));
-    } else {
-      toast.error("Enter Address and Payment method");
+  useEffect(() => {
+    if (paymentMethod === "card" && selectedAddress) {
+      initializeBkashPayment();
     }
-  };
+  }, [totalAmount, bKashPayId, paymentMethod, selectedAddress]);
+
   return (
     <>
       {/* {!items.length && <Navigate to="/" replace={true}></Navigate>} */}
@@ -109,8 +225,16 @@ function Checkout() {
       {/* {status === "loading" ? (
         <Loader />
       ) : (
-    
+
       )} */}
+      {/* <ConfirmModal
+        isOpen={isModalOpen}
+        title="Confirm Action"
+        message="Do you want to pay with bKash?"
+        onConfirm={handleConfirm}
+        onCancel={handleCloseModal}
+      /> */}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
@@ -425,7 +549,7 @@ function Checkout() {
                         htmlFor="card"
                         className="block text-sm font-medium leading-6 text-gray-900 cursor-pointer"
                       >
-                        Card Payment
+                        Pay with Bkash
                       </label>
                     </div>
                   </div>
@@ -526,12 +650,28 @@ function Checkout() {
                 </div>
 
                 <div className="mt-6">
-                  <div
-                    onClick={handleOrder}
-                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
-                  >
-                    Order Now
-                  </div>
+                  {selectedAddress && paymentMethod === "card" ? (
+                    <button
+                      id="bKash_button"
+                      onClick={handleOrder}
+                      className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
+                        isOrdering ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={isOrdering}
+                    >
+                      {isOrdering ? "Submitting Order" : "Order Now with Bkash"}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleOrder}
+                      className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
+                        isOrdering ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={isOrdering}
+                    >
+                      {isOrdering ? "Submitting Order" : "Order Now"}
+                    </button>
+                  )}
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>
