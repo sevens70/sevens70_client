@@ -75,7 +75,7 @@ function TrendingProducts() {
   useEffect(() => {
     if (allProducts?.length > 0) {
       const topProducts = allProducts.filter(
-        (item) => item?.type?.toLowerCase() === "top product"
+        (item) => item?.type?.toLowerCase() === "trending product"
       );
       setDisplayProduct(topProducts);
     }

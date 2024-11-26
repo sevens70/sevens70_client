@@ -389,7 +389,7 @@ function Products() {
                   <CardBody className="text-center px-2 mb-1 mt-1">
                     <div className="flex justify-between items-center">
                       <p className="text-sm text-grey-600 capitalize">
-                        {subcategory}
+                        {category}
                       </p>
                       <h6 className="flex justify-center items-center text-dark-700">
                         <GoDotFill className="fill-primaryRed" />
