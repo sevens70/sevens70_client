@@ -28,38 +28,6 @@ import { getCarrency } from "../../../lib/features/currencySlice";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-const ConfirmModal = ({ isOpen, title, message, onConfirm, onCancel }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-        </div>
-        <div className="mb-6">
-          <p className="text-gray-600">{message}</p>
-        </div>
-        <div className="flex justify-end space-x-3">
-          <button
-            className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button
-            id="bKash_button"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            onClick={onConfirm}
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 function Checkout() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -83,6 +51,8 @@ function Checkout() {
       0
     ) + deliveryCharge;
   const totalItems = items?.reduce((total, item) => item.quantity + total, 0);
+
+  const [isOrdering, setIsOrdering] = useState(false);
 
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
@@ -180,18 +150,21 @@ function Checkout() {
                 status: "pending",
               };
               dispatch(createOrderAsync(order));
+              setIsOrdering(false);
               document.getElementById("bKashFrameWrapper").style.display =
                 "none";
             }
           })
           .catch((err) => {
             console.log(err);
+            setIsOrdering(false);
             toast.error("Unable to create the payment");
             document.getElementById("bKashFrameWrapper").style.display = "none";
             bKash.execute().onError();
           });
       },
       onClose: function () {
+        setIsOrdering(false);
         document.getElementById("bKashFrameWrapper").style.display = "none";
         toast.error("Payment Canceled");
       },
@@ -199,11 +172,12 @@ function Checkout() {
   };
 
   const handleOrder = (e) => {
+    setIsOrdering(true);
     if (selectedAddress && paymentMethod) {
       if (paymentMethod === "card") {
         // initializeBkashPayment();
-        // handleOpenModal();
       } else {
+        setIsOrdering(true);
         const order = {
           items,
           totalAmount,
@@ -214,21 +188,11 @@ function Checkout() {
           status: "pending",
         };
         dispatch(createOrderAsync(order));
+        setIsOrdering(false);
       }
     } else {
       toast.error("Enter Address and Payment method");
     }
-  };
-
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const handleOpenModal = () => setModalOpen(true);
-  const handleCloseModal = () => setModalOpen(false);
-
-  const handleConfirm = () => {
-    console.log("Action confirmed!");
-    initializeBkashPayment();
-    handleCloseModal();
   };
 
   useEffect(() => {
@@ -688,20 +652,26 @@ function Checkout() {
 
                 <div className="mt-6">
                   {selectedAddress && paymentMethod === "card" ? (
-                    <div
+                    <button
                       id="bKash_button"
                       onClick={handleOrder}
-                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
+                        isOrdering ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                     disabled={isOrdering}
                     >
-                      Order Now with Bkash
-                    </div>
+                      {isOrdering ? "Submitting Order" : "Order Now with Bkash"}
+                    </button>
                   ) : (
-                    <div
+                    <button
                       onClick={handleOrder}
-                      className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className={`flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 w-full ${
+                        isOrdering ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                     disabled={isOrdering}
                     >
-                      Order Now
-                    </div>
+                      {isOrdering ? "Submitting Order" : "Order Now"}
+                    </button>
                   )}
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
