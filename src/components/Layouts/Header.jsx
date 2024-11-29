@@ -46,6 +46,7 @@ import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
 import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
 import { SearchBar } from "../../components/search/SearchBar";
 import { SearchResultsList } from "../../components/search/SearchResultsList";
+import { getAuthToken } from "../../lib/utils/utils";
 // import Loader from "../common/Loader";
 const categories = [
   "Home",
@@ -139,6 +140,7 @@ const Header = () => {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
+  const token = getAuthToken();
   const handleLogout = () => {
     setIsDisabled(false);
     dispatch(signOutAsync());
@@ -251,6 +253,7 @@ const Header = () => {
   // if (allProductsStatus === "loading") {
   //   return <Loader />;
   // }
+  console.log("user 1234", user, token);
   return (
     <>
       <header className="sticky top-0 bg-white z-[1000] shadow shadow-dark-50/10 custom-container">
@@ -518,7 +521,7 @@ const Header = () => {
             <nav className="hidden lg:block">{navList}</nav>
             <nav className="gap-1 items-center 2xl:flex  md:flex flex">
               <div className="flex items-end gap-4">
-                {user ? (
+                {user && token !== null ? (
                   <Badge
                     className="hide__item"
                     content={
@@ -549,7 +552,7 @@ const Header = () => {
                   </IconButton>
                 )}
 
-                {user ? (
+                {user && token !== null ? (
                   <Badge
                     content={cartItems?.length > 0 ? cartItems?.length : 0}
                   >
@@ -590,7 +593,7 @@ const Header = () => {
                     </ListItem>
                   </MenuHandler>{" "}
                   <MenuList className="!z-[1000]">
-                    {user ? (
+                    {user && token !== null ? (
                       <>
                         {" "}
                         {/* <MenuItem className="flex items-center gap-2">
@@ -834,7 +837,7 @@ const Header = () => {
           {/* <Link href="/contact-us" className="btn">
             Contact Us
           </Link> */}
-          {user ? (
+          {user && token !== null ? (
             <Button className="btn flex items-center gap-2 ">
               <svg
                 width="16"

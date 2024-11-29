@@ -6,6 +6,7 @@ import Image from "next/image";
 import { authStatus, createUserAsync, selectLoggedInUser } from "./authSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { getAuthToken } from "../../../lib/utils/utils";
 
 function SignUp() {
   const router = useRouter();
@@ -20,6 +21,7 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const token = getAuthToken();
   const togglePasswordVisibility = (event) => {
     event.preventDefault();
     setShowPassword((prev) => !prev);
@@ -32,7 +34,7 @@ function SignUp() {
     if (status === "success" || status === "failed") {
       setIsDisabled(false);
     }
-    if (user) {
+    if (user && token) {
       router.push("/");
     }
   }, [user, router]);
@@ -213,7 +215,6 @@ function SignUp() {
                       role: "user",
                     })
                   );
-            
                 })}
               >
                 <div className="mb-4">

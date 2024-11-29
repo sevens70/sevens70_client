@@ -1,14 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  selectLoggedInUser,
-  loginUserAsync,
-  authStatus,
-} from "./authSlice";
+import { selectLoggedInUser, loginUserAsync, authStatus } from "./authSlice";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import { getAuthToken } from "../../../lib/utils/utils";
 const SignIn = () => {
   const dispatch = useAppDispatch();
   // const error = useAppSelector(selectError);
@@ -17,7 +14,7 @@ const SignIn = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-
+  const token = getAuthToken();
   const togglePasswordVisibility = (event) => {
     event.preventDefault();
     setShowPassword((prev) => !prev);
@@ -34,7 +31,7 @@ const SignIn = () => {
     if (status === "success" || status === "failed") {
       setIsDisabled(false);
     }
-    if (user) {
+    if (user && token) {
       const lastVisitedPath = localStorage.getItem("lastVisitedPath");
       if (lastVisitedPath) {
         localStorage.removeItem("lastVisitedPath");

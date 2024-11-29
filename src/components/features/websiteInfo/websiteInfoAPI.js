@@ -1,16 +1,12 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+import axiosInstance from "../../../lib/axiosInstance";
 
-export function fetchWebsiteInfo() {
-  const token = sessionStorage.getItem("authToken");
-  return new Promise(async (resolve) => {
-    const response = await fetch(`${BASE_URL}/settings`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
+export async function fetchWebsiteInfo() {
+  try {
+    const response = await axiosInstance.get("/settings", {
+      withCredentials: true,
     });
-    const data = await response.json();
-    resolve({ data });
-  });
+    return { data: response.data };
+  } catch (error) {
+    throw error;
+  }
 }

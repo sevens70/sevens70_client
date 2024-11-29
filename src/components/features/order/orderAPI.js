@@ -1,99 +1,51 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_ENDPOINT;
+import axiosInstance from "../../../lib/axiosInstance";
 
 export async function createOrder(order) {
-  const token = sessionStorage.getItem("authToken");
-
   try {
-    const response = await fetch(`${BASE_URL}/orders`, {
-      method: "POST",
-      body: JSON.stringify(order),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
+    const response = await axiosInstance.post("/orders", order, {
+      withCredentials: true,
     });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.error || "An error occurred while creating the order."
-      );
-    }
-
-    const data = await response.json();
-    return { data };
+    return { data: response.data };
   } catch (error) {
-    console.error("Order creation error:", error.message);
-    return { error: error.message };
+    return { error: error.response?.data?.error || error.message };
   }
 }
 
-export function updateOrder(order) {
-  const token = sessionStorage.getItem("authToken");
-  return new Promise(async (resolve) => {
-    const response = await fetch(`${BASE_URL}/orders/${order.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(order),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
+export async function updateOrder(order) {
+  try {
+    const response = await axiosInstance.patch(`/orders/${order.id}`, order, {
+      withCredentials: true,
     });
-    const data = await response.json();
-    resolve({ data });
-  });
+    return { data: response.data };
+  } catch (error) {
+    return { error: error.response?.data?.error || error.message };
+  }
 }
 
-export function fetchAllOrders(sort, pagination) {
-  const token = sessionStorage.getItem("authToken");
-  let queryString = "";
-
-  for (let key in sort) {
-    queryString += `${key}=${sort[key]}&`;
-  }
-  for (let key in pagination) {
-    queryString += `${key}=${pagination[key]}&`;
-  }
-
-  return new Promise(async (resolve) => {
-    const response = await fetch(`${BASE_URL}/orders?${queryString}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
+export async function fetchAllOrders(sort, pagination) {
+  try {
+    const params = { ...sort, ...pagination }; // Combine sort and pagination into query parameters
+    const response = await axiosInstance.get("/orders", {
+      params, // Axios automatically serializes params
+      withCredentials: true,
     });
-    const data = await response.json();
-    const totalOrders = await response.headers.get("X-Total-Count");
-    resolve({ data: { orders: data, totalOrders: +totalOrders } });
-  });
+    const totalOrders = response.headers["x-total-count"];
+    return { data: { orders: response.data, totalOrders: +totalOrders } };
+  } catch (error) {
+    return { error: error.response?.data?.error || error.message };
+  }
 }
-export function fetchAllOrderByUserId(sort, pagination, user) {
-  const token = sessionStorage.getItem("authToken");
-  let queryString = "";
 
-  for (let key in sort) {
-    queryString += `${key}=${sort[key]}&`;
+export async function fetchAllOrderByUserId(sort, pagination, user) {
+  try {
+    const params = { ...sort, ...pagination }; // Combine sort and pagination into query parameters
+    const response = await axiosInstance.get(`/orders/${user.id}`, {
+      params,
+      withCredentials: true,
+    });
+    const totalOrders = response.headers["x-total-count"];
+    return { data: { orders: response.data, totalOrders: +totalOrders } };
+  } catch (error) {
+    return { error: error.response?.data?.error || error.message };
   }
-  for (let key in pagination) {
-    queryString += `${key}=${pagination[key]}&`;
-  }
-
-  return new Promise(async (resolve) => {
-    const response = await fetch(
-      `${BASE_URL}/orders/${user.id}?${queryString}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      }
-    );
-    const data = await response.json();
-    const totalOrders = await response.headers.get("X-Total-Count");
-    resolve({ data: { orders: data, totalOrders: +totalOrders } });
-  });
 }
