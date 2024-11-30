@@ -5,9 +5,14 @@ import CartGallery from "./cartGallery";
 import CartInfo from "./cartInformation";
 import Link from "next/link";
 import { useAppSelector } from "../../../lib/hooks";
-import { selectProductById } from "../../features/product/productSlice";
+import {
+  selectProductById,
+  selectProductListStatus,
+} from "../../features/product/productSlice";
+import Loader from "../../common/Loader";
 function Cart() {
   const singleProduct = useAppSelector(selectProductById);
+  const status = useAppSelector(selectProductListStatus);
   return (
     <section className="">
       <div className=" w-full bg-secondary-500  flex flex-col justify-center items-center h-[200px]">
@@ -19,8 +24,15 @@ function Cart() {
           <a href="#">{singleProduct?.title}</a>
         </Breadcrumbs>
       </div>
-      <CartGallery singleProduct={singleProduct} />
-      <CartInfo singleProduct={singleProduct} />
+      {status === "loading..." ? (
+        <Loader />
+      ) : (
+        <>
+          {" "}
+          <CartGallery singleProduct={singleProduct} />
+          <CartInfo singleProduct={singleProduct} />
+        </>
+      )}
     </section>
   );
 }
