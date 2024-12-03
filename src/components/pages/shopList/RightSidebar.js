@@ -50,6 +50,7 @@ import {
 } from "../../features/cart/cartSlice";
 import { selectLoggedInUser } from "../../features/auth/authSlice";
 import Loader from "../../common/Loader";
+import { getAuthToken } from "../../../lib/utils/utils";
 const showNumber = [
   {
     label: "10",
@@ -79,6 +80,7 @@ function RightSidebar() {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const token = getAuthToken();
   let selectedQueries = {};
   searchParams?.forEach((values, key) => {
     if (key !== "category" && key !== "view") {
@@ -312,7 +314,7 @@ function RightSidebar() {
                         <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (!user) {
+                            if (!user && !token) {
                               // Redirect to sign-in page if user is not authenticated
                               router.push(`/auth/signin`);
                               return;
@@ -346,7 +348,7 @@ function RightSidebar() {
                         <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (!user) {
+                            if (!user && !token) {
                               // Redirect to sign-in page if user is not authenticated
                               router.push(`/auth/signin`);
                               return;
@@ -382,7 +384,7 @@ function RightSidebar() {
                         {/* <IconButton
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (!user) {
+                          if(!user && !token) {
                               // Redirect to sign-in page if user is not authenticated
                               router.push(`/auth/signin`);
                               return;
@@ -444,7 +446,7 @@ function RightSidebar() {
                         e.stopPropagation();
 
                         // Check if user is authenticated
-                        if (!user) {
+                        if (!user && !token) {
                           // Redirect to sign-in page if user is not authenticated
                           router.push(`/auth/signin`);
                           return;

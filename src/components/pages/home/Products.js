@@ -30,6 +30,7 @@ import {
   selectFavouriteItems,
 } from "../../features/favourite/favouriteSlice";
 import Loader from "../../common/Loader";
+import { getAuthToken } from "../../../lib/utils/utils";
 function Products() {
   const breakpoints = {
     0: {
@@ -63,6 +64,7 @@ function Products() {
   const router = useRouter();
   const [active, setActive] = useState("all");
   const [dispalyPrd, setDisplayPrd] = useState([]);
+  const token = getAuthToken();
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     if (prdDocumentId) {
@@ -215,7 +217,7 @@ function Products() {
                           className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (!user) {
+                            if (!user && !token) {
                               router.push(`/auth/signin`);
                               return;
                             }
@@ -263,7 +265,7 @@ function Products() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if (!user && !token) {
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -300,7 +302,7 @@ function Products() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if (!user && !token) {
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -335,7 +337,7 @@ function Products() {
                           {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if(!user && !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -396,7 +398,9 @@ function Products() {
                         {rating}
                       </h6>
                     </div>
-                    <h6 className="text-left text-dark-700">{title}</h6>
+                    <h6 className="text-left text-dark-700">
+                      {title?.length > 30 ? `${title.slice(0, 30)}...` : title}
+                    </h6>
                     <h6 className="mt-1 flex gap-3 justify-start items-center text-dark-700 ">
                       {/* {currencyData?.symbol} */}৳ {discountPrice}
                       <span className="font-normal line-through text-grey-600">

@@ -33,6 +33,7 @@ import {
 } from "../../features/favourite/favouriteSlice";
 import { addToCartAsync } from "../../features/cart/cartSlice";
 import { selectLoggedInUser } from "../../features/auth/authSlice";
+import { getAuthToken } from "../../../lib/utils/utils";
 const breakpoints = {
   0: {
     slidesPerView: 1,
@@ -65,6 +66,7 @@ function TrendingProducts() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [displayProduct, setDisplayProduct] = useState([]);
+  const token = getAuthToken();
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     if (prdDocumentId) {
@@ -164,7 +166,7 @@ function TrendingProducts() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if (!user && !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -202,7 +204,7 @@ function TrendingProducts() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if (!user && !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -239,7 +241,7 @@ function TrendingProducts() {
                           {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user) {
+                              if(!user && !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -291,7 +293,9 @@ function TrendingProducts() {
                   </CardHeader>
                   <CardBody className="flex-grow items-center text-left p-3 mt-2">
                     <p className="text-sm text-grey-600 ">{subcategory}</p>
-                    <h6 className="text-left text-dark-700 mt-1">{title}</h6>
+                    <h6 className="text-left text-dark-700 mt-1">
+                      {title?.length > 30 ? `${title.slice(0, 30)}...` : title}
+                    </h6>
                     <h6 className="flex gap-3 justify-start items-center font-medium text-dark-700 mt-1">
                       {/* {currencyData?.symbol} */}৳ {discountPrice}
                       <span className="font-[400] line-through text-grey-600">
@@ -302,7 +306,12 @@ function TrendingProducts() {
                       <FcRating className="fill-primaryRed" />
                       {rating}
                     </h6>
-                    <p className="text-sm text-grey-700 mt-2">{description}</p>
+                    <p className="text-sm text-grey-700 mt-2">
+                      {" "}
+                      {description?.length > 100
+                        ? `${description.slice(0, 97)}...`
+                        : description}
+                    </p>
                     <Button
                       size="sm"
                       className="font-jost text-sm flex items-center gap-2 mt-3 mb-2 bg-transparent font-normal capitalize text-dark-700  border-[1px] border-grey-600 hover:border-none hover:bg-primaryRed hover:text-white h-[40px] rounded-none"
@@ -310,7 +319,7 @@ function TrendingProducts() {
                         e.stopPropagation();
 
                         // Check if user is authenticated
-                        if (!user) {
+                        if (!user && !token) {
                           // Redirect to sign-in page if user is not authenticated
                           router.push(`/auth/signin`);
                           return;

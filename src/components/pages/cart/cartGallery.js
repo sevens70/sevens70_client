@@ -14,6 +14,7 @@ import { getCarrency } from "../../../lib/features/currencySlice";
 import { addToCartAsync, selectItems } from "../../features/cart/cartSlice";
 import { selectLoggedInUser } from "../../features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { getAuthToken } from "../../../lib/utils/utils";
 function CartGallery({ singleProduct }) {
   const currencyData = useAppSelector(getCarrency);
   const router = useRouter();
@@ -23,6 +24,7 @@ function CartGallery({ singleProduct }) {
   const user = useAppSelector(selectLoggedInUser);
   const items = useAppSelector(selectItems);
   const [count, setCount] = useState(1);
+  const token = getAuthToken();
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
@@ -58,7 +60,7 @@ function CartGallery({ singleProduct }) {
   };
 
   const handleAddToCart = () => {
-    if (!user) {
+    if (!user && !token) {
       // Redirect to sign-in page if user is not authenticated
       router.push(`/auth/signin`);
       return;

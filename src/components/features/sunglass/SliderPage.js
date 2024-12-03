@@ -20,6 +20,7 @@ import {
 } from "@material-tailwind/react";
 import { FcRating } from "react-icons/fc";
 import { FaCartShopping } from "react-icons/fa6";
+import { getAuthToken } from "../../../lib/utils/utils";
 const breakpoints = {
   0: {
     slidesPerView: 1,
@@ -53,6 +54,7 @@ export default function sliderPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [displayProduct, setDisplayProduct] = useState([]);
+  const token = getAuthToken();
   const handleDeleteFavList = (id) => {
     const prdDocumentId = items?.find((item) => item.product.id === id);
     if (prdDocumentId) {
@@ -167,7 +169,7 @@ export default function sliderPage() {
                             e.stopPropagation();
 
                             // Check if user is authenticated
-                            if (!user) {
+                            if (!user && !token) {
                               // Redirect to sign-in page if user is not authenticated
                               router.push(`/auth/signin`);
                               return;

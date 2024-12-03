@@ -10,6 +10,7 @@ import { selectAllBanner } from "../../features/banners/bannersSlice";
 import Loader from "../../common/Loader";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 function Banner() {
   const router = useRouter();
@@ -96,11 +97,34 @@ function Banner() {
                           alt="banner"
                           className="img__banner"
                           style={{ minHeight: "485px" }}
+                          lazy="loading.."
                           // className="object-cover object-center bg-dark-500 "
                           width={300}
                           height={300}
                         />
                       </div>
+                      {/* <div
+                        className="pt-8 flex-grow flex justify-center"
+                        style={{
+                          background: `linear-gradient(to top, rgba(255,0,0,0) 10%, rgba(255,0,0,0.1) 90%)`,
+                          borderTopLeftRadius: "1000px",
+                          borderTopRightRadius: "1000px",
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Image
+                          src={item.bannerImage}
+                          alt="banner"
+                          className="img__banner"
+                          style={{ minHeight: "485px" }}
+                          width={300}
+                          height={300}
+                          priority
+                          placeholder="blur"
+                          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII="
+                          sizes="(max-width: 768px) 100vw, 50vw" // Adjust responsive sizes for different viewports
+                        />
+                      </div> */}
                     </div>
                   </div>
                 </section>
