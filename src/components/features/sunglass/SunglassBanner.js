@@ -2,17 +2,24 @@ import React from "react";
 import { Button } from "@material-tailwind/react";
 export default function SunglassBanner() {
   return (
-    <section className="relative min-h-[800px] bg-gradient-to-r from-blue-500 to-purple-800 text-white flex flex-col items-center justify-start px-4">
+    <section className="relative min-h-[800px] bg-gradient-to-r from-black to-[#FBBF1A] text-white flex flex-col items-center justify-start px-4">
       {/* Logo and Menu */}
       <div className="w-full px-10 py-10 flex items-start justify-between">
-        <div className="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center">
-          <span className="text-white text-md font-bold">LOGO</span>
+        {/* <div className="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center"> */}
+        <div className="bg-white flex items-center justify-center">
+          {/* <span className="text-white text-md font-bold">LOGO</span> */}
+          <img
+            priority="true"
+            src="/sunglass/logo.png"
+            alt="logo"
+            className="max-w-[150px] w-full h-full"
+          />
         </div>
-        <div className="">
+        {/* <div className="">
           <div className="w-12 h-12 rounded flex items-center justify-center bg-white text-blue-500">
             <span className="text-lg">☰</span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Heading */}
@@ -40,7 +47,7 @@ export default function SunglassBanner() {
 
       {/* Down Arrow */}
       <div className="absolute bottom-0 text-center z-10">
-        <div className="w-14 h-8 bg-gradient-to-r from-blue-500 to-purple-800 rounded-bl-full rounded-br-full flex items-center justify-center cursor-pointer">
+        <div className="w-14 h-8 bg-gradient-to-r from-black-500 to-[#FBBF1A] rounded-bl-full rounded-br-full flex items-center justify-center cursor-pointer">
           <span className="text-white text-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -61,9 +68,9 @@ export default function SunglassBanner() {
       </div>
 
       {/* Bottom Red Strip */}
-      <div className="absolute bottom-0 text-center w-full h-8 bg-purple-600 flex justify-center">
+      <div className="absolute bottom-0 text-center w-full h-8 bg-[#FBBF1A] flex justify-center">
         {" "}
-        <div className="w-16 h-14 bg-purple-600 rounded-full flex items-center justify-center cursor-pointer">
+        <div className="w-16 h-14 bg-[#FBBF1A] rounded-full flex items-center justify-center cursor-pointer">
           {/* <span className="text-white text-md">⌄</span> */}
         </div>
       </div>
