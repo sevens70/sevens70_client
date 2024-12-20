@@ -1,6 +1,25 @@
-import React from "react";
-import { Button } from "@material-tailwind/react";
+import React, { useEffect } from "react";
+// import { Button } from "@material-tailwind/react";
+import {
+  allSunglassBanner,
+  fetchSunglassBannerAsync,
+  sunglassBannerStatus,
+} from "./sunglassBannerSlice";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import Loader from "../../common/Loader";
+import Link from "next/link";
+import { moveToOrderForm } from "../../../lib/utils/utils";
 export default function SunglassBanner() {
+  const banners = useAppSelector(allSunglassBanner);
+  const status = useAppSelector(sunglassBannerStatus);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchSunglassBannerAsync());
+  }, [dispatch]);
+  console.log("banners 123", banners);
+  if (status === "loading") {
+    return <Loader />;
+  }
   return (
     <section className="relative min-h-[800px] bg-gradient-to-r from-black to-[#FBBF1A] text-white flex flex-col items-center justify-start px-4">
       {/* Logo and Menu */}
@@ -8,12 +27,15 @@ export default function SunglassBanner() {
         {/* <div className="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center"> */}
         <div className="bg-white flex items-center justify-center">
           {/* <span className="text-white text-md font-bold">LOGO</span> */}
-          <img
-            priority="true"
-            src="/sunglass/logo.png"
-            alt="logo"
-            className="max-w-[150px] w-full h-full"
-          />
+          <Link href="/">
+            {" "}
+            <img
+              priority="true"
+              src="/sunglass/logo.png"
+              alt="logo"
+              className="max-w-[150px] w-full h-full"
+            />
+          </Link>
         </div>
         {/* <div className="">
           <div className="w-12 h-12 rounded flex items-center justify-center bg-white text-blue-500">
@@ -24,7 +46,7 @@ export default function SunglassBanner() {
 
       {/* Heading */}
       <h1 className="text-center mt-[30px] text-white font-bold text-xl sm:text-3xl lg:text-4xl mb-8 max-w-4xl">
-        THIS IS THE HOOK, THAT GRAB THE VIEWER’S ATTENTION AT ONCE.
+        {banners[0]?.title}
       </h1>
 
       {/* Video Placeholder */}
@@ -36,15 +58,19 @@ export default function SunglassBanner() {
 
       {/* Subheading */}
       <p className="text-center text-white text-sm  lg:tmax-w-4xl  mt-6 max-w-lg">
-        This is the godfather offer. An offer that none can’t deny. To make this
-        type of offer you have to know target audience’s pain and gain points.
+        {banners[0]?.subtitle}
       </p>
 
       {/* Call to Action Button */}
-      <button className="mt-10 px-6 py-3 bg-purple-600 text-white font-bold rounded-full">
+      {/* <button className="mt-10 px-6 py-3 bg-purple-600 text-white font-bold rounded-full">
         CALL TO ACTION
+      </button> */}
+      <button
+        onClick={moveToOrderForm}
+        className="mt-10 px-4 py-3 bg-[#FBBF1A] text-sm text-dark font-medium rounded rounded-lg"
+      >
+        আমি এখনই অর্ডার করতে চাই
       </button>
-
       {/* Down Arrow */}
       <div className="absolute bottom-0 text-center z-10">
         <div className="w-14 h-8 bg-gradient-to-r from-black-500 to-[#FBBF1A] rounded-bl-full rounded-br-full flex items-center justify-center cursor-pointer">

@@ -1,5 +1,6 @@
 import React from "react";
 import DeliverySection from "./DeliverySection";
+import { moveToOrderForm } from "../../../lib/utils/utils";
 
 export default function Headline() {
   return (
@@ -112,7 +113,10 @@ export default function Headline() {
         <h2 className="text-md font-bold mb-4 text-[#FBBF1A]">
           সুরক্ষা এবং স্টাইলের এমন সংমিশ্রণ আর কোথাও পাবেন না।
         </h2>
-        <button className="px-4 py-3 bg-[#FBBF1A] text-sm text-dark font-medium rounded rounded-lg">
+        <button
+          onClick={moveToOrderForm}
+          className="px-4 py-3 bg-[#FBBF1A] text-sm text-dark font-medium rounded rounded-lg"
+        >
           আমি এখনই অর্ডার করতে চাই
         </button>
       </div>
@@ -177,7 +181,10 @@ export default function Headline() {
         </p>
         <div className="mt-5 text-center">
           {" "}
-          <button className="px-4  py-3 bg-dark text-sm text-[#FBBF1A] font-medium rounded rounded-lg">
+          <button
+            onClick={moveToOrderForm}
+            className="px-4  py-3 bg-dark text-sm text-[#FBBF1A] font-medium rounded rounded-lg"
+          >
             আমি এখনই অর্ডার করতে চাই
           </button>
         </div>

@@ -12,6 +12,8 @@ import userReducer from "../components/features/user/userSlice";
 import websiteInfoReducer from "../components/features/websiteInfo/websiteInfoSlice";
 import bannerReducer from "../components/features/banners/bannersSlice";
 import topBannerReducer from "../components/features/topBanners/topBannersSlice";
+import sunglassBannerReducer from "../components/features/sunglass/sunglassBannerSlice";
+import sunglassProductReducer from "../components/features/sunglass/sunglassProductSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -40,6 +42,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   websiteInfo: websiteInfoReducer,
   topBanner: topBannerReducer,
+  sunglassBanner: sunglassBannerReducer,
+  sunglassProduct: sunglassProductReducer,
 });
 
 const persistConfig = {

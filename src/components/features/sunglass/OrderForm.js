@@ -1,6 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
+import {
+  allSunglassProduct,
+  fetchSunglassProductAsync,
+  SunglassProductStatus,
+} from "./sunglassProductSlice";
+import Loader from "../../common/Loader";
 
 export default function OrderForm() {
+  const products = useAppSelector(allSunglassProduct);
+  const status = useAppSelector(SunglassProductStatus);
+  const dispatch = useAppDispatch();
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [deliveryDetails, setDeliveryDetails] = useState({
     name: "",
@@ -8,11 +19,11 @@ export default function OrderForm() {
     address: "",
   });
 
-  const products = [
-    { id: 1, name: "Dear Hair Cleanser & Tonic 200-200 ML", price: 1230 },
-    { id: 2, name: "Dear Hair Cleanser 200 ML", price: 490 },
-    { id: 3, name: "Dear Hair Tonic 200 ML", price: 760 },
-  ];
+  // const products = [
+  //   { id: 1, name: "Dear Hair Cleanser & Tonic 200-200 ML", price: 1230 },
+  //   { id: 2, name: "Dear Hair Cleanser 200 ML", price: 490 },
+  //   { id: 3, name: "Dear Hair Tonic 200 ML", price: 760 },
+  // ];
 
   const handleSelectProduct = (id) => {
     setSelectedProduct(id);
@@ -30,9 +41,15 @@ export default function OrderForm() {
     const selected = products.find((product) => product.id === selectedProduct);
     return selected ? selected.price + 70 : 0; // Adding shipping cost of 70
   };
-
+  useEffect(() => {
+    dispatch(fetchSunglassProductAsync());
+  }, [dispatch]);
+  console.log("sunglassProducts 123", products);
+  if (status === "loading") {
+    return <Loader />;
+  }
   return (
-    <div className="bg-green-100 min-h-screen p-8">
+    <div id="orderForm" className="bg-green-100 min-h-screen p-8">
       {/* Header Section */}
       <div className="bg-green-200 p-4 rounded-lg text-center">
         <p className="text-lg font-bold">কোন প্রশ্ন বা অর্ডার করতে কল করুনঃ</p>
@@ -71,15 +88,15 @@ export default function OrderForm() {
                 {/* Product Image */}
                 <div className="w-2/5">
                   <img
-                    src={`https://res.cloudinary.com/dlbnsaxfz/image/upload/v1731776584/bcjyh5srvkp0kf6t7n5w.png`}
-                    alt={product.name}
+                    src={product?.image}
+                    alt={product?.title}
                     className="w-full h-auto object-cover rounded-md"
                   />
                 </div>
 
                 {/* Product Details */}
                 <div className="w-3/5 pl-4">
-                  <p className="font-semibold">{product.name}</p>
+                  <p className="font-semibold">{product.title}</p>
                   <p className="text-gray-600">৳ {product.price}</p>
                   <input
                     type="radio"
