@@ -1,8 +1,12 @@
 import React from "react";
 import DeliverySection from "./DeliverySection";
 import { moveToOrderForm } from "../../../lib/utils/utils";
+import { useAppSelector } from "../../../lib/hooks";
+import { allSunglassProduct } from "./sunglassProductSlice";
 
 export default function Headline() {
+  const products = useAppSelector(allSunglassProduct);
+  // console.log("products 1111", products);
   return (
     <section className="w-full">
       {/* Assurance Section */}
@@ -19,10 +23,10 @@ export default function Headline() {
             <div className="flex flex-col md:flex-row items-center text-center md:text-left p-4 rounded-lg">
               {/* Content Section */}
               <div className="w-full md:w-3/4">
-                <h1 className="ml-0 px-4 md:px-8 lg:ml-[100px] text-left mt-[30px] text-white font-bold text-xl sm:text-3xl lg:text-4xl mb-8">
+                <h1 className="ml-0 px-4 md:px-8 lg:ml-[100px] text-left mt-[30px] text-white font-bold text-xl sm:text-3xl lg:text-3xl mb-8">
                   সুরক্ষার প্রতিশ্রুতি,
                   <br />
-                  <span className="text-white text-xl sm:text-3xl lg:text-5xl mt-4">
+                  <span className="text-white text-xl sm:text-3xl lg:text-4xl mt-4">
                     স্টাইলের আত্মবিশ্বাস।
                   </span>
                 </h1>
@@ -33,23 +37,18 @@ export default function Headline() {
                 </p>
               </div>
               {/* Image Section */}
-              <div className="w-full flex justify-center items-center gap-3">
-                <img
-                  priority="true"
-                  src="/sunglass/promised01.png"
-                  alt="logo"
-                  className="max-w-[250px] w-full h-full"
-                  width={500}
-                  height={500}
-                />
-                <img
-                  priority="true"
-                  src="/sunglass/promised01.png"
-                  alt="logo"
-                  className="max-w-[250px] w-full h-full"
-                  width={500}
-                  height={500}
-                />
+              <div className="w-full flex justify-center items-center flex-wrap gap-3">
+                {products?.map((item) => (
+                  <img
+                    priority="true"
+                    // src="/sunglass/promised01.png"
+                    src={item?.image}
+                    alt="logo"
+                    className="max-w-[250px] w-full h-full"
+                    width={500}
+                    height={500}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -125,44 +124,24 @@ export default function Headline() {
         <h2 className="text-md font-bold mb-4">
           সুরক্ষার অভাবে স্টাইলের নামে ভুল করছেন না তো?
         </h2>
-        <p className="text-gray-700 py-4 text-sm max-w-2xl mx-auto">
+        <p className="text-gray-700 mb-2 py-4 text-sm max-w-2xl mx-auto">
           সস্তা সানগ্লাস হয়তো স্টাইলিশ লাগে, কিন্তু সন্তানের চোখের সুরক্ষায়
           কার্যকর নয়। Seven’s 7.0 Polarized Sunglass নিশ্চিত করে চোখের জন্য
           সুরক্ষার সেরা ব্যবস্থা এবং অনন্য স্টাইল।
         </p>
+
+        {/* ============================================== changes will be here */}
         <div className="w-full mb-10 flex justify-center items-center flex-wrap gap-3">
-          <img
-            priority="true"
-            src="/sunglass/promised01.png"
-            alt="logo"
-            className="max-w-[250px] w-full h-full"
-            width={500}
-            height={500}
-          />
-          <img
-            priority="true"
-            src="/sunglass/promised01.png"
-            alt="logo"
-            className="max-w-[250px] w-full h-full"
-            width={500}
-            height={500}
-          />
-          <img
-            priority="true"
-            src="/sunglass/promised01.png"
-            alt="logo"
-            className="max-w-[250px] w-full h-full"
-            width={500}
-            height={500}
-          />
-          <img
-            priority="true"
-            src="/sunglass/promised01.png"
-            alt="logo"
-            className="max-w-[250px] w-full h-full"
-            width={500}
-            height={500}
-          />
+          {products?.map((item) => (
+            <img
+              priority="true"
+              src={item?.image}
+              alt="logo"
+              className="max-w-[250px] w-full h-full"
+              width={500}
+              height={500}
+            />
+          ))}
         </div>
       </div>
       <div className="bg-[#FBBF1A] py-[70px] px-[20px] md:px-[100px] lg:px-[200px]">

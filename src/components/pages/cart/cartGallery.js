@@ -60,7 +60,7 @@ function CartGallery({ singleProduct }) {
   };
 
   const handleAddToCart = () => {
-    if (!user && !token) {
+    if (!user || !token) {
       // Redirect to sign-in page if user is not authenticated
       router.push(`/auth/signin`);
       return;

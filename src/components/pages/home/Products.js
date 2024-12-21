@@ -217,7 +217,7 @@ function Products() {
                           className="font-jost bg-white font-normal capitalize text-sm text-dark-500 flex justify-center items-center h-[35px]"
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (!user && !token) {
+                            if (!user || !token) {
                               router.push(`/auth/signin`);
                               return;
                             }
@@ -265,7 +265,7 @@ function Products() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user && !token) {
+                              if (!user || !token) {
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -302,7 +302,7 @@ function Products() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user && !token) {
+                              if (!user || !token) {
                                 router.push(`/auth/signin`);
                                 return;
                               }
@@ -337,7 +337,7 @@ function Products() {
                           {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if(!user && !token) {
+                              if(!user || !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;

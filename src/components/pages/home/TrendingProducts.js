@@ -166,7 +166,7 @@ function TrendingProducts() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user && !token) {
+                              if (!user || !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -204,7 +204,7 @@ function TrendingProducts() {
                           <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!user && !token) {
+                              if (!user || !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -241,7 +241,7 @@ function TrendingProducts() {
                           {/* <IconButton
                             onClick={(e) => {
                               e.stopPropagation();
-                              if(!user && !token) {
+                              if(!user || !token) {
                                 // Redirect to sign-in page if user is not authenticated
                                 router.push(`/auth/signin`);
                                 return;
@@ -319,7 +319,7 @@ function TrendingProducts() {
                         e.stopPropagation();
 
                         // Check if user is authenticated
-                        if (!user && !token) {
+                        if (!user || !token) {
                           // Redirect to sign-in page if user is not authenticated
                           router.push(`/auth/signin`);
                           return;

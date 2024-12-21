@@ -25,9 +25,11 @@ export default function OrderForm() {
   //   { id: 3, name: "Dear Hair Tonic 200 ML", price: 760 },
   // ];
 
-  const handleSelectProduct = (id) => {
-    setSelectedProduct(id);
-  };
+   const handleSelectProduct = (productId) => {
+     setSelectedProduct((prevSelectedProduct) =>
+       prevSelectedProduct === productId ? null : productId
+     );
+   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +46,7 @@ export default function OrderForm() {
   useEffect(() => {
     dispatch(fetchSunglassProductAsync());
   }, [dispatch]);
-  console.log("sunglassProducts 123", products);
+  // console.log("sunglassProducts 123", products, selectedProduct);
   if (status === "loading") {
     return <Loader />;
   }
@@ -98,9 +100,10 @@ export default function OrderForm() {
                 <div className="w-3/5 pl-4">
                   <p className="font-semibold">{product.title}</p>
                   <p className="text-gray-600">৳ {product.price}</p>
+
+                  {/* Checkbox to select product */}
                   <input
-                    type="radio"
-                    name="product"
+                    type="checkbox"
                     checked={selectedProduct === product.id}
                     onChange={() => handleSelectProduct(product.id)}
                     className="mt-2"

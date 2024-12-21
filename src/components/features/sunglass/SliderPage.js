@@ -169,7 +169,7 @@ export default function sliderPage() {
                             e.stopPropagation();
 
                             // Check if user is authenticated
-                            if (!user && !token) {
+                            if (!user || !token) {
                               // Redirect to sign-in page if user is not authenticated
                               router.push(`/auth/signin`);
                               return;

@@ -2,11 +2,11 @@
 import React from "react";
 import SunglassBanner from "./SunglassBanner";
 import Headline from "./Headline";
-import SliderPage from "./SliderPage";
+// import SliderPage from "./SliderPage";
 import CardReviews from "./CardReviews";
 import OrderForm from "./OrderForm";
-import DeliverySection from "./DeliverySection";
-import FooterSection from "./FooterSection";
+// import DeliverySection from "./DeliverySection";
+// import FooterSection from "./FooterSection";
 export default function Sunglass() {
   return (
     <div>

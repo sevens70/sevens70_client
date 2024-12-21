@@ -170,7 +170,14 @@ function Checkout() {
       },
     });
   };
-
+  console.log(
+    "item 123",
+    items,
+    totalItems,
+    totalAmount,
+    paymentMethod,
+    selectedAddress
+  );
   const handleOrder = (e) => {
     setIsOrdering(true);
     if (selectedAddress && paymentMethod) {
