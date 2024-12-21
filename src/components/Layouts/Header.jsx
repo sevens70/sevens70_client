@@ -4,14 +4,14 @@ import {
   Option,
   Select,
   Typography,
-  Input,
+  // Input,
   Menu,
   MenuHandler,
   Button,
   MenuItem,
   Badge,
   MenuList,
-  Avatar,
+  // Avatar,
   Drawer,
   ListItem,
 } from "@material-tailwind/react";
@@ -100,26 +100,7 @@ const menu = [
   //   isMenu: false,
   // },
 ];
-const currency = [
-  {
-    label: "BDT",
-    value: "BDT",
-    symbol: "৳",
-    flag: "/header/c2.png",
-  },
-  {
-    label: "USD",
-    value: "USD",
-    symbol: "$",
-    flag: "/header/c1.png",
-  },
-  {
-    label: "EUR",
-    value: "EUR",
-    symbol: "€",
-    flag: "/header/c3.jpg",
-  },
-];
+
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -379,7 +360,7 @@ const Header = () => {
                 ) : (
                   <img
                     priority="true"
-                    src="/Logo.png"
+                    src="/logo.png"
                     alt="logo"
                     className="max-w-[150px] w-full h-full"
                     width={300}
@@ -450,7 +431,7 @@ const Header = () => {
                   <span className="2xl:text-sm lg:text-xsm md:text-xsm font-normal text-dark">
                     {websiteInfo?.length > 0
                       ? websiteInfo[0]?.phoneNumber
-                      : "880 1827969106"}
+                      : "018 20 215 215"}
                   </span>
                 </a>
               </nav>
@@ -757,7 +738,7 @@ const Header = () => {
             ) : (
               <img
                 priority="true"
-                src="/Logo.png"
+                src="/logo.png"
                 alt="logo"
                 className="max-w-[150px] w-full h-full"
                 width={300}

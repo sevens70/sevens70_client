@@ -35,6 +35,36 @@ export async function createSunglassProduct(payload) {
     throw error;
   }
 }
+export async function orderSunglassProduct(payload) {
+  const token = getAuthToken();
+  try {
+    const response = await fetch(`${BASE_URL}/order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("ordered prd", data);
+      toast.success("Product rdered successfully.");
+      return { data };
+    } else {
+      const errorText = await response.text();
+      console.error("Error response:", errorText);
+      toast.error("Failed to create Product.");
+      throw new Error(errorText);
+    }
+  } catch (error) {
+    // console.error("Error creating brand:", error.message);
+    toast.error("An error occurred while creating the product.");
+    throw error;
+  }
+}
 
 // Fetch all brands
 export async function fetchSunglassProduct() {

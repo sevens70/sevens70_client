@@ -5,6 +5,7 @@ import {
   fetchSunglassProudctById,
   updateSunglassProduct,
   fetchSunglassProduct,
+  orderSunglassProduct,
 } from "./sunglassProductAPI";
 
 const initialState = {
@@ -33,6 +34,13 @@ export const createSunglassProductAsync = createAsyncThunk(
   "sunglass/createSunglassProduct",
   async (brand) => {
     const response = await createSunglassProduct(brand);
+    return response.data;
+  },
+);
+export const orderSunglassProductAsync = createAsyncThunk(
+  "sunglass/orderSunglassProduct",
+  async (order) => {
+    const response = await orderSunglassProduct(order);
     return response.data;
   },
 );

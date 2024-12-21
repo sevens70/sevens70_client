@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import {
   allSunglassProduct,
+  createSunglassProductAsync,
   fetchSunglassProductAsync,
+  orderSunglassProductAsync,
   SunglassProductStatus,
 } from "./sunglassProductSlice";
 import Loader from "../../common/Loader";
@@ -12,7 +14,8 @@ export default function OrderForm() {
   const status = useAppSelector(SunglassProductStatus);
   const dispatch = useAppDispatch();
 
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [isOrdering, setIsOrdering] = useState(false);
   const [deliveryDetails, setDeliveryDetails] = useState({
     name: "",
     phone: "",
@@ -25,11 +28,18 @@ export default function OrderForm() {
   //   { id: 3, name: "Dear Hair Tonic 200 ML", price: 760 },
   // ];
 
-   const handleSelectProduct = (productId) => {
-     setSelectedProduct((prevSelectedProduct) =>
-       prevSelectedProduct === productId ? null : productId
-     );
-   };
+  // Handle product selection
+  const handleSelectProduct = (product) => {
+    setSelectedProducts((prevSelectedProducts) => {
+      if (prevSelectedProducts.find((p) => p.id === product.id)) {
+        // Remove product if already selected
+        return prevSelectedProducts.filter((p) => p.id !== product.id);
+      } else {
+        // Add product if not selected
+        return [...prevSelectedProducts, product];
+      }
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,14 +49,60 @@ export default function OrderForm() {
     }));
   };
 
-  const calculateTotal = () => {
-    const selected = products.find((product) => product.id === selectedProduct);
-    return selected ? selected.price + 70 : 0; // Adding shipping cost of 70
-  };
   useEffect(() => {
     dispatch(fetchSunglassProductAsync());
   }, [dispatch]);
-  // console.log("sunglassProducts 123", products, selectedProduct);
+  console.log("sunglassProducts 123", products, selectedProducts);
+  const calculateTotal = () => {
+    const total = selectedProducts.reduce(
+      (acc, product) => acc + Number(product.price),
+      0
+    );
+    return total + 70;
+  };
+  const total = selectedProducts.reduce(
+    (acc, product) => acc + Number(product.price),
+    0
+  );
+  const handleOrder = async (e) => {
+    e.preventDefault();
+
+    if (!selectedProducts.length || !deliveryDetails) {
+      alert("Please select products and provide delivery details.");
+      return;
+    }
+
+    setIsOrdering(true);
+    const order = {
+      items: selectedProducts,
+      totalAmount: calculateTotal(),
+      totalItems: selectedProducts.length,
+      paymentMethod: "cash",
+      selectedAddress: deliveryDetails,
+      status: "pending",
+    };
+
+    try {
+      await dispatch(orderSunglassProductAsync(order));
+    } catch (error) {
+      console.error("Order creation failed:", error);
+    } finally {
+      setIsOrdering(false);
+    }
+  };
+
+  <button
+    className={`w-full py-2 mt-4 rounded ${
+      selectedProducts.length > 0
+        ? "bg-green-500 text-white"
+        : "bg-gray-300 text-gray-500 cursor-not-allowed"
+    }`}
+    onClick={(e) => handleOrder(e)}
+    disabled={selectedProducts.length === 0}
+  >
+    Place Order ৳ {calculateTotal()}
+  </button>;
+
   if (status === "loading") {
     return <Loader />;
   }
@@ -81,11 +137,11 @@ export default function OrderForm() {
               <div
                 key={product.id}
                 className={`p-4 border rounded-lg shadow-sm cursor-pointer flex items-center ${
-                  selectedProduct === product.id
+                  selectedProducts.find((p) => p.id === product.id)
                     ? "border-green-500 bg-green-50"
                     : "border-gray-300"
                 }`}
-                onClick={() => handleSelectProduct(product.id)}
+                onClick={() => handleSelectProduct(product)}
               >
                 {/* Product Image */}
                 <div className="w-2/5">
@@ -104,8 +160,10 @@ export default function OrderForm() {
                   {/* Checkbox to select product */}
                   <input
                     type="checkbox"
-                    checked={selectedProduct === product.id}
-                    onChange={() => handleSelectProduct(product.id)}
+                    checked={
+                      !!selectedProducts.find((p) => p.id === product.id)
+                    }
+                    onChange={() => handleSelectProduct(product)}
                     className="mt-2"
                   />
                 </div>
@@ -159,30 +217,26 @@ export default function OrderForm() {
           {/* Order Summary Section */}
           <div className="bg-white p-6 rounded-lg shadow-md mt-4">
             <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-            <div className="flex justify-between">
-              <p>Selected Product</p>
-              <p>
-                ৳{" "}
-                {selectedProduct
-                  ? products.find((p) => p.id === selectedProduct).price
-                  : 0}
-              </p>
+            <div className="flex justify-between font-bold">
+              <p>Total</p>
+              <p>৳ {total}</p>
             </div>
             <div className="flex justify-between">
               <p>Shipping</p>
               <p>৳ 70</p>
             </div>
             <div className="flex justify-between font-bold">
-              <p>Total</p>
+              <p>Total (Including Shipping)</p>
               <p>৳ {calculateTotal()}</p>
             </div>
             <button
               className={`w-full py-2 mt-4 rounded ${
-                selectedProduct
+                selectedProducts.length > 0
                   ? "bg-green-500 text-white"
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
-              disabled={!selectedProduct}
+              onClick={(e) => handleOrder(e)}
+              disabled={selectedProducts.length === 0}
             >
               Place Order ৳ {calculateTotal()}
             </button>

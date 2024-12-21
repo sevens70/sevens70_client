@@ -31,7 +31,7 @@ export default function SunglassBanner() {
             {" "}
             <img
               priority="true"
-              src="/sunglass/logo.png"
+              src="/logo.png"
               alt="logo"
               className="max-w-[150px] w-full h-full"
             />
@@ -51,9 +51,18 @@ export default function SunglassBanner() {
 
       {/* Video Placeholder */}
       <div className="w-full max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
-        <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
+        {/* <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
           <span className="text-blue-500 text-3xl font-bold">▶</span>
-        </div>
+        </div> */}
+        <img
+          priority="true"
+          // src="/sunglass/promised01.png"
+          src={banners[0]?.image}
+          alt="banner"
+          className="w-full h-full rounded rounded-l-md"
+          // width={500}
+          // height={500}
+        />
       </div>
 
       {/* Subheading */}

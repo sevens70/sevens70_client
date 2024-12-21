@@ -1,5 +1,5 @@
 "use client";
-import { contacts } from "../../site/info";
+// import { contacts } from "../../site/info";
 import Link from "next/link";
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { selectWebsiteInfo } from "../features/websiteInfo/websiteInfoSlice";
@@ -74,7 +74,7 @@ const Footer = () => {
               ) : (
                 <img
                   priority="true"
-                  src="/Logo.png"
+                  src="/logo.png"
                   alt="logo"
                   className="max-w-[150px] w-full h-full"
                   width={300}
