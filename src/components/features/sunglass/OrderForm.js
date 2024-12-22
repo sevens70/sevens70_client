@@ -8,25 +8,20 @@ import {
   SunglassProductStatus,
 } from "./sunglassProductSlice";
 import Loader from "../../common/Loader";
+import { useRouter } from "next/navigation";
 
-export default function OrderForm() {
+export default function OrderForm({ selectedProducts, setSelectedProducts }) {
   const products = useAppSelector(allSunglassProduct);
   const status = useAppSelector(SunglassProductStatus);
   const dispatch = useAppDispatch();
-
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const router = useRouter();
+  // const [selectedProducts, setSelectedProducts] = useState([]);
   const [isOrdering, setIsOrdering] = useState(false);
   const [deliveryDetails, setDeliveryDetails] = useState({
     name: "",
     phone: "",
     address: "",
   });
-
-  // const products = [
-  //   { id: 1, name: "Dear Hair Cleanser & Tonic 200-200 ML", price: 1230 },
-  //   { id: 2, name: "Dear Hair Cleanser 200 ML", price: 490 },
-  //   { id: 3, name: "Dear Hair Tonic 200 ML", price: 760 },
-  // ];
 
   // Handle product selection
   const handleSelectProduct = (product) => {
@@ -52,15 +47,14 @@ export default function OrderForm() {
   useEffect(() => {
     dispatch(fetchSunglassProductAsync());
   }, [dispatch]);
-  console.log("sunglassProducts 123", products, selectedProducts);
   const calculateTotal = () => {
-    const total = selectedProducts.reduce(
+    const total = selectedProducts?.reduce(
       (acc, product) => acc + Number(product.price),
       0
     );
     return total + 70;
   };
-  const total = selectedProducts.reduce(
+  const total = selectedProducts?.reduce(
     (acc, product) => acc + Number(product.price),
     0
   );
@@ -91,17 +85,11 @@ export default function OrderForm() {
     }
   };
 
-  <button
-    className={`w-full py-2 mt-4 rounded ${
-      selectedProducts.length > 0
-        ? "bg-green-500 text-white"
-        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-    }`}
-    onClick={(e) => handleOrder(e)}
-    disabled={selectedProducts.length === 0}
-  >
-    Place Order ৳ {calculateTotal()}
-  </button>;
+  useEffect(() => {
+    if (status === "Order success") {
+      router.push("/thank-you");
+    }
+  }, [status]);
 
   if (status === "loading") {
     return <Loader />;
@@ -116,13 +104,13 @@ export default function OrderForm() {
             href="tel:01996111027"
             className="text-lg font-semibold text-white bg-green-500 px-4 py-2 rounded-lg"
           >
-            📞 0199-6111027
+            📞 018 20 215 215
           </a>
           <a
             href="tel:01996111027"
             className="text-lg font-semibold text-white bg-green-500 px-4 py-2 rounded-lg"
           >
-            📞 0199-6111027
+            📞 018 20 215 215
           </a>
         </div>
       </div>
@@ -164,7 +152,7 @@ export default function OrderForm() {
                       !!selectedProducts.find((p) => p.id === product.id)
                     }
                     onChange={() => handleSelectProduct(product)}
-                    className="mt-2"
+                    className="mt-2 h-4 w-4 accent-green-600"
                   />
                 </div>
               </div>
@@ -236,9 +224,10 @@ export default function OrderForm() {
                   : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }`}
               onClick={(e) => handleOrder(e)}
-              disabled={selectedProducts.length === 0}
+              disabled={selectedProducts.length === 0 || isOrdering}
             >
-              Place Order ৳ {calculateTotal()}
+              {/* অর্ডার করতে ক্লিক করুন (৳{calculateTotal()}) */}
+              Order Now (৳{calculateTotal()})
             </button>
           </div>
         </div>

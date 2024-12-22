@@ -50,7 +50,7 @@ export default function SunglassBanner() {
       </h1>
 
       {/* Video Placeholder */}
-      <div className="w-full max-w-4xl h-60 bg-gray-300 rounded-lg flex items-center justify-center">
+      <div className="w-full max-w-4xl h-auto  rounded-lg flex items-center justify-center">
         {/* <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg cursor-pointer">
           <span className="text-blue-500 text-3xl font-bold">▶</span>
         </div> */}

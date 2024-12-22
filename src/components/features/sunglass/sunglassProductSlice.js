@@ -20,7 +20,7 @@ export const fetchSunglassProductAsync = createAsyncThunk(
     const response = await fetchSunglassProduct();
     console.log("response 12", response);
     return response.data;
-  },
+  }
 );
 
 export const deleteSunglassProductByIdAsync = createAsyncThunk(
@@ -28,28 +28,28 @@ export const deleteSunglassProductByIdAsync = createAsyncThunk(
   async (id) => {
     const response = await deleteSunglassProduct(id);
     return response.data;
-  },
+  }
 );
 export const createSunglassProductAsync = createAsyncThunk(
   "sunglass/createSunglassProduct",
   async (brand) => {
     const response = await createSunglassProduct(brand);
     return response.data;
-  },
+  }
 );
 export const orderSunglassProductAsync = createAsyncThunk(
   "sunglass/orderSunglassProduct",
   async (order) => {
     const response = await orderSunglassProduct(order);
     return response.data;
-  },
+  }
 );
 export const updateSunglassProductAsync = createAsyncThunk(
   "sunglass/updateSunglassProduct",
   async (update) => {
     const response = await updateSunglassProduct(update);
     return response.data;
-  },
+  }
 );
 
 export const SunglassProductSlice = createSlice({
@@ -76,7 +76,7 @@ export const SunglassProductSlice = createSlice({
       .addCase(deleteSunglassProductByIdAsync.fulfilled, (state, action) => {
         state.status = "success";
         state.product = state.product.filter(
-          (banner) => banner.id !== action.payload.id,
+          (banner) => banner.id !== action.payload.id
         );
         if (
           state.selectedSunglassProduct &&
@@ -100,13 +100,24 @@ export const SunglassProductSlice = createSlice({
         state.status = "success";
         state.product.push(action.payload);
       })
+      .addCase(orderSunglassProductAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(orderSunglassProductAsync.rejected, (state, action) => {
+        state.status = "failed";
+        console.error("error", action.error);
+      })
+      .addCase(orderSunglassProductAsync.fulfilled, (state, action) => {
+        state.status = "Order success";
+        // state.product.push(action.payload);
+      })
       .addCase(updateSunglassProductAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(updateSunglassProductAsync.fulfilled, (state, action) => {
         state.status = "success";
         const index = state.product.findIndex(
-          (brand) => brand.id === action.payload.id,
+          (brand) => brand.id === action.payload.id
         );
         state.product[index] = action.payload;
         state.selectedSunglassProduct = action.payload;

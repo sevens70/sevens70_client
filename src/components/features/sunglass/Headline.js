@@ -4,17 +4,17 @@ import { moveToOrderForm } from "../../../lib/utils/utils";
 import { useAppSelector } from "../../../lib/hooks";
 import { allSunglassProduct } from "./sunglassProductSlice";
 
-export default function Headline() {
+export default function Headline({ selectedProducts, setSelectedProducts }) {
   const products = useAppSelector(allSunglassProduct);
   // console.log("products 1111", products);
   return (
     <section className="w-full">
       {/* Assurance Section */}
       <div className="py-8 text-center mt-7">
-        <h2 className="text-md font-bold mb-4">নিশ্চিন্ত থাকুন! Seven’s 7.0</h2>
+        <h2 className="text-md font-bold mb-4">নিশ্চিন্ত থাকুন!</h2>
         <p className="text-gray-700 py-4 text-sm max-w-2xl mx-auto">
-          Polarized Sunglass নিয়ে এসেছে এমন সমাধান যা সুরক্ষা আর স্টাইলের মধ্যে
-          কোনো কম্প্রোমাইজ করে না।
+          Seven’s 7.0 Polarized Sunglass নিয়ে এসেছে এমন সমাধান যা সুরক্ষা আর
+          স্টাইলের মধ্যে কোনো কম্প্রোমাইজ করে না।
         </p>
       </div>
       <div className="bg-dark text-white flex flex-col items-center justify-start px-4">
@@ -129,15 +129,22 @@ export default function Headline() {
           কার্যকর নয়। Seven’s 7.0 Polarized Sunglass নিশ্চিত করে চোখের জন্য
           সুরক্ষার সেরা ব্যবস্থা এবং অনন্য স্টাইল।
         </p>
-
-        {/* ============================================== changes will be here */}
         <div className="w-full mb-10 flex justify-center items-center flex-wrap gap-3">
           {products?.map((item) => (
             <img
+              onClick={() => {
+                if (selectedProducts.find((p) => p.id === item.id)) {
+                  setSelectedProducts(
+                    selectedProducts.filter((p) => p.id !== item.id)
+                  );
+                } else {
+                  setSelectedProducts([...selectedProducts, item]);
+                }
+              }}
               priority="true"
               src={item?.image}
               alt="logo"
-              className="max-w-[250px] w-full h-full"
+              className="max-w-[250px] w-full h-full cursor-pointer"
               width={500}
               height={500}
             />

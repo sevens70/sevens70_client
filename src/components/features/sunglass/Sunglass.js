@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import SunglassBanner from "./SunglassBanner";
 import Headline from "./Headline";
 // import SliderPage from "./SliderPage";
@@ -8,6 +8,7 @@ import OrderForm from "./OrderForm";
 // import DeliverySection from "./DeliverySection";
 // import FooterSection from "./FooterSection";
 export default function Sunglass() {
+  const [selectedProducts, setSelectedProducts] = useState([]);
   return (
     <div>
       <div className="mx-auto bg-white ">
@@ -21,11 +22,17 @@ export default function Sunglass() {
           />
         </div> */}
         <SunglassBanner />
-        <Headline />
+        <Headline
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+        />
         {/* <DeliverySection /> */}
         {/* <SliderPage /> */}
         <CardReviews />
-        <OrderForm />
+        <OrderForm
+          selectedProducts={selectedProducts}
+          setSelectedProducts={setSelectedProducts}
+        />
         {/* <FooterSection /> */}
         {/* ); */}
       </div>
