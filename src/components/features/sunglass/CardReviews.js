@@ -14,7 +14,7 @@ export default function CardReviews() {
     <>
       {/* New Section for Reviews */}
       <div className="py-8">
-        <h2 className="text-md text-center font-bold text-center my-[60px]">
+        <h2 className="text-md text-center font-bold text-center my-[60px] leading-9">
           আমাদের হ্যাপি কাস্টমার এর কিছু কথা
         </h2>
         <div className="px[20px] md:px[50px] lg:px-[150px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 sm:px-8 lg:px-16">

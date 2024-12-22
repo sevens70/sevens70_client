@@ -9,8 +9,10 @@ import { useAppDispatch, useAppSelector } from "../../../lib/hooks";
 import Loader from "../../common/Loader";
 import Link from "next/link";
 import { moveToOrderForm } from "../../../lib/utils/utils";
+// import { selectWebsiteInfo } from "../websiteInfo/websiteInfoSlice";
 export default function SunglassBanner() {
   const banners = useAppSelector(allSunglassBanner);
+  //  const websiteInfo = useAppSelector(selectWebsiteInfo)
   const status = useAppSelector(sunglassBannerStatus);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -23,15 +25,13 @@ export default function SunglassBanner() {
   return (
     <section className="relative min-h-[800px] bg-gradient-to-r from-black to-[#FBBF1A] text-white flex flex-col items-center justify-start px-4">
       {/* Logo and Menu */}
-      <div className="w-full px-10 py-10 flex items-start justify-between">
+      <div className="w-full px-0  sm:px-10 py-10 flex items-start justify-between">
         {/* <div className="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center"> */}
-        <div className="bg-white flex items-center justify-center">
+        <div className="bg-transparent flex items-center justify-center">
           {/* <span className="text-white text-md font-bold">LOGO</span> */}
           <Link href="/">
-            {" "}
             <img
-              priority="true"
-              src="/logo.png"
+              src="/white_logo.png"
               alt="logo"
               className="max-w-[150px] w-full h-full"
             />
@@ -61,7 +61,7 @@ export default function SunglassBanner() {
           alt="banner"
           className="w-full h-full rounded rounded-l-md"
           // width={500}
-          // height={500}
+          // height={800}
         />
       </div>
 

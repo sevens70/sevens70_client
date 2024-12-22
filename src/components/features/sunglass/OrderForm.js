@@ -111,7 +111,7 @@ export default function OrderForm() {
       {/* Header Section */}
       <div className="bg-green-200 p-4 rounded-lg text-center">
         <p className="text-lg font-bold">কোন প্রশ্ন বা অর্ডার করতে কল করুনঃ</p>
-        <div className="my-7 flex justify-center items-center gap-3 ">
+        <div className="my-7 flex justify-center items-center flex-wrap gap-3 ">
           <a
             href="tel:01996111027"
             className="text-lg font-semibold text-white bg-green-500 px-4 py-2 rounded-lg"

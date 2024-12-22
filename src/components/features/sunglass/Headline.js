@@ -30,7 +30,7 @@ export default function Headline() {
                     স্টাইলের আত্মবিশ্বাস।
                   </span>
                 </h1>
-                <p className="px-4 md:px-8 text-white text-sm ml-0 lg:ml-[100px]">
+                <p className="px-4 mb-4 md:px-8 text-white text-left text-sm ml-0 lg:ml-[100px]">
                   আপনার সন্তানের চোখ থাকবে UV রশ্মি থেকে ১০০% সুরক্ষিত, আর মজবুত
                   ও আরামদায়ক ফ্রেমের সঙ্গে তারা উপভোগ করবে ফ্যাশনের সেরা
                   অভিজ্ঞতা।
@@ -44,9 +44,9 @@ export default function Headline() {
                     // src="/sunglass/promised01.png"
                     src={item?.image}
                     alt="logo"
-                    className="max-w-[250px] w-full h-full"
-                    width={500}
-                    height={500}
+                    className="max-w-[250px] w-full h-auto"
+                    // width={500}
+                    // height={500}
                   />
                 ))}
               </div>
@@ -56,7 +56,7 @@ export default function Headline() {
       </div>
       {/* Benefit Section */}
       <div className=" bg-[#FBBF1A] relative py-20 px-[20px] md:px-[100px] lg:px-[200px]">
-        <h2 className="text-md font-bold text-center mb-[60px]">
+        <h2 className="text-md font-bold text-center mb-[60px] leading-9">
           কেন আমাদের থেকেই নেবেন এই চশমা ?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
@@ -108,8 +108,8 @@ export default function Headline() {
           </div>
         </div>
       </div>
-      <div className="py-8 text-center bg-dark text-white">
-        <h2 className="text-md font-bold mb-4 text-[#FBBF1A]">
+      <div className="py-10 text-center bg-dark text-white">
+        <h2 className="text-md font-bold mb-4 text-[#FBBF1A] leading-9">
           সুরক্ষা এবং স্টাইলের এমন সংমিশ্রণ আর কোথাও পাবেন না।
         </h2>
         <button
@@ -121,7 +121,7 @@ export default function Headline() {
       </div>
       <DeliverySection />
       <div className="py-8 text-center mt-7">
-        <h2 className="text-md font-bold mb-4">
+        <h2 className="text-md font-bold mb-4 leading-9">
           সুরক্ষার অভাবে স্টাইলের নামে ভুল করছেন না তো?
         </h2>
         <p className="text-gray-700 mb-2 py-4 text-sm max-w-2xl mx-auto">
@@ -146,7 +146,7 @@ export default function Headline() {
       </div>
       <div className="bg-[#FBBF1A] py-[70px] px-[20px] md:px-[100px] lg:px-[200px]">
         {" "}
-        <h2 className="text-md font-bold text-left mt-[60px] mb-[20px]">
+        <h2 className="text-md font-bold text-left mt-[60px] mb-[20px] leading-9">
           সন্তানের চোখের জন্য সুরক্ষা আর স্টাইল-সব এক জায়গায়।
         </h2>
         <p className="font-bold text-left text-lg mb-1">
