@@ -1,12 +1,13 @@
+"use client";
 import React from "react";
 import DeliverySection from "./DeliverySection";
 import { moveToOrderForm } from "../../../lib/utils/utils";
 import { useAppSelector } from "../../../lib/hooks";
 import { allSunglassProduct } from "./sunglassProductSlice";
-
+import SliderWithContent from "./SliderWithContent";
+import ContentSection from "./ContentSection";
 export default function Headline({ selectedProducts, setSelectedProducts }) {
   const products = useAppSelector(allSunglassProduct);
-  // console.log("products 1111", products);
   return (
     <section className="w-full">
       {/* Assurance Section */}
@@ -17,43 +18,9 @@ export default function Headline({ selectedProducts, setSelectedProducts }) {
           স্টাইলের মধ্যে কোনো কম্প্রোমাইজ করে না।
         </p>
       </div>
-      <div className="bg-dark text-white flex flex-col items-center justify-start px-4">
-        <div className="py-8">
-          <div className="grid grid-cols-1 gap-8 px-4 sm:px-8 lg:px-16">
-            <div className="flex flex-col md:flex-row items-center text-center md:text-left p-4 rounded-lg">
-              {/* Content Section */}
-              <div className="w-full md:w-3/4">
-                <h1 className="ml-0 px-4 md:px-8 lg:ml-[100px] text-left mt-[30px] text-white font-bold text-xl sm:text-3xl lg:text-3xl mb-8">
-                  সুরক্ষার প্রতিশ্রুতি,
-                  <br />
-                  <span className="text-white text-xl sm:text-3xl lg:text-4xl mt-4">
-                    স্টাইলের আত্মবিশ্বাস।
-                  </span>
-                </h1>
-                <p className="px-4 mb-4 md:px-8 text-white text-left text-sm ml-0 lg:ml-[100px]">
-                  আপনার সন্তানের চোখ থাকবে UV রশ্মি থেকে ১০০% সুরক্ষিত, আর মজবুত
-                  ও আরামদায়ক ফ্রেমের সঙ্গে তারা উপভোগ করবে ফ্যাশনের সেরা
-                  অভিজ্ঞতা।
-                </p>
-              </div>
-              {/* Image Section */}
-              <div className="w-full flex justify-center items-center flex-wrap gap-3">
-                {products?.map((item) => (
-                  <img
-                    priority="true"
-                    // src="/sunglass/promised01.png"
-                    src={item?.image}
-                    alt="logo"
-                    className="max-w-[250px] w-full h-auto"
-                    // width={500}
-                    // height={500}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <SliderWithContent products={products} />
+
       {/* Benefit Section */}
       <div className=" bg-[#FBBF1A] relative py-20 px-[20px] md:px-[100px] lg:px-[200px]">
         <h2 className="text-md font-bold text-center mb-[60px] leading-9">
@@ -120,7 +87,12 @@ export default function Headline({ selectedProducts, setSelectedProducts }) {
         </button>
       </div>
       <DeliverySection />
-      <div className="py-8 text-center mt-7">
+      <ContentSection
+        products={products}
+        selectedProducts={selectedProducts}
+        setSelectedProducts={setSelectedProducts}
+      />
+      {/* <div className="py-8 text-center mt-7">
         <h2 className="text-md font-bold mb-4 leading-9">
           সুরক্ষার অভাবে স্টাইলের নামে ভুল করছেন না তো?
         </h2>
@@ -150,10 +122,10 @@ export default function Headline({ selectedProducts, setSelectedProducts }) {
             />
           ))}
         </div>
-      </div>
-      <div className="bg-[#FBBF1A] py-[70px] px-[20px] md:px-[100px] lg:px-[200px]">
+      </div> */}
+      <div className="bg-[#FBBF1A] py-[60px] md:py-[70px] px-[20px] md:px-[100px] lg:px-[200px]">
         {" "}
-        <h2 className="text-md font-bold text-left mt-[60px] mb-[20px] leading-9">
+        <h2 className="text-md font-bold text-left mb-[20px] leading-9">
           সন্তানের চোখের জন্য সুরক্ষা আর স্টাইল-সব এক জায়গায়।
         </h2>
         <p className="font-bold text-left text-lg mb-1">
@@ -169,7 +141,7 @@ export default function Headline({ selectedProducts, setSelectedProducts }) {
           {" "}
           <button
             onClick={moveToOrderForm}
-            className="px-4  py-3 bg-dark text-sm text-[#FBBF1A] font-medium rounded rounded-lg"
+            className="px-4 mt-3  py-3 bg-dark text-sm text-[#FBBF1A] font-medium rounded rounded-lg"
           >
             আমি এখনই অর্ডার করতে চাই
           </button>

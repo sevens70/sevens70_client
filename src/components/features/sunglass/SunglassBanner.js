@@ -18,12 +18,12 @@ export default function SunglassBanner() {
   useEffect(() => {
     dispatch(fetchSunglassBannerAsync());
   }, [dispatch]);
-  console.log("banners 123", banners);
+
   if (status === "loading") {
     return <Loader />;
   }
   return (
-    <section className="relative min-h-[800px] bg-gradient-to-r from-black to-[#FBBF1A] text-white flex flex-col items-center justify-start px-4">
+    <section className="relative min-h-[600px] sm:min-h-[800px] bg-gradient-to-r from-black to-[#FBBF1A] text-white flex flex-col items-center justify-start px-4">
       {/* Logo and Menu */}
       <div className="w-full px-0  sm:px-10 py-10 flex items-start justify-between">
         {/* <div className="bg-purple-600 w-12 h-12 rounded-full flex items-center justify-center"> */}
@@ -31,7 +31,7 @@ export default function SunglassBanner() {
           {/* <span className="text-white text-md font-bold">LOGO</span> */}
           <Link href="/">
             <img
-              src="/white_logo.png"
+              src="/final_logo.png"
               alt="logo"
               className="max-w-[150px] w-full h-full"
             />

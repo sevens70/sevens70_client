@@ -106,12 +106,12 @@ export default function OrderForm({ selectedProducts, setSelectedProducts }) {
           >
             📞 018 20 215 215
           </a>
-          <a
+          {/* <a
             href="tel:01996111027"
             className="text-lg font-semibold text-white bg-green-500 px-4 py-2 rounded-lg"
           >
             📞 018 20 215 215
-          </a>
+          </a> */}
         </div>
       </div>
 
