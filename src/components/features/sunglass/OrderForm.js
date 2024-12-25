@@ -120,11 +120,12 @@ export default function OrderForm({ selectedProducts, setSelectedProducts }) {
         {/* Product List Section */}
         <div>
           <h2 className="text-2xl font-bold mb-4">Choose Your Product</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[560px] overflow-auto pr-4 -mr-4">
             {products.map((product) => (
               <div
                 key={product.id}
-                className={`p-4 border rounded-lg shadow-sm cursor-pointer flex items-center ${
+                className={`p-4 border rounded-lg shadow-sm cursor-pointer flex items-center max-h-[560px] overflow-auto ${
                   selectedProducts.find((p) => p.id === product.id)
                     ? "border-green-500 bg-green-50"
                     : "border-gray-300"
