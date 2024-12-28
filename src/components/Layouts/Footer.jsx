@@ -52,14 +52,6 @@ const Footer = () => {
       <div className="w-11/12 md:w-10/12 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 justify-between items-start mx-auto ">
           <div className="col-span-12 md:col-span-6 lg:col-span-4 justify-start md:justify-start">
-            {/* <img
-              priority="true"
-              src="/FooterLogo.png"
-              className="w-full max-w-[150px] bg-white mb-3 rounded-none md:mx-0 h-full"
-              alt="footer_logo"
-              width={300}
-              height={300}
-            /> */}
             <Link href="/">
               {websiteInfo?.length > 0 ? (
                 <img
@@ -67,18 +59,14 @@ const Footer = () => {
                   // src="/Logo.png"
                   src={websiteInfo[0]?.logoUrl}
                   alt="logo"
-                  className="max-w-[150px] max-h-[30px] w-full h-full"
-                  width={300}
-                  height={300}
+                  className="!w-[150px] max-h-[25px]"
                 />
               ) : (
                 <img
                   priority="true"
                   src="/logo.png"
                   alt="logo"
-                  className="max-w-[150px] w-full h-full"
-                  width={300}
-                  height={300}
+                  className="!w-[150px] max-h-[25px]"
                 />
               )}
             </Link>

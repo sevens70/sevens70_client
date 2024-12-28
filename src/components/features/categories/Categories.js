@@ -100,7 +100,10 @@ function Categories() {
                     <Card className="h-[300px] shadow-sm">
                       <CardHeader
                         floated={false}
-                        className="h-4/5 !m-0 !rounded-none !rounded-tl-lg !rounded-tr-lg shadow-none"
+                        className="h-4/5 !m-0 !rounded-none !rounded-tl-lg !rounded-tr-lg"
+                        style={{
+                          boxShadow: "gba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                        }}
                       >
                         <img
                           src={thumbnail}

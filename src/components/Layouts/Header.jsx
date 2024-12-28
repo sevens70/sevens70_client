@@ -39,7 +39,7 @@ import {
 import {
   selectAllCategories,
   selectAllProducts,
-  selectProductListStatus,
+  // selectProductListStatus,
 } from "../features/product/productSlice";
 import { selectItems } from "../features/cart/cartSlice";
 import { selectFavouriteItems } from "../features/favourite/favouriteSlice";
@@ -100,7 +100,6 @@ const menu = [
   //   isMenu: false,
   // },
 ];
-
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -350,21 +349,16 @@ const Header = () => {
                 {websiteInfo?.length > 0 ? (
                   <img
                     priority="true"
-                    // src="/Logo.png"
                     src={websiteInfo[0]?.logoUrl}
                     alt="logo"
-                    className="max-w-[150px] max-h-[30px] w-full h-full"
-                    width={300}
-                    height={300}
+                    className="!w-[150px] max-h-[25px]"
                   />
                 ) : (
                   <img
                     priority="true"
                     src="/logo.png"
                     alt="logo"
-                    className="max-w-[150px] w-full h-full"
-                    width={300}
-                    height={300}
+                    className="!w-[150px] max-h-[25px]"
                   />
                 )}
               </Link>
